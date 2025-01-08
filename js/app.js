@@ -633,6 +633,7 @@ const Menu = {
         // 菜单链接点击事件
         document.querySelectorAll('.menu-link').forEach(link => {
             link.addEventListener('click', (e) => {
+                e.preventDefault(); // 阻止默认行为
                 this.handleMenuClick(link);
             });
         });
@@ -699,13 +700,19 @@ const Menu = {
 
     // 处理菜单点击
     handleMenuClick(menuLink) {
-        // 阻止默认的链接行为
         const href = menuLink.getAttribute('href');
         if (href) {
-            window.location.href = href;
+            // 获取当前域名和仓库名
+            const baseUrl = window.location.origin + '/teaerp';
+            // 移除开头的 /teaerp 以避免重复
+            const cleanHref = href.replace(/^\/teaerp/, '');
+            // 构建完整的URL
+            const fullUrl = baseUrl + cleanHref;
+            // 导航到新页面
+            window.location.href = fullUrl;
         }
 
-        // 移除其他菜单项的激活状态，但保持当前菜单项的父级菜单展开状态
+        // 移除其他菜单项的激活状态
         document.querySelectorAll('.menu-item').forEach(item => {
             if (!menuLink.closest('.menu-module').contains(item)) {
                 item.classList.remove('active');
@@ -718,18 +725,6 @@ const Menu = {
 
         // 展开所有父级菜单
         this.expandParentMenus(menuItem);
-
-        // 收起其他一级菜单（不包含当前激活菜单的父级）
-        const currentModule = menuLink.closest('.menu-module');
-        document.querySelectorAll('.menu-module').forEach(module => {
-            if (module !== currentModule) {
-                module.classList.remove('expanded');
-                const moduleSubMenu = module.querySelector('.sub-menu');
-                if (moduleSubMenu) {
-                    moduleSubMenu.style.display = 'none';
-                }
-            }
-        });
     },
 
     // 设置当前激活的菜单
