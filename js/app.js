@@ -699,6 +699,12 @@ const Menu = {
 
     // 处理菜单点击
     handleMenuClick(menuLink) {
+        // 阻止默认的链接行为
+        const href = menuLink.getAttribute('href');
+        if (href) {
+            window.location.href = href;
+        }
+
         // 移除其他菜单项的激活状态，但保持当前菜单项的父级菜单展开状态
         document.querySelectorAll('.menu-item').forEach(item => {
             if (!menuLink.closest('.menu-module').contains(item)) {
