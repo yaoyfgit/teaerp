@@ -9,31 +9,31 @@ const menuConfig = [
                 key: 'requirement',
                 title: '采购需求',
                 icon: 'clipboard-list',
-                path: 'C:/teaerp/pages/purchase/demand.html'
+                path: '/teaerp/pages/purchase/demand.html'
             },
             {
                 key: 'order',
                 title: '采购订单',
                 icon: 'file-invoice',
-                path: 'C:/teaerp/pages/purchase/order.html'
+                path: '/teaerp/pages/purchase/order.html'
             },
             {
                 key: 'receive',
                 title: '通知收货',
                 icon: 'truck-loading',
-                path: 'C:/teaerp/pages/purchase/receive.html'
+                path: '/teaerp/pages/purchase/receive.html'
             },
             {
                 key: 'return',
                 title: '通知退货',
                 icon: 'undo',
-                path: 'C:/teaerp/pages/purchase/return.html'
+                path: '/teaerp/pages/purchase/return.html'
             },
             {
                 key: 'analysis',
                 title: '采购分析',
                 icon: 'chart-line',
-                path: 'C:/teaerp/pages/purchase/analysis.html'
+                path: '/teaerp/pages/purchase/analysis.html'
             }
         ]
     },
@@ -46,31 +46,31 @@ const menuConfig = [
                 key: 'order',
                 title: '销售订单',
                 icon: 'file-invoice-dollar',
-                path: 'C:/teaerp/pages/sales/order.html'
+                path: '/teaerp/pages/sales/order.html'
             },
             {
                 key: 'delivery',
                 title: '通知发货',
                 icon: 'truck',
-                path: 'C:/teaerp/pages/sales/delivery.html'
+                path: '/teaerp/pages/sales/delivery.html'
             },
             {
                 key: 'return',
                 title: '通知退货',
                 icon: 'undo-alt',
-                path: 'C:/teaerp/pages/sales/return.html'
+                path: '/teaerp/pages/sales/return.html'
             },
             {
                 key: 'analysis',
                 title: '销售分析',
                 icon: 'chart-bar',
-                path: 'C:/teaerp/pages/sales/analysis.html'
+                path: '/teaerp/pages/sales/analysis.html'
             },
             {
                 key: 'manual',
                 title: '产品手册',
                 icon: 'book',
-                path: 'C:/teaerp/pages/sales/product-manual.html'
+                path: '/teaerp/pages/sales/product-manual.html'
             }
         ]
     },
@@ -83,25 +83,25 @@ const menuConfig = [
                 key: 'info',
                 title: '供应商信息',
                 icon: 'info-circle',
-                path: 'C:/teaerp/pages/supplier/info.html'
+                path: '/teaerp/pages/supplier/info.html'
             },
             {
                 key: 'contract',
                 title: '供应商合同',
                 icon: 'file-contract',
-                path: 'C:/teaerp/pages/supplier/contract.html'
+                path: '/teaerp/pages/supplier/contract.html'
             },
             {
                 key: 'reconciliation',
                 title: '供应商对账',
                 icon: 'balance-scale',
-                path: 'C:/teaerp/pages/supplier/reconciliation.html'
+                path: '/teaerp/pages/supplier/reconciliation.html'
             },
             {
                 key: 'analysis',
                 title: '供应商分析',
                 icon: 'chart-pie',
-                path: 'C:/teaerp/pages/supplier/analysis.html'
+                path: '/teaerp/pages/supplier/analysis.html'
             }
         ]
     },
@@ -114,31 +114,31 @@ const menuConfig = [
                 key: 'info',
                 title: '客户列表',
                 icon: 'user-circle',
-                path: 'C:/teaerp/pages/customer/list.html'
+                path: '/teaerp/pages/customer/list.html'
             },
             {
                 key: 'contract',
                 title: '客户合同',
                 icon: 'file-signature',
-                path: 'C:/teaerp/pages/customer/contract.html'
+                path: '/teaerp/pages/customer/contract.html'
             },
             {
                 key: 'reconciliation',
                 title: '客户对账',
                 icon: 'balance-scale-right',
-                path: 'C:/teaerp/pages/customer/reconciliation.html'
+                path: '/teaerp/pages/customer/reconciliation.html'
             },
             {
                 key: 'service',
                 title: '客户服务',
                 icon: 'headset',
-                path: 'C:/teaerp/pages/customer/service.html'
+                path: '/teaerp/pages/customer/service.html'
             },
             {
                 key: 'analysis',
                 title: '客户分析',
                 icon: 'chart-area',
-                path: 'C:/teaerp/pages/customer/analysis.html'
+                path: '/teaerp/pages/customer/analysis.html'
             }
         ]
     },
@@ -151,49 +151,49 @@ const menuConfig = [
                 key: 'inbound',
                 title: '入库管理',
                 icon: 'sign-in-alt',
-                path: 'C:/teaerp/pages/stock/inbound.html'
+                path: '/teaerp/pages/stock/inbound.html'
             },
             {
                 key: 'outbound',
                 title: '出库管理',
                 icon: 'sign-out-alt',
-                path: 'C:/teaerp/pages/stock/outbound.html'
+                path: '/teaerp/pages/stock/outbound.html'
             },
             {
                 key: 'flow',
                 title: '库存流水',
                 icon: 'stream',
-                path: 'C:/teaerp/pages/stock/stock-flow.html'
+                path: '/teaerp/pages/stock/stock-flow.html'
             },
             {
                 key: 'query',
                 title: '库存查询',
                 icon: 'search',
-                path: 'C:/teaerp/pages/stock/stock-query.html'
+                path: '/teaerp/pages/stock/stock-query.html'
             },
             {
                 key: 'check',
                 title: '库存盘点',
                 icon: 'clipboard-check',
-                path: 'C:/teaerp/pages/stock/stock-check.html'
+                path: '/teaerp/pages/stock/stock-check.html'
             },
             {
                 key: 'warning',
                 title: '库存预警',
                 icon: 'exclamation-triangle',
-                path: 'C:/teaerp/pages/stock/stock-warning.html'
+                path: '/teaerp/pages/stock/stock-warning.html'
             },
             {
                 key: 'transfer',
                 title: '库存调拨',
                 icon: 'exchange-alt',
-                path: 'C:/teaerp/pages/stock/stock-transfer.html'
+                path: '/teaerp/pages/stock/stock-transfer.html'
             },
             {
                 key: 'analysis',
                 title: '库存分析',
                 icon: 'chart-line',
-                path: 'C:/teaerp/pages/stock/stock-analysis.html'
+                path: '/teaerp/pages/stock/stock-analysis.html'
             }
         ]
     },
@@ -207,28 +207,28 @@ const menuConfig = [
                 title: 'BOM管理',
                 icon: 'sitemap',
                 children: [
-                    { key: 'material', title: '物料管理', icon: 'boxes', path: 'C:/teaerp/pages/production/bom/material.html' },
-                    { key: 'structure', title: '结构管理', icon: 'project-diagram', path: 'C:/teaerp/pages/production/bom/structure.html' },
-                    { key: 'process', title: '工艺路线', icon: 'route', path: 'C:/teaerp/pages/production/bom/process.html' }
+                    { key: 'material', title: '物料管理', icon: 'boxes', path: '/teaerp/pages/production/bom/material.html' },
+                    { key: 'structure', title: '结构管理', icon: 'project-diagram', path: '/teaerp/pages/production/bom/structure.html' },
+                    { key: 'process', title: '工艺路线', icon: 'route', path: '/teaerp/pages/production/bom/process.html' }
                 ]
             },
             {
                 key: 'plan',
                 title: '生产计划',
                 icon: 'calendar-alt',
-                path: 'C:/teaerp/pages/production/plan/index.html'
+                path: '/teaerp/pages/production/plan/index.html'
             },
             {
                 key: 'workorder',
                 title: '工单管理',
                 icon: 'tasks',
-                path: 'C:/teaerp/pages/production/workorder/index.html'
+                path: '/teaerp/pages/production/workorder/index.html'
             },
             {
                 key: 'process',
                 title: '生产过程',
                 icon: 'cogs',
-                path: 'C:/teaerp/pages/production/process/index.html'
+                path: '/teaerp/pages/production/process/index.html'
             },
             {
                 key: 'collect',
@@ -239,19 +239,19 @@ const menuConfig = [
                         key: 'material-collect',
                         title: '物料采集',
                         icon: 'box',
-                        path: 'C:/teaerp/pages/production/collect/material.html'
+                        path: '/teaerp/pages/production/collect/material.html'
                     },
                     {
                         key: 'progress-collect',
                         title: '进度采集',
                         icon: 'tasks',
-                        path: 'C:/teaerp/pages/production/collect/progress.html'
+                        path: '/teaerp/pages/production/collect/progress.html'
                     },
                     {
                         key: 'energy-collect',
                         title: '能耗采集',
                         icon: 'bolt',
-                        path: 'C:/teaerp/pages/production/collect/energy.html'
+                        path: '/teaerp/pages/production/collect/energy.html'
                     }
                 ]
             },
@@ -259,16 +259,16 @@ const menuConfig = [
                 key: 'execute',
                 title: '生产执行',
                 icon: 'play',
-                path: 'C:/teaerp/pages/production/execute/task.html'
+                path: '/teaerp/pages/production/execute/task.html'
             },
             {
                 key: 'progress',
                 title: '生产进度',
                 icon: 'chart-line',
                 children: [
-                    { key: 'progress-plan', title: '进度计划', icon: 'calendar-check', path: 'C:/teaerp/pages/production/progress/plan.html' },
-                    { key: 'progress-monitor', title: '进度监控', icon: 'eye', path: 'C:/teaerp/pages/production/progress/monitor.html' },
-                    { key: 'progress-report', title: '进度报告', icon: 'file-alt', path: 'C:/teaerp/pages/production/progress/report.html' }
+                    { key: 'progress-plan', title: '进度计划', icon: 'calendar-check', path: '/teaerp/pages/production/progress/plan.html' },
+                    { key: 'progress-monitor', title: '进度监控', icon: 'eye', path: '/teaerp/pages/production/progress/monitor.html' },
+                    { key: 'progress-report', title: '进度报告', icon: 'file-alt', path: '/teaerp/pages/production/progress/report.html' }
                 ]
             },
             {
@@ -276,8 +276,8 @@ const menuConfig = [
                 title: 'MRP运算',
                 icon: 'calculator',
                 children: [
-                    { key: 'mrp-execute', title: '运算执行', icon: 'play-circle', path: 'C:/teaerp/pages/production/mrp/execute.html' },
-                    { key: 'mrp-monitor', title: '运算监控', icon: 'desktop', path: 'C:/teaerp/pages/production/mrp/monitor.html' }
+                    { key: 'mrp-execute', title: '运算执行', icon: 'play-circle', path: '/teaerp/pages/production/mrp/execute.html' },
+                    { key: 'mrp-monitor', title: '运算监控', icon: 'desktop', path: '/teaerp/pages/production/mrp/monitor.html' }
                 ]
             },
             {
@@ -289,37 +289,37 @@ const menuConfig = [
                         key: 'energy-analysis',
                         title: '能耗分析',
                         icon: 'bolt',
-                        path: 'C:/teaerp/pages/production/analysis/energy.html'
+                        path: '/teaerp/pages/production/analysis/energy.html'
                     },
                     {
                         key: 'cost-analysis',
                         title: '成本分析',
                         icon: 'dollar-sign',
-                        path: 'C:/teaerp/pages/production/analysis/cost.html'
+                        path: '/teaerp/pages/production/analysis/cost.html'
                     },
                     {
                         key: 'capacity-analysis',
                         title: '产能分析',
                         icon: 'industry',
-                        path: 'C:/teaerp/pages/production/analysis/capacity.html'
+                        path: '/teaerp/pages/production/analysis/capacity.html'
                     },
                     {
                         key: 'efficiency-analysis',
                         title: '效率分析',
                         icon: 'tachometer-alt',
-                        path: 'C:/teaerp/pages/production/analysis/efficiency.html'
+                        path: '/teaerp/pages/production/analysis/efficiency.html'
                     },
                     {
                         key: 'quality-analysis',
                         title: '质量分析',
                         icon: 'check-circle',
-                        path: 'C:/teaerp/pages/production/analysis/quality.html'
+                        path: '/teaerp/pages/production/analysis/quality.html'
                     },
                     {
                         key: 'performance-analysis',
                         title: '绩效分析',
                         icon: 'chart-line',
-                        path: 'C:/teaerp/pages/production/analysis/performance.html'
+                        path: '/teaerp/pages/production/analysis/performance.html'
                     }
                 ]
             }
@@ -339,19 +339,19 @@ const menuConfig = [
                         key: 'account',
                         title: '科目设置',
                         icon: 'cog',
-                        path: 'C:/teaerp/pages/finance/ledger/account.html'
+                        path: '/teaerp/pages/finance/ledger/account.html'
                     },
                     {
                         key: 'voucher',
                         title: '凭证管理',
                         icon: 'file-invoice',
-                        path: 'C:/teaerp/pages/finance/ledger/voucher.html'
+                        path: '/teaerp/pages/finance/ledger/voucher.html'
                     },
                     {
                         key: 'book',
                         title: '账簿查询',
                         icon: 'book-open',
-                        path: 'C:/teaerp/pages/finance/ledger/book.html'
+                        path: '/teaerp/pages/finance/ledger/book.html'
                     }
                 ]
             },
@@ -363,17 +363,17 @@ const menuConfig = [
                     {
                         key: 'bill',
                         title: '应收单',
-                        path: 'C:/teaerp/pages/finance/receivable/bill.html'
+                        path: '/teaerp/pages/finance/receivable/bill.html'
                     },
                     {
                         key: 'receipt',
                         title: '收款单',
-                        path: 'C:/teaerp/pages/finance/receivable/receipt.html'
+                        path: '/teaerp/pages/finance/receivable/receipt.html'
                     },
                     {
                         key: 'aging',
                         title: '应收账龄',
-                        path: 'C:/teaerp/pages/finance/receivable/aging.html'
+                        path: '/teaerp/pages/finance/receivable/aging.html'
                     }
                 ]
             },
@@ -385,17 +385,17 @@ const menuConfig = [
                     {
                         key: 'bill',
                         title: '应付单',
-                        path: 'C:/teaerp/pages/finance/payable/bill.html'
+                        path: '/teaerp/pages/finance/payable/bill.html'
                     },
                     {
                         key: 'payment',
                         title: '付款单',
-                        path: 'C:/teaerp/pages/finance/payable/payment.html'
+                        path: '/teaerp/pages/finance/payable/payment.html'
                     },
                     {
                         key: 'aging',
                         title: '应付账龄',
-                        path: 'C:/teaerp/pages/finance/payable/aging.html'
+                        path: '/teaerp/pages/finance/payable/aging.html'
                     }
                 ]
             },
@@ -407,22 +407,22 @@ const menuConfig = [
                     {
                         key: 'cost-accounting',
                         title: '成本核算',
-                        path: 'C:/teaerp/pages/finance/cost/cost-accounting.html'
+                        path: '/teaerp/pages/finance/cost/cost-accounting.html'
                     },
                     {
                         key: 'cost-analysis',
                         title: '成本分析',
-                        path: 'C:/teaerp/pages/finance/cost/cost-analysis.html'
+                        path: '/teaerp/pages/finance/cost/cost-analysis.html'
                     },
                     {
                         key: 'cost-report',
                         title: '成本报表',
-                        path: 'C:/teaerp/pages/finance/cost/cost-report.html'
+                        path: '/teaerp/pages/finance/cost/cost-report.html'
                     },
                     {
                         key: 'cost-adjustment',
                         title: '成本调整',
-                        path: 'C:/teaerp/pages/finance/cost/cost-adjustment.html'
+                        path: '/teaerp/pages/finance/cost/cost-adjustment.html'
                     }
                 ]
             },
@@ -434,12 +434,12 @@ const menuConfig = [
                     {
                         key: 'invoice-management',
                         title: '发票管理',
-                        path: 'C:/teaerp/pages/finance/invoice/index.html'
+                        path: '/teaerp/pages/finance/invoice/index.html'
                     },
                     {
                         key: 'invoice-statistics',
                         title: '发票统计',
-                        path: 'C:/teaerp/pages/finance/invoice/statistics.html'
+                        path: '/teaerp/pages/finance/invoice/statistics.html'
                     }
                 ]
             },
@@ -451,12 +451,12 @@ const menuConfig = [
                     {
                         key: 'expense-management',
                         title: '费用管理',
-                        path: 'C:/teaerp/pages/finance/expense/index.html'
+                        path: '/teaerp/pages/finance/expense/index.html'
                     },
                     {
                         key: 'expense-statistics',
                         title: '费用统计',
-                        path: 'C:/teaerp/pages/finance/expense/statistics.html'
+                        path: '/teaerp/pages/finance/expense/statistics.html'
                     }
                 ]
             },
@@ -464,7 +464,7 @@ const menuConfig = [
                 key: 'analysis',
                 title: '财务分析',
                 icon: 'chart-bar',
-                path: 'C:/teaerp/pages/finance/analysis/index.html'
+                path: '/teaerp/pages/finance/analysis/index.html'
             }
         ]
     },
@@ -477,61 +477,61 @@ const menuConfig = [
                 key: 'user',
                 title: '用户管理',
                 icon: 'user-cog',
-                path: 'C:/teaerp/pages/system/user.html'
+                path: '/teaerp/pages/system/user.html'
             },
             {
                 key: 'role',
                 title: '角色管理',
                 icon: 'users-cog',
-                path: 'C:/teaerp/pages/system/role.html'
+                path: '/teaerp/pages/system/role.html'
             },
             {
                 key: 'permission',
                 title: '权限管理',
                 icon: 'lock',
-                path: 'C:/teaerp/pages/system/permission.html'
+                path: '/teaerp/pages/system/permission.html'
             },
             {
                 key: 'log',
                 title: '日志管理',
                 icon: 'history',
-                path: 'C:/teaerp/pages/system/log.html'
+                path: '/teaerp/pages/system/log.html'
             },
             {
                 key: 'monitor',
                 title: '系统监控',
                 icon: 'desktop',
-                path: 'C:/teaerp/pages/system/monitor.html'
+                path: '/teaerp/pages/system/monitor.html'
             },
             {
                 key: 'config',
                 title: '系统配置',
                 icon: 'sliders-h',
-                path: 'C:/teaerp/pages/system/config.html'
+                path: '/teaerp/pages/system/config.html'
             },
             {
                 key: 'backup',
                 title: '系统备份',
                 icon: 'database',
-                path: 'C:/teaerp/pages/system/backup.html'
+                path: '/teaerp/pages/system/backup.html'
             },
             {
                 key: 'recovery',
                 title: '系统恢复',
                 icon: 'redo',
-                path: 'C:/teaerp/pages/system/recovery.html'
+                path: '/teaerp/pages/system/recovery.html'
             },
             {
                 key: 'upgrade',
                 title: '系统升级',
                 icon: 'arrow-up',
-                path: 'C:/teaerp/pages/system/upgrade.html'
+                path: '/teaerp/pages/system/upgrade.html'
             },
             {
                 key: 'maintenance',
                 title: '系统维护',
                 icon: 'tools',
-                path: 'C:/teaerp/pages/system/maintenance.html'
+                path: '/teaerp/pages/system/maintenance.html'
             }
         ]
     },
@@ -544,19 +544,19 @@ const menuConfig = [
                 key: 'target',
                 title: '计划制定',
                 icon: 'bullseye',
-                path: 'C:/teaerp/pages/operation/plan/target/index.html'
+                path: '/teaerp/pages/operation/plan/target/index.html'
             },
             {
                 key: 'adjust',
                 title: '计划调整',
                 icon: 'sliders-h',
-                path: 'C:/teaerp/pages/operation/plan/adjust/index.html'
+                path: '/teaerp/pages/operation/plan/adjust/index.html'
             },
             {
                 key: 'analysis',
                 title: '计划分析',
                 icon: 'chart-bar',
-                path: 'C:/teaerp/pages/operation/plan/analysis/index.html'
+                path: '/teaerp/pages/operation/plan/analysis/index.html'
             }
         ]
     }

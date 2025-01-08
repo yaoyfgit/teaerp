@@ -9,7 +9,7 @@ const menuConfig = [
                 key: 'receipt',
                 title: '收款管理',
                 icon: 'hand-holding-usd',
-                path: 'C:/teaerp/pages/finance/receipt/index.html'
+                path: '/teaerp/pages/finance/receipt/index.html'
             },
             {
                 key: 'payment',
