@@ -225,6 +225,31 @@ const menuConfig = [
                 path: '/teaerp/pages/production/workorder/index.html'
             },
             {
+                key: 'report',
+                title: '生产报工',
+                icon: 'clipboard-list',
+                children: [
+                    { 
+                        key: 'daily-report', 
+                        title: '日报表', 
+                        icon: 'calendar-day', 
+                        path: '/teaerp/pages/production/report/daily.html'
+                    },
+                    { 
+                        key: 'summary-report', 
+                        title: '汇总报表', 
+                        icon: 'list-alt', 
+                        path: '/teaerp/pages/production/report/summary.html'
+                    },
+                    { 
+                        key: 'analysis-report', 
+                        title: '分析报表', 
+                        icon: 'chart-line', 
+                        path: '/teaerp/pages/production/report/analysis.html'
+                    }
+                ]
+            },
+            {
                 key: 'process',
                 title: '生产过程',
                 icon: 'cogs',
