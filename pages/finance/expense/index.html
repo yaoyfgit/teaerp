@@ -124,6 +124,130 @@
             font-weight: bold;
             color: #333;
         }
+
+        /* 弹窗样式 */
+        .standard-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #dcdfe6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #303133;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-header h3 i {
+            color: #8fd4d2;
+        }
+
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+        }
+
+        .modal-footer {
+            padding: 16px;
+            border-top: 1px solid #dcdfe6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #909399;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #606266;
+        }
+
+        /* 表单样式 */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #606266;
+        }
+
+        .form-group .required {
+            color: #f56c6c;
+            margin-left: 4px;
+        }
+
+        .standard-input[type="file"] {
+            padding: 8px;
+            border: 1px dashed #dcdfe6;
+            background: #f5f7fa;
+        }
+
+        .standard-textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 80px;
+            font-size: 14px;
+        }
+
+        .standard-textarea:focus {
+            border-color: #8fd4d2;
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -227,7 +351,7 @@
                                 重置
                             </button>
                             <div class="toolbar-divider"></div>
-                            <button class="standard-button primary">
+                            <button class="standard-button primary" onclick="showExpenseModal()">
                                 <i class="fas fa-plus"></i>
                                 新增费用
                             </button>
@@ -318,13 +442,177 @@
         </div>
     </div>
 
+    <!-- 新增/编辑费用弹窗 -->
+    <div class="standard-modal" id="expenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice-dollar"></i> 费用信息</h3>
+                <button class="close-btn" onclick="hideExpenseModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>费用单号</label>
+                            <input type="text" class="standard-input" name="expenseCode" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>费用类型<span class="required">*</span></label>
+                            <select class="standard-select" name="expenseType" required>
+                                <option value="">请选择</option>
+                                <option value="travel">差旅费</option>
+                                <option value="office">办公费</option>
+                                <option value="entertainment">招待费</option>
+                                <option value="training">培训费</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>报销部门<span class="required">*</span></label>
+                            <select class="standard-select" name="department" required>
+                                <option value="">请选择</option>
+                                <option value="sales">销售部</option>
+                                <option value="production">生产部</option>
+                                <option value="rd">研发部</option>
+                                <option value="admin">行政部</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>报销人<span class="required">*</span></label>
+                            <input type="text" class="standard-input" name="applicant" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>费用金额<span class="required">*</span></label>
+                            <input type="number" class="standard-input" name="amount" required step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>报销日期<span class="required">*</span></label>
+                            <input type="date" class="standard-input" name="expenseDate" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>费用说明<span class="required">*</span></label>
+                        <textarea class="standard-textarea" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>附件</label>
+                        <input type="file" class="standard-input" name="attachments" multiple>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="standard-button" onclick="hideExpenseModal()">取消</button>
+                <button class="standard-button primary" onclick="saveExpense()">保存</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../../../js/app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // 等待 DOM 加载完成
+        document.addEventListener('DOMContentLoaded', function() {
             // 初始化菜单
             Menu.renderMenu();
             // 初始化菜单切换功能
             initMenuToggle();
+
+            // 绑定新增费用按钮点击事件
+            document.querySelector('button[onclick="showExpenseModal()"]').addEventListener('click', function() {
+                showExpenseModal();
+            });
+        });
+
+        // 显示费用弹窗
+        function showExpenseModal(expenseId = null) {
+            const modal = document.getElementById('expenseModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                
+                if (expenseId) {
+                    // 加载费用信息
+                    loadExpenseInfo(expenseId);
+                } else {
+                    // 清空表单
+                    clearExpenseForm();
+                    // 生成新的费用单号
+                    generateExpenseCode();
+                }
+            } else {
+                console.error('Modal element not found');
+            }
+        }
+
+        // 隐藏费用弹窗
+        function hideExpenseModal() {
+            const modal = document.getElementById('expenseModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // 生成费用单号
+        function generateExpenseCode() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const random = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+            const expenseCode = `EX${year}${month}${day}${random}`;
+            
+            const codeInput = document.querySelector('input[name="expenseCode"]');
+            if (codeInput) {
+                codeInput.value = expenseCode;
+            }
+        }
+
+        // 清空费用表单
+        function clearExpenseForm() {
+            const form = document.querySelector('#expenseModal form');
+            if (form) {
+                form.reset();
+            }
+        }
+
+        // 加载费用信息
+        function loadExpenseInfo(expenseId) {
+            // TODO: 调用API获取费用信息
+            console.log('Loading expense info:', expenseId);
+        }
+
+        // 保存费用信息
+        function saveExpense() {
+            const form = document.querySelector('#expenseModal form');
+            if (!form) return;
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // TODO: 调用API保存费用信息
+            alert('保存成功');
+            hideExpenseModal();
+        }
+
+        // 绑定关闭按钮事件
+        document.querySelectorAll('.close-btn, .modal-footer .standard-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (e.target.matches('[onclick="hideExpenseModal()"]')) {
+                    hideExpenseModal();
+                }
+            });
+        });
+
+        // 点击模态框外部关闭
+        document.getElementById('expenseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideExpenseModal();
+            }
         });
     </script>
 </body>

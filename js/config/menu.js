@@ -149,6 +149,50 @@ const menuConfig = [
                 ]
             }
         ]
+    },
+    {
+        key: 'quality',
+        title: '质量管理',
+        icon: 'vial',
+        children: [
+            {
+                key: 'inspection',
+                title: '检验管理',
+                icon: 'microscope',
+                children: [
+                    {
+                        key: 'inspection-scheme',
+                        title: '检验方案',
+                        icon: 'clipboard-list',
+                        path: '/teaerp/pages/quality/inspection/scheme.html'
+                    },
+                    {
+                        key: 'inbound-inspection',
+                        title: '入库检验',
+                        icon: 'clipboard-check',
+                        path: '/teaerp/pages/quality/inspection/inbound.html'
+                    },
+                    {
+                        key: 'outbound-inspection',
+                        title: '出库检验',
+                        icon: 'tasks',
+                        path: '/teaerp/pages/quality/inspection/outbound.html'
+                    }
+                ]
+            },
+            {
+                key: 'quality-standard',
+                title: '质量标准',
+                icon: 'ruler',
+                path: '/teaerp/pages/quality/standard/index.html'
+            },
+            {
+                key: 'quality-report',
+                title: '质量报表',
+                icon: 'chart-bar',
+                path: '/teaerp/pages/quality/report/index.html'
+            }
+        ]
     }
 ];
 

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检验项目维护 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/menu.css">
+    <link rel="stylesheet" href="../../../css/modules/quality.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 左侧菜单 -->
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航 -->
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="navbar-right">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span>管理员</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 面包屑 -->
+            <div class="breadcrumb">
+                <i class="fas fa-vial"></i>
+                <span>质量管理</span>
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-list-alt"></i>
+                <span>检验项目</span>
+            </div>
+
+            <!-- 主要内容卡片 -->
+            <div class="standard-card">
+                <div class="card-header">
+                    <h3>检验项目维护</h3>
+                </div>
+                <div class="card-body">
+                    <!-- 查询区域 -->
+                    <div class="standard-toolbar">
+                        <div class="toolbar-left">
+                            <div class="toolbar-group">
+                                <input type="text" class="standard-input" placeholder="项目编码/名称">
+                                <select class="standard-select">
+                                    <option value="">全部类型</option>
+                                    <option value="1">感官指标</option>
+                                    <option value="2">理化指标</option>
+                                    <option value="3">卫生指标</option>
+                                </select>
+                                <select class="standard-select">
+                                    <option value="">全部状态</option>
+                                    <option value="1">启用</option>
+                                    <option value="0">停用</option>
+                                </select>
+                                <button class="standard-button" onclick="handleSearch()">
+                                    <i class="fas fa-search"></i> 查询
+                                </button>
+                            </div>
+                            <div class="toolbar-divider"></div>
+                            <div class="toolbar-group">
+                                <button class="standard-button primary" onclick="showAddModal()">
+                                    <i class="fas fa-plus"></i> 新增
+                                </button>
+                                <button class="standard-button" onclick="handleExport()">
+                                    <i class="fas fa-file-excel"></i> 导出
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 表格 -->
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th>项目编码</th>
+                                <th>项目名称</th>
+                                <th>检验类型</th>
+                                <th>检验方法</th>
+                                <th>标准值</th>
+                                <th>单位</th>
+                                <th>上限</th>
+                                <th>下限</th>
+                                <th>状态</th>
+                                <th width="150">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>QC001</td>
+                                <td>外观形状</td>
+                                <td>感官指标</td>
+                                <td>目测</td>
+                                <td>条索紧结</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge success">启用</span></td>
+                                <td>
+                                    <button class="standard-button" title="编辑" onclick="handleEdit('QC001')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="standard-button" title="复制" onclick="handleCopy('QC001')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="standard-button danger" title="停用" onclick="handleDisable('QC001')">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>QC002</td>
+                                <td>水分含量</td>
+                                <td>理化指标</td>
+                                <td>烘干法</td>
+                                <td>5.0</td>
+                                <td>%</td>
+                                <td>6.0</td>
+                                <td>4.0</td>
+                                <td><span class="status-badge success">启用</span></td>
+                                <td>
+                                    <button class="standard-button" title="编辑" onclick="handleEdit('QC002')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="standard-button" title="复制" onclick="handleCopy('QC002')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="standard-button danger" title="停用" onclick="handleDisable('QC002')">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>QC003</td>
+                                <td>农药残留</td>
+                                <td>卫生指标</td>
+                                <td>色谱法</td>
+                                <td>0.1</td>
+                                <td>mg/kg</td>
+                                <td>0.2</td>
+                                <td>0</td>
+                                <td><span class="status-badge warning">停用</span></td>
+                                <td>
+                                    <button class="standard-button" title="编辑" onclick="handleEdit('QC003')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="standard-button" title="复制" onclick="handleCopy('QC003')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="standard-button success" title="启用" onclick="handleEnable('QC003')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 分页 -->
+                    <div class="pagination-container">
+                        <div class="pagination">
+                            <button class="standard-button" disabled>
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                            <button class="standard-button" disabled>
+                                <i class="fas fa-angle-left"></i>
+                            </button>
+                            <button class="standard-button primary">1</button>
+                            <button class="standard-button">2</button>
+                            <button class="standard-button">3</button>
+                            <button class="standard-button">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                            <button class="standard-button">
+                                <i class="fas fa-angle-double-right"></i>
+                            </button>
+                            <span class="pagination-info">共 15 条记录</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增/编辑弹窗 -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>检验项目信息</h3>
+                <button class="close-button" onclick="hideEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="standard-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>项目编码</label>
+                            <input type="text" class="standard-input" name="code" placeholder="请输入项目编码">
+                        </div>
+                        <div class="form-group">
+                            <label>项目名称</label>
+                            <input type="text" class="standard-input" name="name" placeholder="请输入项目名称">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>检验类型</label>
+                            <select class="standard-select" name="type">
+                                <option value="1">感官指标</option>
+                                <option value="2">理化指标</option>
+                                <option value="3">卫生指标</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>检验方法</label>
+                            <input type="text" class="standard-input" name="method" placeholder="请输入检验方法">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>标准值</label>
+                            <input type="text" class="standard-input" name="standard" placeholder="请输入标准值">
+                        </div>
+                        <div class="form-group">
+                            <label>单位</label>
+                            <input type="text" class="standard-input" name="unit" placeholder="请输入单位">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>上限</label>
+                            <input type="number" class="standard-input" name="upper" placeholder="请输入上限值">
+                        </div>
+                        <div class="form-group">
+                            <label>下限</label>
+                            <input type="number" class="standard-input" name="lower" placeholder="请输入下限值">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>备注说明</label>
+                            <textarea class="standard-textarea" name="remark" placeholder="请输入备注说明"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="standard-button" onclick="hideEditModal()">取消</button>
+                <button class="standard-button primary" onclick="handleSubmit()">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入必要的JS -->
+    <script src="../../../js/app.js"></script>
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化菜单
+            Menu.renderMenu();
+        });
+
+        // 查询按钮点击事件
+        function handleSearch() {
+            const keyword = document.querySelector('input[type="text"]').value;
+            const type = document.querySelector('select:nth-of-type(1)').value;
+            const status = document.querySelector('select:nth-of-type(2)').value;
+            
+            console.log('执行查询:', { keyword, type, status });
+            // TODO: 实现查询逻辑
+        }
+
+        // 导出按钮点击事件
+        function handleExport() {
+            console.log('执行导出');
+            // TODO: 实现导出逻辑
+        }
+
+        // 显示新增弹窗
+        function showAddModal() {
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                // 清空表单
+                const form = modal.querySelector('form');
+                if (form) {
+                    form.reset();
+                }
+                
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 编辑按钮点击事件
+        function handleEdit(code) {
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                // 模拟加载数据
+                const data = {
+                    code: code,
+                    name: '水分含量',
+                    type: '2',
+                    method: '烘干法',
+                    standard: '5.0',
+                    unit: '%',
+                    upper: '6.0',
+                    lower: '4.0',
+                    remark: '测定样品中水分含量'
+                };
+
+                // 填充表单数据
+                const form = modal.querySelector('form');
+                if (form) {
+                    Object.keys(data).forEach(key => {
+                        const element = form.querySelector(`[name="${key}"]`);
+                        if (element) {
+                            element.value = data[key];
+                        }
+                    });
+                }
+
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 复制按钮点击事件
+        function handleCopy(code) {
+            console.log('复制项目:', code);
+            // TODO: 实现复制逻辑
+            showAddModal();
+        }
+
+        // 停用按钮点击事件
+        function handleDisable(code) {
+            console.log('停用项目:', code);
+            // TODO: 实现停用逻辑
+        }
+
+        // 启用按钮点击事件
+        function handleEnable(code) {
+            console.log('启用项目:', code);
+            // TODO: 实现启用逻辑
+        }
+
+        // 隐藏编辑弹窗
+        function hideEditModal() {
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // 提交表单
+        function handleSubmit() {
+            const form = document.querySelector('#editModal form');
+            if (form) {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                console.log('提交数据:', data);
+                // TODO: 实现提交逻辑
+                
+                // 关闭弹窗
+                hideEditModal();
+            }
+        }
+    </script>
+
+    <style>
+    /* 状态徽章样式 */
+    .status-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .status-badge.success {
+        background-color: #e8f5e9;
+        color: #4caf50;
+    }
+
+    .status-badge.warning {
+        background-color: #fff3e0;
+        color: #ff9800;
+    }
+
+    /* 工具栏样式 */
+    .standard-toolbar {
+        padding: 15px;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .toolbar-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .toolbar-divider {
+        width: 1px;
+        height: 24px;
+        background-color: #ddd;
+        margin: 0 10px;
+    }
+
+    /* 弹窗样式 */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        border-radius: 4px;
+        width: 600px;
+        max-width: 90%;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-header h3 {
+        margin: 0;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* 表单样式 */
+    .standard-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-group.full-width {
+        flex: 0 0 100%;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .standard-textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    /* 分页居中样式 */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* 操作按钮样式优化 */
+    .standard-table td .standard-button {
+        padding: 6px 12px;
+        margin: 0 4px;
+    }
+
+    .standard-table td .standard-button:hover {
+        background-color: #e9ecef;
+    }
+
+    .standard-table td .standard-button.primary:hover {
+        background-color: #0056b3;
+    }
+
+    .standard-table td .standard-button.danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .standard-table td .standard-button.success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
+    </style>
+</body>
+</html> 

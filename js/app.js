@@ -1,3 +1,24 @@
+// 获取基础路径
+function getBasePath() {
+    // 判断是否在GitHub Pages环境
+    if (window.location.hostname.includes('github.io')) {
+        return '/teaerp/';
+    }
+    // 本地开发环境 - 使用完整的本地路径
+    return '/C:/teaerp/';
+}
+
+// 处理路径
+function processPath(path) {
+    const basePath = getBasePath();
+    // 如果路径已经包含了基础路径，直接返回
+    if (path.startsWith(basePath)) {
+        return path;
+    }
+    // 移除开头的斜杠并拼接
+    return basePath + path.replace(/^\//, '');
+}
+
 // 菜单配置
 const menuConfig = [
     {
@@ -9,31 +30,31 @@ const menuConfig = [
                 key: 'requirement',
                 title: '采购需求',
                 icon: 'clipboard-list',
-                path: '/teaerp/pages/purchase/demand.html'
+                path: 'pages/purchase/demand.html'
             },
             {
                 key: 'order',
                 title: '采购订单',
                 icon: 'file-invoice',
-                path: '/teaerp/pages/purchase/order.html'
+                path: 'pages/purchase/order.html'
             },
             {
                 key: 'receive',
                 title: '通知收货',
                 icon: 'truck-loading',
-                path: '/teaerp/pages/purchase/receive.html'
+                path: 'pages/purchase/receive.html'
             },
             {
                 key: 'return',
                 title: '通知退货',
                 icon: 'undo',
-                path: '/teaerp/pages/purchase/return.html'
+                path: 'pages/purchase/return.html'
             },
             {
                 key: 'analysis',
                 title: '采购分析',
                 icon: 'chart-line',
-                path: '/teaerp/pages/purchase/analysis.html'
+                path: 'pages/purchase/analysis.html'
             }
         ]
     },
@@ -46,31 +67,31 @@ const menuConfig = [
                 key: 'order',
                 title: '销售订单',
                 icon: 'file-invoice-dollar',
-                path: '/teaerp/pages/sales/order.html'
+                path: 'pages/sales/order.html'
             },
             {
                 key: 'delivery',
                 title: '通知发货',
                 icon: 'truck',
-                path: '/teaerp/pages/sales/delivery.html'
+                path: 'pages/sales/delivery.html'
             },
             {
                 key: 'return',
                 title: '通知退货',
                 icon: 'undo-alt',
-                path: '/teaerp/pages/sales/return.html'
+                path: 'pages/sales/return.html'
             },
             {
                 key: 'analysis',
                 title: '销售分析',
                 icon: 'chart-bar',
-                path: '/teaerp/pages/sales/analysis.html'
+                path: 'pages/sales/analysis.html'
             },
             {
                 key: 'manual',
                 title: '产品手册',
                 icon: 'book',
-                path: '/teaerp/pages/sales/product-manual.html'
+                path: 'pages/sales/product-manual.html'
             }
         ]
     },
@@ -83,25 +104,25 @@ const menuConfig = [
                 key: 'info',
                 title: '供应商信息',
                 icon: 'info-circle',
-                path: '/teaerp/pages/supplier/info.html'
+                path: 'pages/supplier/info.html'
             },
             {
                 key: 'contract',
                 title: '供应商合同',
                 icon: 'file-contract',
-                path: '/teaerp/pages/supplier/contract.html'
+                path: 'pages/supplier/contract.html'
             },
             {
                 key: 'reconciliation',
                 title: '供应商对账',
                 icon: 'balance-scale',
-                path: '/teaerp/pages/supplier/reconciliation.html'
+                path: 'pages/supplier/reconciliation.html'
             },
             {
                 key: 'analysis',
                 title: '供应商分析',
                 icon: 'chart-pie',
-                path: '/teaerp/pages/supplier/analysis.html'
+                path: 'pages/supplier/analysis.html'
             }
         ]
     },
@@ -114,31 +135,31 @@ const menuConfig = [
                 key: 'info',
                 title: '客户列表',
                 icon: 'user-circle',
-                path: '/teaerp/pages/customer/list.html'
+                path: 'pages/customer/list.html'
             },
             {
                 key: 'contract',
                 title: '客户合同',
                 icon: 'file-signature',
-                path: '/teaerp/pages/customer/contract.html'
+                path: 'pages/customer/contract.html'
             },
             {
                 key: 'reconciliation',
                 title: '客户对账',
                 icon: 'balance-scale-right',
-                path: '/teaerp/pages/customer/reconciliation.html'
+                path: 'pages/customer/reconciliation.html'
             },
             {
                 key: 'service',
                 title: '客户服务',
                 icon: 'headset',
-                path: '/teaerp/pages/customer/service.html'
+                path: 'pages/customer/service.html'
             },
             {
                 key: 'analysis',
                 title: '客户分析',
                 icon: 'chart-area',
-                path: '/teaerp/pages/customer/analysis.html'
+                path: 'pages/customer/analysis.html'
             }
         ]
     },
@@ -151,49 +172,49 @@ const menuConfig = [
                 key: 'inbound',
                 title: '入库管理',
                 icon: 'sign-in-alt',
-                path: '/teaerp/pages/stock/inbound.html'
+                path: 'pages/stock/inbound.html'
             },
             {
                 key: 'outbound',
                 title: '出库管理',
                 icon: 'sign-out-alt',
-                path: '/teaerp/pages/stock/outbound.html'
+                path: 'pages/stock/outbound.html'
             },
             {
                 key: 'flow',
                 title: '库存流水',
                 icon: 'stream',
-                path: '/teaerp/pages/stock/stock-flow.html'
+                path: 'pages/stock/stock-flow.html'
             },
             {
                 key: 'query',
                 title: '库存查询',
                 icon: 'search',
-                path: '/teaerp/pages/stock/stock-query.html'
+                path: 'pages/stock/stock-query.html'
             },
             {
                 key: 'check',
                 title: '库存盘点',
                 icon: 'clipboard-check',
-                path: '/teaerp/pages/stock/stock-check.html'
+                path: 'pages/stock/stock-check.html'
             },
             {
                 key: 'warning',
                 title: '库存预警',
                 icon: 'exclamation-triangle',
-                path: '/teaerp/pages/stock/stock-warning.html'
+                path: 'pages/stock/stock-warning.html'
             },
             {
                 key: 'transfer',
                 title: '库存调拨',
                 icon: 'exchange-alt',
-                path: '/teaerp/pages/stock/stock-transfer.html'
+                path: 'pages/stock/stock-transfer.html'
             },
             {
                 key: 'analysis',
                 title: '库存分析',
                 icon: 'chart-line',
-                path: '/teaerp/pages/stock/stock-analysis.html'
+                path: 'pages/stock/stock-analysis.html'
             }
         ]
     },
@@ -207,22 +228,22 @@ const menuConfig = [
                 title: 'BOM管理',
                 icon: 'sitemap',
                 children: [
-                    { key: 'material', title: '物料管理', icon: 'boxes', path: '/teaerp/pages/production/bom/material.html' },
-                    { key: 'structure', title: '结构管理', icon: 'project-diagram', path: '/teaerp/pages/production/bom/structure.html' },
-                    { key: 'process', title: '工艺路线', icon: 'route', path: '/teaerp/pages/production/bom/process.html' }
+                    { key: 'material', title: '物料管理', icon: 'boxes', path: 'pages/production/bom/material.html' },
+                    { key: 'structure', title: '结构管理', icon: 'project-diagram', path: 'pages/production/bom/structure.html' },
+                    { key: 'process', title: '工艺路线', icon: 'route', path: 'pages/production/bom/process.html' }
                 ]
             },
             {
                 key: 'plan',
                 title: '生产计划',
                 icon: 'calendar-alt',
-                path: '/teaerp/pages/production/plan/index.html'
+                path: 'pages/production/plan/index.html'
             },
             {
                 key: 'workorder',
                 title: '工单管理',
                 icon: 'tasks',
-                path: '/teaerp/pages/production/workorder/index.html'
+                path: 'pages/production/workorder/index.html'
             },
             {
                 key: 'report',
@@ -233,19 +254,19 @@ const menuConfig = [
                         key: 'daily-report', 
                         title: '日报表', 
                         icon: 'calendar-day', 
-                        path: '/teaerp/pages/production/report/daily.html'
+                        path: 'pages/production/report/daily.html'
                     },
                     { 
                         key: 'summary-report', 
                         title: '汇总报表', 
                         icon: 'list-alt', 
-                        path: '/teaerp/pages/production/report/summary.html'
+                        path: 'pages/production/report/summary.html'
                     },
                     { 
                         key: 'analysis-report', 
                         title: '分析报表', 
                         icon: 'chart-line', 
-                        path: '/teaerp/pages/production/report/analysis.html'
+                        path: 'pages/production/report/analysis.html'
                     }
                 ]
             },
@@ -253,7 +274,7 @@ const menuConfig = [
                 key: 'process',
                 title: '生产过程',
                 icon: 'cogs',
-                path: '/teaerp/pages/production/process/index.html'
+                path: 'pages/production/process/index.html'
             },
             {
                 key: 'collect',
@@ -264,45 +285,20 @@ const menuConfig = [
                         key: 'material-collect',
                         title: '物料采集',
                         icon: 'box',
-                        path: '/teaerp/pages/production/collect/material.html'
+                        path: 'pages/production/collect/material.html'
                     },
                     {
                         key: 'progress-collect',
                         title: '进度采集',
                         icon: 'tasks',
-                        path: '/teaerp/pages/production/collect/progress.html'
+                        path: 'pages/production/collect/progress.html'
                     },
                     {
                         key: 'energy-collect',
                         title: '能耗采集',
                         icon: 'bolt',
-                        path: '/teaerp/pages/production/collect/energy.html'
+                        path: 'pages/production/collect/energy.html'
                     }
-                ]
-            },
-            {
-                key: 'execute',
-                title: '生产执行',
-                icon: 'play',
-                path: '/teaerp/pages/production/execute/task.html'
-            },
-            {
-                key: 'progress',
-                title: '生产进度',
-                icon: 'chart-line',
-                children: [
-                    { key: 'progress-plan', title: '进度计划', icon: 'calendar-check', path: '/teaerp/pages/production/progress/plan.html' },
-                    { key: 'progress-monitor', title: '进度监控', icon: 'eye', path: '/teaerp/pages/production/progress/monitor.html' },
-                    { key: 'progress-report', title: '进度报告', icon: 'file-alt', path: '/teaerp/pages/production/progress/report.html' }
-                ]
-            },
-            {
-                key: 'mrp',
-                title: 'MRP运算',
-                icon: 'calculator',
-                children: [
-                    { key: 'mrp-execute', title: '运算执行', icon: 'play-circle', path: '/teaerp/pages/production/mrp/execute.html' },
-                    { key: 'mrp-monitor', title: '运算监控', icon: 'desktop', path: '/teaerp/pages/production/mrp/monitor.html' }
                 ]
             },
             {
@@ -314,37 +310,31 @@ const menuConfig = [
                         key: 'energy-analysis',
                         title: '能耗分析',
                         icon: 'bolt',
-                        path: '/teaerp/pages/production/analysis/energy.html'
+                        path: 'pages/production/analysis/energy.html'
                     },
                     {
                         key: 'cost-analysis',
                         title: '成本分析',
                         icon: 'dollar-sign',
-                        path: '/teaerp/pages/production/analysis/cost.html'
+                        path: 'pages/production/analysis/cost.html'
                     },
                     {
                         key: 'capacity-analysis',
                         title: '产能分析',
                         icon: 'industry',
-                        path: '/teaerp/pages/production/analysis/capacity.html'
+                        path: 'pages/production/analysis/capacity.html'
                     },
                     {
                         key: 'efficiency-analysis',
                         title: '效率分析',
                         icon: 'tachometer-alt',
-                        path: '/teaerp/pages/production/analysis/efficiency.html'
+                        path: 'pages/production/analysis/efficiency.html'
                     },
                     {
                         key: 'quality-analysis',
                         title: '质量分析',
                         icon: 'check-circle',
-                        path: '/teaerp/pages/production/analysis/quality.html'
-                    },
-                    {
-                        key: 'performance-analysis',
-                        title: '绩效分析',
-                        icon: 'chart-line',
-                        path: '/teaerp/pages/production/analysis/performance.html'
+                        path: 'pages/production/analysis/quality.html'
                     }
                 ]
             }
@@ -364,19 +354,19 @@ const menuConfig = [
                         key: 'account',
                         title: '科目设置',
                         icon: 'cog',
-                        path: '/teaerp/pages/finance/ledger/account.html'
+                        path: 'pages/finance/ledger/account.html'
                     },
                     {
                         key: 'voucher',
                         title: '凭证管理',
                         icon: 'file-invoice',
-                        path: '/teaerp/pages/finance/ledger/voucher.html'
+                        path: 'pages/finance/ledger/voucher.html'
                     },
                     {
                         key: 'book',
                         title: '账簿查询',
                         icon: 'book-open',
-                        path: '/teaerp/pages/finance/ledger/book.html'
+                        path: 'pages/finance/ledger/book.html'
                     }
                 ]
             },
@@ -388,17 +378,17 @@ const menuConfig = [
                     {
                         key: 'bill',
                         title: '应收单',
-                        path: '/teaerp/pages/finance/receivable/bill.html'
+                        path: 'pages/finance/receivable/bill.html'
                     },
                     {
                         key: 'receipt',
                         title: '收款单',
-                        path: '/teaerp/pages/finance/receivable/receipt.html'
+                        path: 'pages/finance/receivable/receipt.html'
                     },
                     {
                         key: 'aging',
                         title: '应收账龄',
-                        path: '/teaerp/pages/finance/receivable/aging.html'
+                        path: 'pages/finance/receivable/aging.html'
                     }
                 ]
             },
@@ -410,17 +400,17 @@ const menuConfig = [
                     {
                         key: 'bill',
                         title: '应付单',
-                        path: '/teaerp/pages/finance/payable/bill.html'
+                        path: 'pages/finance/payable/bill.html'
                     },
                     {
                         key: 'payment',
                         title: '付款单',
-                        path: '/teaerp/pages/finance/payable/payment.html'
+                        path: 'pages/finance/payable/payment.html'
                     },
                     {
                         key: 'aging',
                         title: '应付账龄',
-                        path: '/teaerp/pages/finance/payable/aging.html'
+                        path: 'pages/finance/payable/aging.html'
                     }
                 ]
             },
@@ -432,22 +422,17 @@ const menuConfig = [
                     {
                         key: 'cost-accounting',
                         title: '成本核算',
-                        path: '/teaerp/pages/finance/cost/cost-accounting.html'
+                        path: 'pages/finance/cost/cost-accounting.html'
                     },
                     {
                         key: 'cost-analysis',
                         title: '成本分析',
-                        path: '/teaerp/pages/finance/cost/cost-analysis.html'
+                        path: 'pages/finance/cost/cost-analysis.html'
                     },
                     {
                         key: 'cost-report',
                         title: '成本报表',
-                        path: '/teaerp/pages/finance/cost/cost-report.html'
-                    },
-                    {
-                        key: 'cost-adjustment',
-                        title: '成本调整',
-                        path: '/teaerp/pages/finance/cost/cost-adjustment.html'
+                        path: 'pages/finance/cost/cost-report.html'
                     }
                 ]
             },
@@ -459,12 +444,12 @@ const menuConfig = [
                     {
                         key: 'invoice-management',
                         title: '发票管理',
-                        path: '/teaerp/pages/finance/invoice/index.html'
+                        path: 'pages/finance/invoice/index.html'
                     },
                     {
                         key: 'invoice-statistics',
                         title: '发票统计',
-                        path: '/teaerp/pages/finance/invoice/statistics.html'
+                        path: 'pages/finance/invoice/statistics.html'
                     }
                 ]
             },
@@ -476,12 +461,12 @@ const menuConfig = [
                     {
                         key: 'expense-management',
                         title: '费用管理',
-                        path: '/teaerp/pages/finance/expense/index.html'
+                        path: 'pages/finance/expense/index.html'
                     },
                     {
                         key: 'expense-statistics',
                         title: '费用统计',
-                        path: '/teaerp/pages/finance/expense/statistics.html'
+                        path: 'pages/finance/expense/statistics.html'
                     }
                 ]
             },
@@ -489,7 +474,7 @@ const menuConfig = [
                 key: 'analysis',
                 title: '财务分析',
                 icon: 'chart-bar',
-                path: '/teaerp/pages/finance/analysis/index.html'
+                path: 'pages/finance/analysis/index.html'
             }
         ]
     },
@@ -502,61 +487,49 @@ const menuConfig = [
                 key: 'user',
                 title: '用户管理',
                 icon: 'user-cog',
-                path: '/teaerp/pages/system/user.html'
+                path: 'pages/system/user.html'
             },
             {
                 key: 'role',
                 title: '角色管理',
                 icon: 'users-cog',
-                path: '/teaerp/pages/system/role.html'
+                path: 'pages/system/role.html'
             },
             {
                 key: 'permission',
                 title: '权限管理',
                 icon: 'lock',
-                path: '/teaerp/pages/system/permission.html'
+                path: 'pages/system/permission.html'
             },
             {
                 key: 'log',
                 title: '日志管理',
                 icon: 'history',
-                path: '/teaerp/pages/system/log.html'
+                path: 'pages/system/log.html'
             },
             {
                 key: 'monitor',
                 title: '系统监控',
                 icon: 'desktop',
-                path: '/teaerp/pages/system/monitor.html'
+                path: 'pages/system/monitor.html'
             },
             {
                 key: 'config',
                 title: '系统配置',
                 icon: 'sliders-h',
-                path: '/teaerp/pages/system/config.html'
+                path: 'pages/system/config.html'
             },
             {
                 key: 'backup',
                 title: '系统备份',
                 icon: 'database',
-                path: '/teaerp/pages/system/backup.html'
+                path: 'pages/system/backup.html'
             },
             {
                 key: 'recovery',
                 title: '系统恢复',
                 icon: 'redo',
-                path: '/teaerp/pages/system/recovery.html'
-            },
-            {
-                key: 'upgrade',
-                title: '系统升级',
-                icon: 'arrow-up',
-                path: '/teaerp/pages/system/upgrade.html'
-            },
-            {
-                key: 'maintenance',
-                title: '系统维护',
-                icon: 'tools',
-                path: '/teaerp/pages/system/maintenance.html'
+                path: 'pages/system/recovery.html'
             }
         ]
     },
@@ -569,19 +542,63 @@ const menuConfig = [
                 key: 'target',
                 title: '计划制定',
                 icon: 'bullseye',
-                path: '/teaerp/pages/operation/plan/target/index.html'
+                path: 'pages/operation/plan/target/index.html'
             },
             {
                 key: 'adjust',
                 title: '计划调整',
                 icon: 'sliders-h',
-                path: '/teaerp/pages/operation/plan/adjust/index.html'
+                path: 'pages/operation/plan/adjust/index.html'
             },
             {
                 key: 'analysis',
                 title: '计划分析',
                 icon: 'chart-bar',
-                path: '/teaerp/pages/operation/plan/analysis/index.html'
+                path: 'pages/operation/plan/analysis/index.html'
+            }
+        ]
+    },
+    {
+        key: 'quality',
+        title: '质量管理',
+        icon: 'vial',
+        children: [
+            {
+                key: 'inspection',
+                title: '检验管理',
+                icon: 'microscope',
+                children: [
+                    {
+                        key: 'inspection-scheme',
+                        title: '检验方案',
+                        icon: 'clipboard-list',
+                        path: 'pages/quality/inspection/scheme.html'
+                    },
+                    {
+                        key: 'inbound-inspection',
+                        title: '入库检验',
+                        icon: 'clipboard-check',
+                        path: 'pages/quality/inspection/inbound.html'
+                    },
+                    {
+                        key: 'outbound-inspection',
+                        title: '出库检验',
+                        icon: 'tasks',
+                        path: 'pages/quality/inspection/outbound.html'
+                    }
+                ]
+            },
+            {
+                key: 'quality-standard',
+                title: '质量标准',
+                icon: 'ruler',
+                path: 'pages/quality/standard/index.html'
+            },
+            {
+                key: 'quality-report',
+                title: '质量报表',
+                icon: 'chart-bar',
+                path: 'pages/quality/report/index.html'
             }
         ]
     }
@@ -626,7 +643,7 @@ const Menu = {
                             </div>
                             ${this.renderSubMenu(item.children)}
                         ` : `
-                            <a href="${item.path}" class="menu-link">
+                            <a href="${processPath(item.path)}" class="menu-link">
                                 <i class="fas fa-${item.icon || 'circle'}"></i>
                                 <span>${item.title}</span>
                             </a>
@@ -654,42 +671,15 @@ const Menu = {
                 this.toggleSubMenu(menuItem);
             });
         });
-
-        // 菜单链接点击事件
-        document.querySelectorAll('.menu-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // 阻止默认行为
-                this.handleMenuClick(link);
-            });
-        });
     },
 
     // 切换模块展开状态
     toggleModule(menuModule) {
         const subMenu = menuModule.querySelector('.sub-menu');
         if (subMenu) {
-            const isExpanded = menuModule.classList.contains('expanded');
-            
-            // 如果当前模块包含激活的菜单项，则不允许折叠
-            const hasActiveItem = menuModule.querySelector('.menu-item.active');
-            if (hasActiveItem && isExpanded) {
-                return;
-            }
-            
-            // 收起其他模块
-            document.querySelectorAll('.menu-module').forEach(module => {
-                if (module !== menuModule && !module.querySelector('.menu-item.active')) {
-                    module.classList.remove('expanded');
-                    const moduleSubMenu = module.querySelector('.sub-menu');
-                    if (moduleSubMenu) {
-                        moduleSubMenu.style.display = 'none';
-                    }
-                }
-            });
-
-            // 切换当前模块
             menuModule.classList.toggle('expanded');
-            subMenu.style.display = isExpanded ? 'none' : 'block';
+            const isExpanded = menuModule.classList.contains('expanded');
+            subMenu.style.display = isExpanded ? 'block' : 'none';
         }
     },
 
@@ -697,113 +687,46 @@ const Menu = {
     toggleSubMenu(menuItem) {
         const subMenu = menuItem.querySelector('.sub-menu');
         if (subMenu) {
-            const isExpanded = menuItem.classList.contains('expanded');
-            
-            // 如果当前菜单项包含激活的子项，则不允许折叠
-            const hasActiveItem = menuItem.querySelector('.menu-item.active');
-            if (hasActiveItem && isExpanded) {
-                return;
-            }
-            
-            // 收起同级其他展开的菜单
-            const siblings = menuItem.parentElement.children;
-            Array.from(siblings).forEach(sibling => {
-                if (sibling !== menuItem && !sibling.querySelector('.menu-item.active')) {
-                    sibling.classList.remove('expanded');
-                    const siblingSubMenu = sibling.querySelector('.sub-menu');
-                    if (siblingSubMenu) {
-                        siblingSubMenu.style.display = 'none';
-                    }
-                }
-            });
-
-            // 切换当前菜单
             menuItem.classList.toggle('expanded');
-            subMenu.style.display = isExpanded ? 'none' : 'block';
+            const isExpanded = menuItem.classList.contains('expanded');
+            subMenu.style.display = isExpanded ? 'block' : 'none';
         }
-    },
-
-    // 处理菜单点击
-    handleMenuClick(menuLink) {
-        const href = menuLink.getAttribute('href');
-        if (href) {
-            // 获取当前域名和仓库名
-            const baseUrl = window.location.origin + '/teaerp';
-            // 移除开头的 /teaerp 以避免重复
-            const cleanHref = href.replace(/^\/teaerp/, '');
-            // 构建完整的URL
-            const fullUrl = baseUrl + cleanHref;
-            // 导航到新页面
-            window.location.href = fullUrl;
-        }
-
-        // 移除其他菜单项的激活状态
-        document.querySelectorAll('.menu-item').forEach(item => {
-            if (!menuLink.closest('.menu-module').contains(item)) {
-                item.classList.remove('active');
-            }
-        });
-
-        // 设置当前菜单激活状态
-        const menuItem = menuLink.closest('.menu-item');
-        menuItem.classList.add('active');
-
-        // 展开所有父级菜单
-        this.expandParentMenus(menuItem);
     },
 
     // 设置当前激活的菜单
     setActiveMenu() {
-        const path = window.location.pathname;
+        const currentPath = window.location.pathname;
+        const menuLinks = document.querySelectorAll('.menu-link');
         
-        // 移除所有激活状态
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.classList.remove('active');
-        });
-
-        // 查找并设置当前激活的菜单
-        const menuLink = document.querySelector(`.menu-link[href*="${path}"]`);
-        if (menuLink) {
-            const menuItem = menuLink.closest('.menu-item');
-            menuItem.classList.add('active');
-
-            // 展开所有父级菜单
-            this.expandParentMenus(menuItem);
-
-            // 收起其他一级菜单（不包含当前激活菜单的父级）
-            const currentModule = menuLink.closest('.menu-module');
-            document.querySelectorAll('.menu-module').forEach(module => {
-                if (module !== currentModule) {
-                    module.classList.remove('expanded');
-                    const moduleSubMenu = module.querySelector('.sub-menu');
-                    if (moduleSubMenu) {
-                        moduleSubMenu.style.display = 'none';
+        menuLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (currentPath.includes(href)) {
+                const menuItem = link.closest('.menu-item');
+                const menuModule = link.closest('.menu-module');
+                
+                // 激活当前菜单项
+                menuItem.classList.add('active');
+                
+                // 展开父级菜单
+                const parentSubMenu = menuItem.closest('.sub-menu');
+                if (parentSubMenu) {
+                    parentSubMenu.style.display = 'block';
+                    const parentMenuItem = parentSubMenu.closest('.menu-item');
+                    if (parentMenuItem) {
+                        parentMenuItem.classList.add('expanded');
                     }
                 }
-            });
-        }
-    },
-
-    // 展开父级菜单
-    expandParentMenus(menuItem) {
-        let parent = menuItem.parentElement;
-        while (parent) {
-            if (parent.classList.contains('sub-menu')) {
-                const parentItem = parent.closest('.menu-item');
-                if (parentItem) {
-                    parentItem.classList.add('expanded');
-                    parent.style.display = 'block';
+                
+                // 展开模块
+                if (menuModule) {
+                    menuModule.classList.add('expanded');
+                    const moduleSubMenu = menuModule.querySelector('.sub-menu');
+                    if (moduleSubMenu) {
+                        moduleSubMenu.style.display = 'block';
+                    }
                 }
-            } else if (parent.classList.contains('menu-module')) {
-                parent.classList.add('expanded');
-                const moduleSubMenu = parent.querySelector('.sub-menu');
-                if (moduleSubMenu) {
-                    moduleSubMenu.style.display = 'block';
-                }
-                break; // 找到最顶层模块后停止
             }
-            parent = parent.parentElement;
-        }
+        });
     }
 };
 

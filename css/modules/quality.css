@@ -1,0 +1,86 @@
+/* 搜索区域样式 */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.search-box .divider {
+    width: 1px;
+    height: 24px;
+    background-color: #e0e0e0;
+    margin: 0 8px;
+}
+
+/* 弹窗样式 */
+.standard-modal .modal-content {
+    width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.standard-modal .modal-header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.standard-modal .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.standard-modal .modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    z-index: 1;
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.standard-modal .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.standard-modal .form-group {
+    flex: 1;
+}
+
+.standard-modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.standard-modal .table-toolbar {
+    margin-bottom: 8px;
+}
+
+.standard-modal .table-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* 按钮样式 */
+.standard-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 16px;
+} 

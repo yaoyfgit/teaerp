@@ -15,58 +15,43 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            padding: 16px;
-            background: #f8f9fa;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            margin: 16px;
+            margin-bottom: 16px;
         }
         
         .overview-item {
-            background: #fff;
             border-radius: 4px;
             padding: 20px;
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #e8e8e8;
+            gap: 16px;
         }
         
-        .overview-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        .overview-item:nth-child(1) {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+        
+        .overview-item:nth-child(2) {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .overview-item:nth-child(3) {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+        
+        .overview-item:nth-child(4) {
+            background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%);
         }
         
         .overview-item i {
-            font-size: 24px;
-            margin-right: 16px;
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-        }
-        
-        .overview-item:nth-child(1) i {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .overview-item:nth-child(2) i {
-            background-color: #e8f5e9;
-            color: #43a047;
-        }
-        
-        .overview-item:nth-child(3) i {
-            background-color: #fff3e0;
-            color: #ef6c00;
-        }
-        
-        .overview-item:nth-child(4) i {
-            background-color: #f3e5f5;
-            color: #8e24aa;
+            font-size: 24px;
+            color: #fff;
         }
         
         .overview-item .info {
@@ -74,21 +59,20 @@
         }
         
         .overview-item h4 {
-            margin: 0;
             font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
+            color: #fff;
+            margin: 0 0 4px 0;
         }
         
         .overview-item .number {
             font-size: 24px;
             font-weight: bold;
-            color: #333;
+            color: #fff;
         }
         
         .overview-item .unit {
             font-size: 14px;
-            color: #666;
+            color: #fff;
             margin-left: 4px;
         }
 
@@ -584,6 +568,134 @@
             font-size: 14px;
             color: #1976d2;
         }
+
+        /* 状态标签样式 */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.4;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* 审批状态 */
+        .status-badge.pending {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-badge.approved {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+
+        .status-badge.rejected {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* 执行状态 */
+        .status-badge.not-started {
+            background-color: #f3f4f6;
+            color: #6b7280;
+            border: 1px solid #e5e7eb;
+        }
+
+        .status-badge.in-progress {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-badge.warning {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-badge.completed {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+
+        .status-badge.overdue {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* 调整表格列宽 */
+        .standard-table th:nth-child(9), /* 审批状态列 */
+        .standard-table th:nth-child(10) { /* 执行状态列 */
+            min-width: 100px;
+        }
+
+        .content {
+            padding: 16px 24px;
+            background: #f5f7fa;
+            min-height: calc(100vh - 60px);
+        }
+
+        .standard-card {
+            border-radius: 4px;
+        }
+
+        /* 分页样式优化 */
+        .pagination-container {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination button {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            color: #666;
+            font-size: 14px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            border-color: #8fd4d2;
+            color: #8fd4d2;
+        }
+
+        .pagination button.active {
+            background: #8fd4d2;
+            border-color: #8fd4d2;
+            color: #fff;
+        }
+
+        .pagination button:disabled {
+            background: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .pagination button i {
+            font-size: 12px;
+        }
+
+        .pagination .total {
+            margin-left: 16px;
+            color: #666;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -611,48 +723,43 @@
             </div>
 
             <div class="content">
-                <!-- 面包屑 -->
                 <div class="breadcrumb">
                     <i class="fas fa-home"></i>
                     <span>首页</span>
-                    <i class="fas fa-angle-right separator"></i>
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-angle-right"></i>
                     <span>经营计划</span>
-                    <i class="fas fa-angle-right separator"></i>
-                    <i class="fas fa-bullseye"></i>
+                    <i class="fas fa-angle-right"></i>
                     <span>计划制定</span>
                 </div>
 
-                <!-- 计划统计概览 -->
-                <div class="standard-card">
-                    <div class="overview-grid">
-                        <div class="overview-item">
-                            <i class="fas fa-clipboard-check"></i>
-                            <div class="info">
-                                <h4>已完成计划</h4>
-                                <div class="number">18<span class="unit">个</span></div>
-                            </div>
+                <!-- 统计卡片 -->
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info">
+                            <h4>已完成计划</h4>
+                            <div class="number">18<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-clock"></i>
-                            <div class="info">
-                                <h4>进行中计划</h4>
-                                <div class="number">25<span class="unit">个</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info">
+                            <h4>进行中计划</h4>
+                            <div class="number">25<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <div class="info">
-                                <h4>即将到期</h4>
-                                <div class="number">5<span class="unit">个</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div class="info">
+                            <h4>即将到期</h4>
+                            <div class="number">5<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-chart-line"></i>
-                            <div class="info">
-                                <h4>计划完成率</h4>
-                                <div class="number">85<span class="unit">%</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="info">
+                            <h4>计划完成率</h4>
+                            <div class="number">85<span class="unit">%</span></div>
                         </div>
                     </div>
                 </div>
@@ -677,8 +784,16 @@
                                     <option value="cost">成本计划</option>
                                 </select>
                                 <select class="standard-select">
-                                    <option value="">完成状态</option>
-                                    <option value="pending">进行中</option>
+                                    <option value="">审批状态</option>
+                                    <option value="pending">待审批</option>
+                                    <option value="approved">已批准</option>
+                                    <option value="rejected">已驳回</option>
+                                </select>
+                                <select class="standard-select">
+                                    <option value="">执行状态</option>
+                                    <option value="not-started">未开始</option>
+                                    <option value="in-progress">进行中</option>
+                                    <option value="warning">即将到期</option>
                                     <option value="completed">已完成</option>
                                     <option value="overdue">已逾期</option>
                                 </select>
@@ -716,6 +831,7 @@
                                     <th>开始日期</th>
                                     <th>结束日期</th>
                                     <th>审批状态</th>
+                                    <th>执行状态</th>
                                     <th width="120">操作</th>
                                 </tr>
                             </thead>
@@ -740,7 +856,8 @@
                                     </td>
                                     <td>2024-01-01</td>
                                     <td>2024-03-31</td>
-                                    <td><span class="status pending">待审批</span></td>
+                                    <td><span class="status-badge pending">待审批</span></td>
+                                    <td><span class="status-badge in-progress">进行中</span></td>
                                     <td>
                                         <div class="button-group">
                                             <button class="standard-button small" onclick="viewPlan('PL202403200001')">
@@ -765,7 +882,8 @@
                                     </td>
                                     <td>2024-01-01</td>
                                     <td>2024-03-31</td>
-                                    <td><span class="status approved">已批准</span></td>
+                                    <td><span class="status-badge approved">已批准</span></td>
+                                    <td><span class="status-badge in-progress">进行中</span></td>
                                     <td>
                                         <div class="button-group">
                                             <button class="standard-button small" onclick="viewPlan('PL202403200002')">
@@ -787,7 +905,8 @@
                                     </td>
                                     <td>2024-01-01</td>
                                     <td>2024-03-31</td>
-                                    <td><span class="status rejected">已驳回</span></td>
+                                    <td><span class="status-badge rejected">已驳回</span></td>
+                                    <td><span class="status-badge not-started">未开始</span></td>
                                     <td>
                                         <div class="button-group">
                                             <button class="standard-button small" onclick="viewPlan('PL202403200003')">
@@ -813,7 +932,8 @@
                                     </td>
                                     <td>2024-04-01</td>
                                     <td>2024-06-30</td>
-                                    <td><span class="status pending">未开始</span></td>
+                                    <td><span class="status-badge approved">已批准</span></td>
+                                    <td><span class="status-badge not-started">未开始</span></td>
                                     <td>
                                         <div class="button-group">
                                             <button class="standard-button small" onclick="viewPlan('PL202403200004')">
@@ -839,7 +959,8 @@
                                     </td>
                                     <td>2024-04-01</td>
                                     <td>2024-06-30</td>
-                                    <td><span class="status warning">即将到期</span></td>
+                                    <td><span class="status-badge approved">已批准</span></td>
+                                    <td><span class="status-badge warning">即将到期</span></td>
                                     <td>
                                         <div class="button-group">
                                             <button class="standard-button small" onclick="viewPlan('PL202403200005')">
@@ -853,7 +974,16 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="standard-pagination" id="pagination"></div>
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                <button disabled><i class="fas fa-chevron-left"></i></button>
+                                <button class="active">1</button>
+                                <button>2</button>
+                                <button>3</button>
+                                <button><i class="fas fa-chevron-right"></i></button>
+                                <span class="total">共 50 条</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

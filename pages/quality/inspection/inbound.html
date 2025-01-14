@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入库检验 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/menu.css">
+    <link rel="stylesheet" href="../../../css/modules/quality.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content">
+                <!-- 面包屑导航 -->
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-vial"></i>
+                    <span>质量管理</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>入库检验</span>
+                </div>
+
+                <!-- 统计卡片 -->
+                <div class="statistics-cards">
+                    <div class="statistics-card">
+                        <i class="fas fa-hourglass-half"></i>
+                        <div class="statistics-content">
+                            <div class="stat-title">待检验</div>
+                            <div class="stat-value">12<span class="unit">单</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-spinner"></i>
+                        <div class="statistics-content">
+                            <div class="stat-title">检验中</div>
+                            <div class="stat-value">5<span class="unit">单</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="statistics-content">
+                            <div class="stat-title">今日完成</div>
+                            <div class="stat-value">8<span class="unit">单</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-times-circle"></i>
+                        <div class="statistics-content">
+                            <div class="stat-title">不合格</div>
+                            <div class="stat-value">2<span class="unit">单</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具栏 -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <input type="text" class="standard-input search-input" placeholder="入库单号/商品">
+                        <select class="standard-select search-input">
+                            <option value="">全部仓库</option>
+                            <option value="1">原料仓</option>
+                            <option value="2">成品仓</option>
+                        </select>
+                        <select class="standard-select search-input">
+                            <option value="">全部状态</option>
+                            <option value="1">待检验</option>
+                            <option value="2">检验中</option>
+                            <option value="3">已完成</option>
+                        </select>
+                        <div class="date-range-group">
+                            <input type="date" class="standard-input" placeholder="开始日期">
+                            <span class="separator">至</span>
+                            <input type="date" class="standard-input" placeholder="结束日期">
+                        </div>
+                        <div class="search-actions">
+                            <button class="standard-button primary">
+                                <i class="fas fa-search"></i>
+                                查询
+                            </button>
+                            <div class="toolbar-divider"></div>
+                            <button class="standard-button" onclick="exportInspection()">
+                                <i class="fas fa-file-export"></i>
+                                导出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数据表格 -->
+                <div class="table-container">
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th>入库单号</th>
+                                <th>检验单号</th>
+                                <th>供应商</th>
+                                <th>入库仓库</th>
+                                <th>检验方案</th>
+                                <th>检验项目数</th>
+                                <th>创建时间</th>
+                                <th>状态</th>
+                                <th width="120">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inspectionTable">
+                            <!-- 示例数据 -->
+                            <tr>
+                                <td>IN202403010001</td>
+                                <td>QC202403010001</td>
+                                <td>供应商A</td>
+                                <td>原料仓</td>
+                                <td>原料入库检验方案A</td>
+                                <td>8</td>
+                                <td>2024-03-01</td>
+                                <td><span class="status-badge warning">待检验</span></td>
+                                <td>
+                                    <div class="operation-buttons">
+                                        <button class="standard-button small primary" onclick="startInspection('IN202403010001')">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>IN202403010002</td>
+                                <td>QC202403010002</td>
+                                <td>供应商B</td>
+                                <td>原料仓</td>
+                                <td>原料入库检验方案B</td>
+                                <td>6</td>
+                                <td>2024-03-01</td>
+                                <td><span class="status-badge primary">检验中</span></td>
+                                <td>
+                                    <div class="operation-buttons">
+                                        <button class="standard-button small" onclick="continueInspection('IN202403010002')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 分页器 -->
+                    <div class="pagination-toolbar">
+                        <div class="standard-pagination">
+                            <button disabled><i class="fas fa-chevron-left"></i></button>
+                            <button class="active">1</button>
+                            <button>2</button>
+                            <button>3</button>
+                            <button>4</button>
+                            <button>5</button>
+                            <span>...</span>
+                            <button>10</button>
+                            <button><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 检验操作弹窗 -->
+    <div class="standard-modal" id="inspectionModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-microscope"></i> 检验操作</h3>
+                <button class="close-btn" onclick="hideInspectionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <!-- 基本信息 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>入库单号</label>
+                            <input type="text" class="standard-input" name="inboundCode" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>检验单号</label>
+                            <input type="text" class="standard-input" name="inspectionCode" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>供应商</label>
+                            <input type="text" class="standard-input" name="supplier" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>入库仓库</label>
+                            <input type="text" class="standard-input" name="warehouse" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>检验方案<span class="required">*</span></label>
+                            <div class="input-group">
+                                <input type="text" class="standard-input" name="scheme" readonly>
+                                <button type="button" class="standard-button" onclick="showSchemeSelector()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 检验项目列表 -->
+                    <div class="form-group">
+                        <label>检验项目</label>
+                        <div class="table-container">
+                            <table class="standard-table">
+                                <thead>
+                                    <tr>
+                                        <th>项目名称</th>
+                                        <th>检验方法</th>
+                                        <th>标准值</th>
+                                        <th>检验结果</th>
+                                        <th>是否合格</th>
+                                        <th>备注</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inspectionItems">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 检验结论 -->
+                    <div class="form-group">
+                        <label>检验结论<span class="required">*</span></label>
+                        <select class="standard-select" name="conclusion" required>
+                            <option value="">请选择</option>
+                            <option value="1">合格</option>
+                            <option value="2">不合格</option>
+                            <option value="3">让步接收</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>备注说明</label>
+                        <textarea class="standard-textarea" name="remark" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="standard-button" onclick="hideInspectionModal()">取消</button>
+                <button class="standard-button" onclick="saveInspection(false)">保存</button>
+                <button class="standard-button primary" onclick="saveInspection(true)">提交</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../js/menu.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="../../../js/modules/quality/inspection/inbound.js"></script>
+</body>
+</html> 

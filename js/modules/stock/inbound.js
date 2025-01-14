@@ -148,14 +148,34 @@ function getInboundActions(inbound) {
             break;
         case 'pending':
             actions.push(`<button class="button-link" onclick="reviewInbound('${inbound.id}')">审核</button>`);
+            actions.push(`<button class="button-link" onclick="selectInspectionScheme('${inbound.id}')">选择检验方案</button>`);
             break;
         case 'completed':
             actions.push(`<button class="button-link" onclick="viewInboundDetail('${inbound.id}')">查看</button>`);
             actions.push(`<button class="button-link" onclick="printInbound('${inbound.id}')">打印</button>`);
+            actions.push(`<button class="button-link" onclick="viewInspectionResult('${inbound.id}')">查看检验结果</button>`);
             break;
     }
     
     return actions.join('');
+}
+
+// 选择检验方案
+function selectInspectionScheme(inboundId) {
+    // 打开检验方案选择弹窗
+    window.location.href = `../../pages/quality/inspection/scheme.html?inboundId=${inboundId}`;
+}
+
+// 查看检验结果
+function viewInspectionResult(inboundId) {
+    // 跳转到检验结果页面
+    window.location.href = `../../pages/quality/inspection/inbound.html?inboundId=${inboundId}`;
+}
+
+// 执行入库检验
+function inspectInbound(inboundId) {
+    // 跳转到入库检验页面
+    window.location.href = `../../pages/quality/inspection/inbound.html?inboundId=${inboundId}&mode=edit`;
 }
 
 // 获取来源类型名称
