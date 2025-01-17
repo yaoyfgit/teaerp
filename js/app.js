@@ -459,13 +459,21 @@ const menuConfig = [
                 icon: 'receipt',
                 children: [
                     {
-                        key: 'expense-management',
-                        title: '费用管理',
-                        path: 'pages/finance/expense/index.html'
+                        key: 'expense-apply',
+                        title: '费用申请',
+                        icon: 'file-invoice',
+                        path: 'pages/finance/expense/apply.html'
+                    },
+                    {
+                        key: 'expense-claim',
+                        title: '费用报销',
+                        icon: 'money-check-alt',
+                        path: 'pages/finance/expense/claim.html'
                     },
                     {
                         key: 'expense-statistics',
                         title: '费用统计',
+                        icon: 'chart-line',
                         path: 'pages/finance/expense/statistics.html'
                     }
                 ]

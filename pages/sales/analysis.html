@@ -46,94 +46,187 @@
                 </div>
 
                 <!-- 销售概览 -->
-                <div class="standard-card">
-                    <div class="overview-grid">
-                        <div class="overview-item">
-                            <i class="fas fa-shopping-cart"></i>
-                            <div class="info">
-                                <h4>销售总额</h4>
-                                <div class="number">1,580<span class="unit">万</span></div>
-                            </div>
+                <div class="overview-grid">
+                    <div class="overview-item" style="background: #fff8e1;">
+                        <i class="fas fa-shopping-cart" style="color: #ff9800;"></i>
+                        <div class="info">
+                            <h4>销售总额</h4>
+                            <div class="number">1,580<span class="unit">万</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-chart-line"></i>
-                            <div class="info">
-                                <h4>订单数量</h4>
-                                <div class="number">256<span class="unit">笔</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item" style="background: #e3f2fd;">
+                        <i class="fas fa-chart-line" style="color: #2196f3;"></i>
+                        <div class="info">
+                            <h4>订单数量</h4>
+                            <div class="number">256<span class="unit">笔</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-yen-sign"></i>
-                            <div class="info">
-                                <h4>平均客单价</h4>
-                                <div class="number">6.2<span class="unit">万</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item" style="background: #e8f5e9;">
+                        <i class="fas fa-yen-sign" style="color: #4caf50;"></i>
+                        <div class="info">
+                            <h4>平均客单价</h4>
+                            <div class="number">6.2<span class="unit">万</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-chart-pie"></i>
-                            <div class="info">
-                                <h4>退货率</h4>
-                                <div class="number">2.5<span class="unit">%</span></div>
-                            </div>
-                        </div>
-                        <div class="overview-item">
-                            <i class="fas fa-clock"></i>
-                            <div class="info">
-                                <h4>及时率</h4>
-                                <div class="number">98<span class="unit">%</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item" style="background: #ffebee;">
+                        <i class="fas fa-chart-pie" style="color: #f44336;"></i>
+                        <div class="info">
+                            <h4>退货率</h4>
+                            <div class="number">2.5<span class="unit">%</span></div>
                         </div>
                     </div>
                 </div>
 
+                <!-- 查询条件 -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <select class="form-control" style="width: 120px;">
+                            <option value="month">月度分析</option>
+                            <option value="quarter">季度分析</option>
+                            <option value="year">年度分析</option>
+                        </select>
+                        <div class="date-range">
+                            <input type="date" class="form-control" style="width: 150px;">
+                            <span style="color: #666;">至</span>
+                            <input type="date" class="form-control" style="width: 150px;">
+                        </div>
+                        <button class="btn-export">
+                            <i class="fas fa-file-export"></i>
+                            导出报表
+                        </button>
+                    </div>
+                </div>
+
                 <!-- 分析图表 -->
-                <div class="standard-card">
-                    <div class="standard-card-header">
-                        <h3><i class="fas fa-chart-line"></i> 销售分析</h3>
-                        <div class="action-bar">
-                            <div class="date-range">
-                                <select class="standard-select" onchange="updateCharts()">
-                                    <option value="month">月度分析</option>
-                                    <option value="quarter">季度分析</option>
-                                    <option value="year">年度分析</option>
-                                </select>
-                                <div class="date-range-group">
-                                    <input type="date" class="standard-input" onchange="updateCharts()">
-                                    <span class="date-separator">至</span>
-                                    <input type="date" class="standard-input" onchange="updateCharts()">
+                <div class="analysis-charts">
+                    <!-- 销售趋势分析 -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-line"></i>
+                                销售趋势分析
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    统计说明：展示每月销售总金额和同比增长率的变化趋势。
+                                    <br>- 销售金额：当月所有销售订单的总金额
+                                    <br>- 同比增长：与去年同期相比的增长百分比
+                                    <br>- 数据更新：每日更新一次
                                 </div>
                             </div>
-                            <button class="standard-button primary" onclick="exportReport()">
-                                <i class="fas fa-download"></i> 导出报表
-                            </button>
+                        </div>
+                        <div class="chart" id="trendChart" style="height: 300px;"></div>
+                    </div>
+
+                    <!-- 客户和商品分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">客户销售额占比</h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各客户的销售金额占比。
+                                        <br>- 计算方式：客户销售额/总销售额×100%
+                                        <br>- 统计范围：当前选择时间段内的所有销售订单
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="customerPieChart" style="height: 300px;"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">商品销售额占比</h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各类商品的销售金额占比。
+                                        <br>- 计算方式：商品销售额/总销售额×100%
+                                        <br>- 统计范围：当前选择时间段内的所有销售订单
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="productPieChart" style="height: 300px;"></div>
                         </div>
                     </div>
-                    <div class="standard-card-body">
-                        <div class="chart-grid">
-                            <div class="chart-card">
-                                <h3 class="chart-title">销售趋势分析</h3>
-                                <div class="chart" id="trendChart"></div>
-                            </div>
-                            <div class="chart-card">
-                                <h3 class="chart-title">客户销售额占比</h3>
-                                <div class="chart" id="customerPieChart"></div>
-                            </div>
-                            <div class="chart-card">
-                                <h3 class="chart-title">商品销售额占比</h3>
-                                <div class="chart" id="productPieChart"></div>
-                            </div>
-                            <div class="chart-card">
+
+                    <!-- 排名和区域分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
                                 <h3 class="chart-title">商品销售排名</h3>
-                                <div class="chart" id="productRankChart"></div>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示销售金额最高的前10名商品。
+                                        <br>- 排序依据：销售订单总金额
+                                        <br>- 统计范围：当前选择时间段内的所有销售订单
+                                        <br>- 更新频率：实时更新
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chart-card">
-                                <h3 class="chart-title">销售退货率分析</h3>
-                                <div class="chart" id="returnRateChart"></div>
+                            <div class="chart" id="productRankChart" style="height: 300px;"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    区域销售分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各销售区域的销售情况。
+                                        <br>- 统计维度：按省份/地区统计
+                                        <br>- 分析指标：销售额、订单数、平均客单价
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chart-card">
-                                <h3 class="chart-title">销售及时率分析</h3>
-                                <div class="chart" id="onTimeRateChart"></div>
+                            <div class="chart" id="regionChart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 退货分析和客单价分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-undo"></i>
+                                    销售退货率分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示每月销售退货率的变化趋势。
+                                        <br>- 计算方式：退货金额/销售总额×100%
+                                        <br>- 统计维度：按月统计
+                                        <br>- 数据来源：销售订单和退货单
+                                    </div>
+                                </div>
                             </div>
+                            <div class="chart" id="returnRateChart" style="height: 300px;"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-yen-sign"></i>
+                                    平均客单价分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示平均客单价的变化趋势。
+                                        <br>- 计算方式：销售总额/订单总数
+                                        <br>- 统计维度：按月统计
+                                        <br>- 分析目的：监控销售质量，优化产品定价
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="avgOrderChart" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -143,5 +236,421 @@
 
     <script src="../../js/app.js"></script>
     <script src="../../js/modules/sales/analysis.js"></script>
+
+    <style>
+    /* 图表区域样式 */
+    .analysis-charts {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .chart-card {
+        background: #fff;
+        border-radius: 4px;
+        padding: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .chart-title {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .chart-info {
+        position: relative;
+    }
+
+    .info-icon {
+        color: #8fd4d2;
+        cursor: pointer;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .info-icon:hover {
+        color: #6ab3b1;
+    }
+
+    .info-tooltip {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 300px;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid #e4e7ed;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: none;
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+        margin-top: 8px;
+    }
+
+    .info-tooltip::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        right: 10px;
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-left: 1px solid #e4e7ed;
+        border-top: 1px solid #e4e7ed;
+        transform: rotate(45deg);
+    }
+
+    .chart-info:hover .info-tooltip {
+        display: block;
+    }
+
+    .chart-row {
+        display: flex;
+        gap: 16px;
+    }
+
+    .chart-row .chart-card {
+        flex: 1;
+    }
+
+    /* 工具栏样式 */
+    .toolbar {
+        margin-bottom: 16px;
+        background: #f5f7fa;
+        border-radius: 4px;
+        padding: 12px 16px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .form-control {
+        height: 32px;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        padding: 0 12px;
+        font-size: 14px;
+        color: #606266;
+        transition: border-color 0.2s;
+    }
+
+    .form-control:hover {
+        border-color: #c0c4cc;
+    }
+
+    .form-control:focus {
+        border-color: #8fd4d2;
+        outline: none;
+    }
+
+    .date-range {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-export {
+        display: inline-flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 16px;
+        background-color: #8fd4d2;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+    }
+
+    .btn-export:hover {
+        background-color: #6ab3b1;
+    }
+
+    .btn-export i {
+        font-size: 14px;
+        margin-right: 4px;
+    }
+
+    /* 统计卡片样式 */
+    .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .overview-item {
+        padding: 20px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .overview-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .overview-item i {
+        font-size: 28px;
+    }
+
+    .overview-item .info {
+        flex: 1;
+    }
+
+    .overview-item h4 {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+
+    .overview-item .number {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .overview-item .unit {
+        font-size: 14px;
+        margin-left: 4px;
+        color: #666;
+    }
+    </style>
+
+    <script>
+    // 销售趋势分析图表
+    function initTrendChart() {
+        const chart = echarts.init(document.getElementById('trendChart'));
+        const option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            legend: {
+                data: ['销售金额', '同比增长']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['1月', '2月', '3月', '4月', '5月', '6月']
+            },
+            yAxis: [{
+                type: 'value',
+                name: '销售金额',
+                axisLabel: {
+                    formatter: '¥{value}万'
+                }
+            }, {
+                type: 'value',
+                name: '同比增长',
+                axisLabel: {
+                    formatter: '{value}%'
+                }
+            }],
+            series: [{
+                name: '销售金额',
+                type: 'bar',
+                data: [150, 230, 224, 218, 135, 147],
+                itemStyle: {
+                    color: '#8fd4d2'
+                }
+            }, {
+                name: '同比增长',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [15.2, 22.1, 18.9, 20.3, 12.5, 14.8],
+                itemStyle: {
+                    color: '#409EFF'
+                }
+            }]
+        };
+        chart.setOption(option);
+    }
+
+    // 区域销售分析图表
+    function initRegionChart() {
+        const chart = echarts.init(document.getElementById('regionChart'));
+        const option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['销售额', '订单数', '平均客单价']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['华东', '华南', '华北', '西南', '其他']
+            },
+            yAxis: [{
+                type: 'value',
+                name: '销售额/订单数',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            }, {
+                type: 'value',
+                name: '平均客单价',
+                axisLabel: {
+                    formatter: '¥{value}万'
+                }
+            }],
+            series: [{
+                name: '销售额',
+                type: 'bar',
+                data: [320, 280, 250, 220, 180],
+                itemStyle: {
+                    color: '#8fd4d2'
+                }
+            }, {
+                name: '订单数',
+                type: 'bar',
+                data: [52, 45, 40, 38, 30],
+                itemStyle: {
+                    color: '#91cc75'
+                }
+            }, {
+                name: '平均客单价',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [6.2, 6.1, 6.3, 5.8, 6.0],
+                itemStyle: {
+                    color: '#409EFF'
+                }
+            }]
+        };
+        chart.setOption(option);
+    }
+
+    // 平均客单价分析图表
+    function initAvgOrderChart() {
+        const chart = echarts.init(document.getElementById('avgOrderChart'));
+        const option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['平均客单价', '环比变化']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['1月', '2月', '3月', '4月', '5月', '6月']
+            },
+            yAxis: [{
+                type: 'value',
+                name: '客单价',
+                axisLabel: {
+                    formatter: '¥{value}万'
+                }
+            }, {
+                type: 'value',
+                name: '环比变化',
+                axisLabel: {
+                    formatter: '{value}%'
+                }
+            }],
+            series: [{
+                name: '平均客单价',
+                type: 'bar',
+                data: [5.8, 6.0, 6.2, 6.1, 6.3, 6.2],
+                itemStyle: {
+                    color: '#8fd4d2'
+                }
+            }, {
+                name: '环比变化',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [0, 3.4, 3.3, -1.6, 3.3, -1.6],
+                itemStyle: {
+                    color: '#409EFF'
+                }
+            }]
+        };
+        chart.setOption(option);
+    }
+
+    // 初始化所有图表
+    function initAllCharts() {
+        // 销售趋势分析
+        initTrendChart();
+        // 客户销售额占比
+        initCustomerPieChart();
+        // 商品销售额占比
+        initProductPieChart();
+        // 商品销售排名
+        initProductRankChart();
+        // 区域销售分析
+        initRegionChart();
+        // 退货率分析
+        initReturnRateChart();
+        // 平均客单价分析
+        initAvgOrderChart();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 初始化菜单
+        Menu.renderMenu();
+        // 初始化所有图表
+        initAllCharts();
+        
+        // 监听窗口大小变化，重新调整图表大小
+        window.addEventListener('resize', () => {
+            const charts = [
+                'trendChart', 'customerPieChart', 'productPieChart',
+                'productRankChart', 'regionChart', 'returnRateChart',
+                'avgOrderChart'
+            ].map(id => echarts.getInstanceByDom(document.getElementById(id)))
+             .filter(Boolean);
+            
+            charts.forEach(chart => chart.resize());
+        });
+    });
+    </script>
 </body>
 </html> 
