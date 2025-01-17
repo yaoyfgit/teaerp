@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="../../css/layout.css">
     <link rel="stylesheet" href="../../css/menu.css">
-    <link rel="stylesheet" href="../../css/modules/supplier.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -20,18 +20,18 @@
                 <div class="toggle-menu">
                     <i class="fas fa-bars"></i>
                 </div>
-            <div class="logo">TeaERP</div>
-            <nav class="top-nav">
-                <ul>
-                    <li><a href="../../index.html">首页</a></li>
-                    <li><a href="#">消息</a></li>
-                    <li><a href="#">帮助</a></li>
-                </ul>
-            </nav>
-            <div class="user-info">
-                <span class="username">管理员</span>
-                <a href="#" class="logout">退出</a>
-            </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
             </div>
 
             <div class="content">
@@ -39,425 +39,406 @@
                     <i class="fas fa-home"></i>
                     <span>首页</span>
                     <i class="fas fa-angle-right separator"></i>
-                    <i class="fas fa-truck"></i>
                     <span>供应商管理</span>
                     <i class="fas fa-angle-right separator"></i>
-                    <i class="fas fa-chart-line"></i>
                     <span>供应商分析</span>
                 </div>
 
-                <!-- 统计卡片 -->
-                <div class="stats-cards">
-                    <div class="stat-card warning">
+                <!-- 供应商概览 -->
+                <div class="overview-grid">
+                    <div class="overview-item" style="background: #fff8e1;">
+                        <i class="fas fa-truck" style="color: #ff9800;"></i>
                         <div class="info">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <div class="label">待评估</div>
-                            <div class="value">15<span>家</span></div>
-                        </div>
-                            </div>
-                    <div class="stat-card danger">
-                        <div class="info">
-                            <i class="fas fa-times-circle"></i>
-                            <div class="label">不合格</div>
-                            <div class="value">3<span>家</span></div>
+                            <h4>供应商总数</h4>
+                            <div class="number">128<span class="unit">家</span></div>
                         </div>
                     </div>
-                    <div class="stat-card info">
+                    <div class="overview-item" style="background: #e3f2fd;">
+                        <i class="fas fa-shopping-cart" style="color: #2196f3;"></i>
                         <div class="info">
-                            <i class="fas fa-handshake"></i>
-                            <div class="label">合作中</div>
-                            <div class="value">28<span>家</span></div>
+                            <h4>采购总额</h4>
+                            <div class="number">980<span class="unit">万</span></div>
+                        </div>
+                    </div>
+                    <div class="overview-item" style="background: #e8f5e9;">
+                        <i class="fas fa-box" style="color: #4caf50;"></i>
+                        <div class="info">
+                            <h4>采购品类</h4>
+                            <div class="number">35<span class="unit">种</span></div>
+                        </div>
+                    </div>
+                    <div class="overview-item" style="background: #ffebee;">
+                        <i class="fas fa-undo" style="color: #f44336;"></i>
+                        <div class="info">
+                            <h4>退货率</h4>
+                            <div class="number">1.8<span class="unit">%</span></div>
+                        </div>
+                    </div>
                 </div>
-                    </div>
-                    <div class="stat-card success">
-                        <div class="info">
-                            <i class="fas fa-star"></i>
-                            <div class="label">优质供应商</div>
-                            <div class="value">12<span>家</span></div>
-                    </div>
+
+                <!-- 查询条件 -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <select class="form-control" style="width: 120px;">
+                            <option value="month">月度分析</option>
+                            <option value="quarter">季度分析</option>
+                            <option value="year">年度分析</option>
+                        </select>
+                        <div class="date-range">
+                            <input type="date" class="form-control" style="width: 150px;">
+                            <span style="color: #666;">至</span>
+                            <input type="date" class="form-control" style="width: 150px;">
+                        </div>
+                        <button class="btn-export">
+                            <i class="fas fa-file-export"></i>
+                            导出报表
+                        </button>
                     </div>
                 </div>
 
                 <!-- 分析图表 -->
-                <div class="card standard-card">
-                    <div class="toolbar">
-                        <div class="search-area">
-                            <div class="search-bar">
-                                <div class="search-row">
-                                    <select class="form-control search-input">
-                                        <option value="">供应商类型</option>
-                                        <option value="manufacturer">生产商</option>
-                                        <option value="distributor">经销商</option>
-                                        <option value="service">服务商</option>
-                                    </select>
-                                    <select class="form-control search-input">
-                                        <option value="">供应商等级</option>
-                                        <option value="A">A级</option>
-                                        <option value="B">B级</option>
-                                        <option value="C">C级</option>
-                                        <option value="D">D级</option>
-                                    </select>
-                                    <select class="form-control search-input">
-                                        <option value="">统计周期</option>
-                                        <option value="month">本月</option>
-                                        <option value="quarter">本季度</option>
-                                        <option value="year">本年度</option>
-                                    </select>
+                <div class="analysis-charts">
+                    <!-- 采购趋势分析 -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-line"></i>
+                                采购趋势分析
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    统计说明：展示每月采购总金额和同比增长率的变化趋势。
+                                    <br>- 采购金额：当月所有采购订单的总金额
+                                    <br>- 同比增长：与去年同期相比的增长百分比
+                                    <br>- 数据更新：每日更新一次
                                 </div>
                             </div>
-                            <div class="button-group">
-                                <div class="search-buttons">
-                                    <button class="btn btn-primary">
-                                        <i class="fas fa-search"></i> 查询
-                                    </button>
-                                    <button class="btn btn-secondary">
-                                        <i class="fas fa-redo"></i> 重置
-                                    </button>
-                                </div>
-                                <div class="divider"></div>
-                                <div class="action-buttons">
-                                    <button class="btn btn-secondary" onclick="exportAnalysis()">
-                                        <i class="fas fa-file-export"></i> 导出报告
-                                    </button>
+                        </div>
+                        <div class="chart" id="trendChart" style="height: 300px;"></div>
+                    </div>
+
+                    <!-- 供应商和物料分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">供应商采购额占比</h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各供应商的采购金额占比。
+                                        <br>- 计算方式：供应商采购额/总采购额×100%
+                                        <br>- 统计范围：当前选择时间段内的所有采购订单
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
                                 </div>
                             </div>
+                            <div class="chart" id="supplierPieChart" style="height: 300px;"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">物料分类采购占比</h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各类物料的采购金额占比。
+                                        <br>- 计算方式：物料采购额/总采购额×100%
+                                        <br>- 统计范围：当前选择时间段内的所有采购订单
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="materialPieChart" style="height: 300px;"></div>
                         </div>
                     </div>
 
-                    <div class="chart-container">
-                        <div class="chart-row">
-                            <div class="chart-item">
-                                <h3>供应商类型分布</h3>
-                                <div id="supplierTypeChart" style="height: 300px;"></div>
+                    <!-- 排名和物料分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">供应商采购排名</h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示采购金额最高的前10名供应商。
+                                        <br>- 排序依据：采购订单总金额
+                                        <br>- 统计范围：当前选择时间段内的所有采购订单
+                                        <br>- 更新频率：实时更新
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chart-item">
-                                <h3>供应商等级分布</h3>
-                                <div id="supplierLevelChart" style="height: 300px;"></div>
-                            </div>
+                            <div class="chart" id="supplierRankChart" style="height: 300px;"></div>
                         </div>
-                        <div class="chart-row">
-                            <div class="chart-item">
-                                <h3>采购金额趋势</h3>
-                                <div id="purchaseTrendChart" style="height: 300px;"></div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-box"></i>
+                                    物料分类供货分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示各物料分类的供货情况。
+                                        <br>- 统计维度：按物料大类统计
+                                        <br>- 分析指标：采购额、订单数、平均单价
+                                        <br>- 数据更新：每日更新一次
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chart-item">
-                                <h3>供应商评分分布</h3>
-                                <div id="supplierScoreChart" style="height: 300px;"></div>
+                            <div class="chart" id="materialAnalysisChart" style="height: 300px;"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="chart-row">
-                            <div class="chart-item">
-                                <h3>供应商地区分布</h3>
-                                <div id="supplierRegionChart" style="height: 300px;"></div>
-                    </div>
-                            <div class="chart-item">
-                                <h3>供应商合作年限分布</h3>
-                                <div id="supplierYearChart" style="height: 300px;"></div>
-                    </div>
-                </div>
+
+                    <!-- 退货分析和交期分析 -->
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-undo"></i>
+                                    退货率分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示每月采购退货率的变化趋势。
+                                        <br>- 计算方式：退货金额/采购总额×100%
+                                        <br>- 统计维度：按月统计
+                                        <br>- 数据来源：采购订单和退货单
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="returnRateChart" style="height: 300px;"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-clock"></i>
+                                    交期准时率分析
+                                </h3>
+                                <div class="chart-info">
+                                    <i class="fas fa-question-circle info-icon"></i>
+                                    <div class="info-tooltip">
+                                        统计说明：展示供应商交期准时率的变化趋势。
+                                        <br>- 计算方式：准时交付订单数/总订单数×100%
+                                        <br>- 统计维度：按月统计
+                                        <br>- 分析目的：监控供应商履约情况
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart" id="deliveryRateChart" style="height: 300px;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <style>
-        /* 统计卡片样式 */
-        .stats-cards {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-            flex-wrap: nowrap;
-        }
-        
-        .stat-card {
-            flex: 1;
-            padding: 16px;
-            border-radius: 4px;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        
-        .stat-card .info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .stat-card i {
-            font-size: 24px;
-        }
-        
-        .stat-card .label {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .stat-card .value {
-            font-size: 24px;
-            font-weight: bold;
-            margin-left: auto;
-        }
-        
-        .stat-card .value span {
-            font-size: 14px;
-            margin-left: 4px;
-            color: #666;
-        }
-        
-        .stat-card.warning {
-            border-left: 4px solid #ff9800;
-            background: #fff8e1;
-        }
-        
-        .stat-card.warning i,
-        .stat-card.warning .value {
-            color: #ff9800;
-        }
-        
-        .stat-card.danger {
-            border-left: 4px solid #f44336;
-            background: #ffebee;
-        }
-        
-        .stat-card.danger i,
-        .stat-card.danger .value {
-            color: #f44336;
-        }
-        
-        .stat-card.info {
-            border-left: 4px solid #2196f3;
-            background: #e3f2fd;
-        }
-        
-        .stat-card.info i,
-        .stat-card.info .value {
-            color: #2196f3;
-        }
-        
-        .stat-card.success {
-            border-left: 4px solid #4caf50;
-            background: #e8f5e9;
-        }
-        
-        .stat-card.success i,
-        .stat-card.success .value {
-            color: #4caf50;
-        }
-        
-        /* 搜索区域样式 */
-        .search-area {
-            padding: 16px;
-            background: #fff;
-            border-radius: 4px;
-        }
-        
-        .search-bar {
-            margin-bottom: 16px;
-        }
-        
-        .search-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        
-        .search-input {
-            height: 32px;
-            padding: 4px 8px;
-            font-size: 14px;
-            width: 180px;
-        }
-        
-        .button-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .search-buttons,
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .divider {
-            width: 1px;
-            height: 24px;
-            background: #eee;
-            margin: 0 8px;
-        }
-        
-        /* 图表区域样式 */
-        .chart-container {
-            padding: 16px;
-        }
-        
-        .chart-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .chart-item {
-            flex: 1;
-            background: #fff;
-            border-radius: 4px;
-            padding: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .chart-item h3 {
-            margin: 0 0 16px 0;
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
-
     <script src="../../js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            Menu.renderMenu();
-            initMenuToggle();
-            initCharts();
-        });
+    <script src="../../js/modules/supplier/analysis.js"></script>
 
-        function initCharts() {
-            // 供应商类型分布
-            const typeChart = echarts.init(document.getElementById('supplierTypeChart'));
-            typeChart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b}: {c} ({d}%)'
-                },
-                series: [{
-                    type: 'pie',
-                    radius: '70%',
-                    data: [
-                        { value: 20, name: '生产商' },
-                        { value: 15, name: '经销商' },
-                        { value: 8, name: '服务商' }
-                    ]
-                }]
-            });
+    <style>
+    /* 图表区域样式 */
+    .analysis-charts {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
 
-            // 供应商等级分布
-            const levelChart = echarts.init(document.getElementById('supplierLevelChart'));
-            levelChart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b}: {c} ({d}%)'
-                },
-                series: [{
-                    type: 'pie',
-                    radius: '70%',
-                    data: [
-                        { value: 12, name: 'A级' },
-                        { value: 18, name: 'B级' },
-                        { value: 10, name: 'C级' },
-                        { value: 3, name: 'D级' }
-                    ]
-                }]
-            });
+    .chart-card {
+        background: #fff;
+        border-radius: 4px;
+        padding: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-            // 采购金额趋势
-            const trendChart = echarts.init(document.getElementById('purchaseTrendChart'));
-            trendChart.setOption({
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: [150, 230, 224, 218, 135, 147],
-                    type: 'line'
-                }]
-            });
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
 
-            // 供应商评分分布
-            const scoreChart = echarts.init(document.getElementById('supplierScoreChart'));
-            scoreChart.setOption({
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['质量', '价格', '交付', '服务', '创新']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: [85, 78, 92, 88, 75],
-                    type: 'bar'
-                }]
-            });
+    .chart-title {
+        margin: 0;
+        font-size: 16px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-            // 供应商地区分布
-            const regionChart = echarts.init(document.getElementById('supplierRegionChart'));
-            regionChart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{b}: {c} ({d}%)'
-                },
-                series: [{
-                    type: 'pie',
-                    radius: '70%',
-                    data: [
-                        { value: 15, name: '华东' },
-                        { value: 12, name: '华南' },
-                        { value: 8, name: '华北' },
-                        { value: 5, name: '西南' },
-                        { value: 3, name: '其他' }
-                    ]
-                }]
-            });
+    .chart-info {
+        position: relative;
+    }
 
-            // 供应商合作年限分布
-            const yearChart = echarts.init(document.getElementById('supplierYearChart'));
-            yearChart.setOption({
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['1年内', '1-3年', '3-5年', '5年以上']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: [10, 15, 12, 6],
-                    type: 'bar'
-                }]
-            });
+    .info-icon {
+        color: #8fd4d2;
+        cursor: pointer;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
 
-            // 监听窗口大小变化，调整图表大小
-            window.addEventListener('resize', () => {
-                typeChart.resize();
-                levelChart.resize();
-                trendChart.resize();
-                scoreChart.resize();
-                regionChart.resize();
-                yearChart.resize();
-            });
-        }
+    .info-icon:hover {
+        color: #6ab3b1;
+    }
 
-        function exportAnalysis() {
-            alert('导出报告功能开发中...');
-        }
-    </script>
+    .info-tooltip {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 300px;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid #e4e7ed;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: none;
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+        margin-top: 8px;
+    }
+
+    .info-tooltip::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        right: 10px;
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-left: 1px solid #e4e7ed;
+        border-top: 1px solid #e4e7ed;
+        transform: rotate(45deg);
+    }
+
+    .chart-info:hover .info-tooltip {
+        display: block;
+    }
+
+    .chart-row {
+        display: flex;
+        gap: 16px;
+    }
+
+    .chart-row .chart-card {
+        flex: 1;
+    }
+
+    /* 工具栏样式 */
+    .toolbar {
+        margin-bottom: 16px;
+        background: #f5f7fa;
+        border-radius: 4px;
+        padding: 12px 16px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .form-control {
+        height: 32px;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        padding: 0 12px;
+        font-size: 14px;
+        color: #606266;
+        transition: border-color 0.2s;
+    }
+
+    .form-control:hover {
+        border-color: #c0c4cc;
+    }
+
+    .form-control:focus {
+        border-color: #8fd4d2;
+        outline: none;
+    }
+
+    .date-range {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-export {
+        display: inline-flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 16px;
+        background-color: #8fd4d2;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+    }
+
+    .btn-export:hover {
+        background-color: #6ab3b1;
+    }
+
+    .btn-export i {
+        font-size: 14px;
+        margin-right: 4px;
+    }
+
+    /* 统计卡片样式 */
+    .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .overview-item {
+        padding: 20px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .overview-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .overview-item i {
+        font-size: 28px;
+    }
+
+    .overview-item .info {
+        flex: 1;
+    }
+
+    .overview-item h4 {
+        margin: 0;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+
+    .overview-item .number {
+        font-size: 28px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .overview-item .unit {
+        font-size: 14px;
+        margin-left: 4px;
+        color: #666;
+    }
+    </style>
 </body>
 </html> 
