@@ -49,19 +49,19 @@
                 <div class="standard-card stat-card">
                     <div class="card-body">
                         <div class="stat-icon">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-tasks"></i>
                         </div>
                         <div class="stat-info">
-                            <div class="stat-label">产能利用率</div>
-                            <div class="stat-value">85.6<span class="stat-unit">%</span></div>
+                            <div class="stat-label">工单完成率</div>
+                            <div class="stat-value">92.3<span class="stat-unit">%</span></div>
                         </div>
                     </div>
-                            </div>
+                </div>
                 <div class="standard-card stat-card success">
                     <div class="card-body">
                         <div class="stat-icon">
                             <i class="fas fa-check-double"></i>
-                            </div>
+                        </div>
                         <div class="stat-info">
                             <div class="stat-label">计划达成率</div>
                             <div class="stat-value">92.3<span class="stat-unit">%</span></div>
@@ -72,7 +72,7 @@
                     <div class="card-body">
                         <div class="stat-icon">
                             <i class="fas fa-exclamation-triangle"></i>
-                            </div>
+                        </div>
                         <div class="stat-info">
                             <div class="stat-label">不良品率</div>
                             <div class="stat-value">3.2<span class="stat-unit">%</span></div>
@@ -82,15 +82,15 @@
                 <div class="standard-card stat-card info">
                     <div class="card-body">
                         <div class="stat-icon">
-                            <i class="fas fa-tachometer-alt"></i>
+                            <i class="fas fa-undo"></i>
                         </div>
                         <div class="stat-info">
-                            <div class="stat-label">设备稼动率</div>
-                            <div class="stat-value">88.9<span class="stat-unit">%</span></div>
+                            <div class="stat-label">退料率</div>
+                            <div class="stat-value">1.8<span class="stat-unit">%</span></div>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </div>
 
             <!-- 主要内容卡片 -->
                 <div class="standard-card">
@@ -99,35 +99,35 @@
                 </div>
                 <div class="card-body">
                     <!-- 查询区域 -->
-                    <div class="standard-toolbar">
-                        <div class="toolbar-left">
-                            <div class="toolbar-group">
-                                <select class="standard-select">
-                                    <option value="month">本月</option>
-                                    <option value="quarter">本季度</option>
-                                    <option value="year">本年度</option>
-                                    <option value="custom">自定义</option>
-                                </select>
-                                <input type="date" class="standard-input" value="2024-01-01">
-                                <span class="date-separator">至</span>
-                                <input type="date" class="standard-input" value="2024-01-31">
-                                <select class="standard-select">
-                                    <option value="">全部工序</option>
-                                    <option value="1">炒制</option>
-                                    <option value="2">揉捻</option>
-                                    <option value="3">烘干</option>
-                                </select>
-                                <button class="standard-button" onclick="handleSearch()">
-                                    <i class="fas fa-search"></i> 查询
-                                </button>
-                            </div>
-                            <div class="toolbar-divider"></div>
-                            <div class="toolbar-group">
-                                <button class="standard-button" onclick="handleExport()">
-                                    <i class="fas fa-file-excel"></i> 导出
-                                </button>
-                            </div>
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <select class="form-control">
+                                <option value="month">本月</option>
+                                <option value="quarter">本季度</option>
+                                <option value="year">本年度</option>
+                                <option value="custom">自定义</option>
+                            </select>
+                            <input type="date" class="form-control" value="2024-01-01">
+                            <span class="date-separator">至</span>
+                            <input type="date" class="form-control" value="2024-01-31">
+                            <select class="form-control">
+                                <option value="">全部工序</option>
+                                <option value="1">窨花</option>
+                                <option value="2">压花</option>
+                                <option value="3">提花</option>
+                                <option value="4">拼配</option>
+                                <option value="5">分装</option>
+                                <option value="6">拆卸</option>
+                            </select>
+                            <button class="btn-primary" onclick="handleSearch()">
+                                <i class="fas fa-search"></i>
+                                查询
+                            </button>
                         </div>
+                        <button class="btn-export" onclick="handleExport()">
+                            <i class="fas fa-file-excel"></i>
+                            导出报表
+                        </button>
                     </div>
 
                     <!-- 图表区域 -->
@@ -135,37 +135,79 @@
                         <div class="chart-row">
                             <div class="chart-item">
                                 <div class="chart-header">
-                                    <h4>产能利用率趋势</h4>
+                                    <h3 class="chart-title">
+                                        <i class="fas fa-tasks"></i>
+                                        工单完成情况
+                                    </h3>
+                                    <div class="chart-info">
+                                        <i class="fas fa-question-circle info-icon"></i>
+                                        <div class="info-tooltip">
+                                            统计说明：展示各工序的工单完成情况。
+                                            <br>- 工单完成率 = 已完成工单数 ÷ 总工单数 × 100%
+                                            <br>- 计划达成率 = 实际产量 ÷ 计划产量 × 100%
+                                            <br>- 统计维度：按工序统计
+                                            <br>- 数据更新：每日更新一次
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="chart-content" id="capacityChart">
-                                    <!-- 图表将通过JS渲染 -->
-                                </div>
+                                <div class="chart-content" id="workOrderChart"></div>
                             </div>
                             <div class="chart-item">
                                 <div class="chart-header">
-                                    <h4>计划达成率分析</h4>
+                                    <h3 class="chart-title">
+                                        <i class="fas fa-clock"></i>
+                                        工序耗时分析
+                                    </h3>
+                                    <div class="chart-info">
+                                        <i class="fas fa-question-circle info-icon"></i>
+                                        <div class="info-tooltip">
+                                            统计说明：展示各工序的平均耗时和标准耗时对比。
+                                            <br>- 平均耗时：实际工序耗时的平均值
+                                            <br>- 标准耗时：工艺要求的标准工序用时
+                                            <br>- 统计维度：按工序统计
+                                            <br>- 数据更新：每日更新一次
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="chart-content" id="planningChart">
-                                    <!-- 图表将通过JS渲染 -->
-                                </div>
+                                <div class="chart-content" id="processingTimeChart"></div>
                             </div>
                         </div>
                         <div class="chart-row">
                             <div class="chart-item">
                                 <div class="chart-header">
-                                    <h4>不良品分布</h4>
+                                    <h3 class="chart-title">
+                                        <i class="fas fa-undo"></i>
+                                        退料原因分析
+                                    </h3>
+                                    <div class="chart-info">
+                                        <i class="fas fa-question-circle info-icon"></i>
+                                        <div class="info-tooltip">
+                                            统计说明：展示生产过程中退料的主要原因分布。
+                                            <br>- 退料率 = 退料数量 ÷ 领料数量 × 100%
+                                            <br>- 统计范围：所有已确认的退料记录
+                                            <br>- 数据更新：实时更新
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="chart-content" id="defectChart">
-                                    <!-- 图表将通过JS渲染 -->
-                                </div>
+                                <div class="chart-content" id="materialReturnChart"></div>
                             </div>
                             <div class="chart-item">
                                 <div class="chart-header">
-                                    <h4>设备稼动率分析</h4>
+                                    <h3 class="chart-title">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        不良品分布
+                                    </h3>
+                                    <div class="chart-info">
+                                        <i class="fas fa-question-circle info-icon"></i>
+                                        <div class="info-tooltip">
+                                            统计说明：展示生产过程中不良品的原因分布。
+                                            <br>- 不良品率 = 不良品数量 ÷ 生产总数量 × 100%
+                                            <br>- 统计范围：所有已确认的不良品记录
+                                            <br>- 数据更新：实时更新
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="chart-content" id="equipmentChart">
-                                    <!-- 图表将通过JS渲染 -->
-                                </div>
+                                <div class="chart-content" id="defectChart"></div>
                             </div>
                         </div>
                     </div>
@@ -179,10 +221,10 @@
                             <thead>
                                 <tr>
                                     <th>工序</th>
-                                    <th>产能利用率</th>
+                                    <th>工单完成率</th>
                                     <th>计划达成率</th>
                                     <th>不良品率</th>
-                                    <th>设备稼动率</th>
+                                    <th>退料率</th>
                                     <th>平均工时</th>
                                     <th>工单数</th>
                                     <th width="120">操作</th>
@@ -190,52 +232,103 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>炒制</td>
-                                    <td>87.5%</td>
+                                    <td>窨花</td>
+                                    <td>93.5%</td>
                                     <td>93.2%</td>
                                     <td>2.8%</td>
-                                    <td>90.1%</td>
+                                    <td>1.5%</td>
                                     <td>6.5h</td>
                                     <td>15</td>
                                     <td>
-                                        <button class="standard-button" title="查看详情" onclick="handleView('炒制')">
+                                        <button class="standard-button" title="查看详情" onclick="handleView('窨花')">
                                             <i class="fas fa-chart-bar"></i>
                                         </button>
-                                        <button class="standard-button" title="导出" onclick="handleExportItem('炒制')">
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('窨花')">
                                             <i class="fas fa-download"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>揉捻</td>
-                                    <td>85.2%</td>
+                                    <td>压花</td>
+                                    <td>91.8%</td>
                                     <td>91.8%</td>
                                     <td>3.5%</td>
-                                    <td>88.3%</td>
+                                    <td>2.1%</td>
                                     <td>7.2h</td>
                                     <td>12</td>
                                     <td>
-                                        <button class="standard-button" title="查看详情" onclick="handleView('揉捻')">
+                                        <button class="standard-button" title="查看详情" onclick="handleView('压花')">
                                             <i class="fas fa-chart-bar"></i>
                                         </button>
-                                        <button class="standard-button" title="导出" onclick="handleExportItem('揉捻')">
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('压花')">
                                             <i class="fas fa-download"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>烘干</td>
-                                    <td>84.1%</td>
+                                    <td>提花</td>
+                                    <td>91.6%</td>
                                     <td>91.9%</td>
                                     <td>3.3%</td>
-                                    <td>88.4%</td>
+                                    <td>1.8%</td>
                                     <td>6.8h</td>
                                     <td>14</td>
                                     <td>
-                                        <button class="standard-button" title="查看详情" onclick="handleView('烘干')">
+                                        <button class="standard-button" title="查看详情" onclick="handleView('提花')">
                                             <i class="fas fa-chart-bar"></i>
                                         </button>
-                                        <button class="standard-button" title="导出" onclick="handleExportItem('烘干')">
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('提花')">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>拼配</td>
+                                    <td>92.5%</td>
+                                    <td>92.1%</td>
+                                    <td>3.0%</td>
+                                    <td>1.6%</td>
+                                    <td>5.8h</td>
+                                    <td>18</td>
+                                    <td>
+                                        <button class="standard-button" title="查看详情" onclick="handleView('拼配')">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </button>
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('拼配')">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>分装</td>
+                                    <td>94.2%</td>
+                                    <td>93.8%</td>
+                                    <td>2.5%</td>
+                                    <td>1.2%</td>
+                                    <td>4.5h</td>
+                                    <td>22</td>
+                                    <td>
+                                        <button class="standard-button" title="查看详情" onclick="handleView('分装')">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </button>
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('分装')">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>拆卸</td>
+                                    <td>93.8%</td>
+                                    <td>93.5%</td>
+                                    <td>2.6%</td>
+                                    <td>1.4%</td>
+                                    <td>5.2h</td>
+                                    <td>20</td>
+                                    <td>
+                                        <button class="standard-button" title="查看详情" onclick="handleView('拆卸')">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </button>
+                                        <button class="standard-button" title="导出" onclick="handleExportItem('拆卸')">
                                             <i class="fas fa-download"></i>
                                         </button>
                                     </td>
@@ -369,102 +462,135 @@
 
         // 初始化主页面图表
         function initCharts() {
-            // 产能利用率趋势图
-            const capacityChart = echarts.init(document.getElementById('capacityChart'));
-            capacityChart.setOption({
-                title: { text: '' },
+            // 工单完成情况
+            const workOrderChart = echarts.init(document.getElementById('workOrderChart'));
+            workOrderChart.setOption({
                 tooltip: { trigger: 'axis' },
-                legend: { data: ['实际产能', '标准产能'] },
+                legend: { data: ['工单完成率', '计划达成率'] },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
                 xAxis: {
                     type: 'category',
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月']
+                    data: ['窨花', '压花', '提花', '拼配', '分装', '拆卸']
                 },
-                yAxis: { type: 'value' },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}%'
+                    },
+                    max: 100
+                },
                 series: [
                     {
-                        name: '实际产能',
-                        type: 'line',
-                        data: [85, 88, 84, 87, 86, 85]
+                        name: '工单完成率',
+                        type: 'bar',
+                        data: [93.5, 91.8, 91.6, 92.5, 94.2, 93.8],
+                        itemStyle: { color: '#91cc75' }
                     },
                     {
-                        name: '标准产能',
-                        type: 'line',
-                        data: [100, 100, 100, 100, 100, 100]
+                        name: '计划达成率',
+                        type: 'bar',
+                        data: [93.2, 91.8, 91.9, 92.1, 93.8, 93.5],
+                        itemStyle: { color: '#5470c6' }
                     }
                 ]
             });
 
-            // 计划达成率分析图
-            const planningChart = echarts.init(document.getElementById('planningChart'));
-            planningChart.setOption({
-                title: { text: '' },
+            // 工序耗时分析
+            const processingTimeChart = echarts.init(document.getElementById('processingTimeChart'));
+            processingTimeChart.setOption({
                 tooltip: { trigger: 'axis' },
-                legend: { data: ['计划量', '完成量'] },
+                legend: { data: ['平均耗时', '标准耗时'] },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
                 xAxis: {
                     type: 'category',
-                    data: ['炒制', '揉捻', '烘干']
+                    data: ['窨花', '压花', '提花', '拼配', '分装', '拆卸']
                 },
-                yAxis: { type: 'value' },
+                yAxis: {
+                    type: 'value',
+                    name: '小时',
+                    axisLabel: {
+                        formatter: '{value}h'
+                    }
+                },
                 series: [
                     {
-                        name: '计划量',
+                        name: '平均耗时',
                         type: 'bar',
-                        data: [1000, 800, 900]
+                        data: [6.5, 7.2, 6.8, 5.8, 4.5, 5.2],
+                        itemStyle: { color: '#91cc75' }
                     },
                     {
-                        name: '完成量',
-                        type: 'bar',
-                        data: [932, 735, 827]
+                        name: '标准耗时',
+                        type: 'line',
+                        data: [6.0, 7.0, 6.5, 5.5, 4.0, 5.0],
+                        itemStyle: { color: '#5470c6' }
                     }
                 ]
             });
 
-            // 不良品分布图
-            const defectChart = echarts.init(document.getElementById('defectChart'));
-            defectChart.setOption({
-                title: { text: '' },
+            // 退料原因分析
+            const materialReturnChart = echarts.init(document.getElementById('materialReturnChart'));
+            materialReturnChart.setOption({
                 tooltip: { trigger: 'item' },
                 legend: { orient: 'vertical', left: 'left' },
-                series: [
-                    {
-                        type: 'pie',
-                        radius: '50%',
-                        data: [
-                            { value: 45, name: '工艺参数偏差' },
-                            { value: 25, name: '原料质量问题' },
-                            { value: 20, name: '设备故障' },
-                            { value: 10, name: '人为操作失误' }
-                        ]
+                series: [{
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 40, name: '原料不符' },
+                        { value: 25, name: '工艺变更' },
+                        { value: 20, name: '计划调整' },
+                        { value: 15, name: '其他原因' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
                     }
-                ]
+                }]
             });
 
-            // 设备稼动率分析图
-            const equipmentChart = echarts.init(document.getElementById('equipmentChart'));
-            equipmentChart.setOption({
-                title: { text: '' },
-                tooltip: { trigger: 'axis' },
-                legend: { data: ['稼动率'] },
-                xAxis: {
-                    type: 'category',
-                    data: ['炒制机', '揉捻机', '烘干机']
-                },
-                yAxis: { type: 'value' },
-                series: [
-                    {
-                        name: '稼动率',
-                        type: 'bar',
-                        data: [90.1, 88.3, 88.4]
+            // 不良品分布
+            const defectChart = echarts.init(document.getElementById('defectChart'));
+            defectChart.setOption({
+                tooltip: { trigger: 'item' },
+                legend: { orient: 'vertical', left: 'left' },
+                series: [{
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: 45, name: '工艺参数偏差' },
+                        { value: 25, name: '原料质量问题' },
+                        { value: 20, name: '操作不当' },
+                        { value: 10, name: '设备故障' }
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
                     }
-                ]
+                }]
             });
 
             // 监听窗口大小变化，调整图表大小
             window.addEventListener('resize', () => {
-                capacityChart.resize();
-                planningChart.resize();
-                defectChart.resize();
-                equipmentChart.resize();
+                [workOrderChart, processingTimeChart, materialReturnChart, defectChart].forEach(chart => {
+                    chart && chart.resize();
+                });
             });
         }
 
@@ -636,31 +762,121 @@
         color: #2196f3;
     }
 
-    /* 工具栏样式 */
-    .standard-toolbar {
-        padding: 15px;
-        background-color: #f5f5f5;
+    /* 图表标题和提示样式 */
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .chart-title {
+        font-size: 14px;
+        color: #333;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .chart-info {
+        position: relative;
+    }
+
+    .info-icon {
+        color: #8fd4d2;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .info-tooltip {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 24px;
+        background: #fff;
+        border: 1px solid #e8e8e8;
         border-radius: 4px;
-        margin-bottom: 20px;
+        padding: 12px;
+        width: 280px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        font-size: 12px;
+        line-height: 1.6;
+        color: #666;
     }
 
-    .toolbar-left {
+    .chart-info:hover .info-tooltip {
+        display: block;
+    }
+
+    /* 工具栏样式 */
+    .toolbar {
+        padding: 16px;
+        background: #fff;
+        border-radius: 4px;
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .search-box {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 16px;
     }
 
-    .toolbar-group {
-        display: flex;
+    .form-control {
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        width: 160px;
+        font-size: 14px;
+        color: #606266;
+    }
+
+    .btn-primary {
+        height: 32px;
+        padding: 0 16px;
+        background-color: #8fd4d2;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: inline-flex;
         align-items: center;
-        gap: 10px;
+        gap: 4px;
     }
 
-    .toolbar-divider {
-        width: 1px;
-        height: 24px;
-        background-color: #ddd;
-        margin: 0 10px;
+    .btn-primary:hover {
+        background-color: #6ab3b1;
+    }
+
+    .btn-export {
+        height: 32px;
+        padding: 0 16px;
+        background-color: #8fd4d2;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .btn-export:hover {
+        background-color: #6ab3b1;
+    }
+
+    .date-separator {
+        color: #606266;
     }
 
     /* 弹窗样式 */
@@ -804,12 +1020,6 @@
 
     .standard-table td .standard-button.primary:hover {
         background-color: #0056b3;
-    }
-
-    /* 日期分隔符样式 */
-    .date-separator {
-        color: #666;
-        margin: 0 5px;
     }
     </style>
 </body>

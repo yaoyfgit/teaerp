@@ -569,44 +569,38 @@ const menuConfig = [
     {
         key: 'quality',
         title: '质量管理',
-        icon: 'vial',
+        icon: 'check-circle',
         children: [
             {
                 key: 'inspection',
-                title: '检验管理',
-                icon: 'microscope',
+                title: '质量检验',
+                icon: 'clipboard-check',
                 children: [
                     {
-                        key: 'inspection-scheme',
+                        key: 'scheme',
                         title: '检验方案',
-                        icon: 'clipboard-list',
+                        icon: 'tasks',
                         path: 'pages/quality/inspection/scheme.html'
                     },
                     {
-                        key: 'inbound-inspection',
+                        key: 'inbound',
                         title: '入库检验',
-                        icon: 'clipboard-check',
+                        icon: 'sign-in-alt',
                         path: 'pages/quality/inspection/inbound.html'
                     },
                     {
-                        key: 'outbound-inspection',
-                        title: '出库检验',
-                        icon: 'tasks',
-                        path: 'pages/quality/inspection/outbound.html'
+                        key: 'items',
+                        title: '检验项目',
+                        icon: 'list-alt',
+                        path: 'pages/quality/inspection/items.html'
                     }
                 ]
             },
             {
-                key: 'quality-standard',
-                title: '质量标准',
-                icon: 'ruler',
-                path: 'pages/quality/standard/index.html'
-            },
-            {
-                key: 'quality-report',
-                title: '质量报表',
+                key: 'analysis',
+                title: '质量分析',
                 icon: 'chart-bar',
-                path: 'pages/quality/report/index.html'
+                path: 'pages/quality/analysis.html'
             }
         ]
     }
