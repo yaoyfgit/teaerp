@@ -14,54 +14,37 @@
         .overview-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 20px;
             padding: 16px;
         }
         
         .overview-item {
-            background: #fff;
-            border-radius: 4px;
-            padding: 20px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 8px;
+            padding: 24px;
             display: flex;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         
         .overview-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .overview-item i {
-            font-size: 24px;
-            margin-right: 16px;
-            width: 40px;
-            height: 40px;
+            font-size: 28px;
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
-        }
-        
-        .overview-item:nth-child(1) i {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .overview-item:nth-child(2) i {
-            background-color: #e8f5e9;
-            color: #43a047;
-        }
-        
-        .overview-item:nth-child(3) i {
-            background-color: #fff3e0;
-            color: #ef6c00;
-        }
-        
-        .overview-item:nth-child(4) i {
-            background-color: #f3e5f5;
-            color: #8e24aa;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #81D8D0 0%, #92E3DC 100%);
+            color: white;
         }
         
         .overview-item .info {
@@ -76,9 +59,10 @@
         }
         
         .overview-item .number {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             color: #333;
+            line-height: 1.2;
         }
         
         .overview-item .unit {
@@ -91,38 +75,81 @@
         .charts-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 20px;
             margin: 16px 0;
         }
 
         .chart-card {
             background: #fff;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            height: 450px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
         }
 
         .chart-card .card-header {
-            padding: 16px;
+            padding: 20px;
             border-bottom: 1px solid #eee;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 60px;
-        }
-
-        .chart-card .card-body {
-            padding: 16px;
-            height: calc(100% - 60px);
             position: relative;
         }
 
-        .chart-card .card-body > div {
+        .chart-card .card-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: auto;
+        }
+
+        .chart-card .card-header .chart-info {
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .chart-card .card-header .info-icon {
+            color: #81D8D0;
+            cursor: pointer;
+            font-size: 16px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .chart-card .card-header .info-icon:hover {
+            opacity: 1;
+        }
+
+        .chart-card .card-header .info-tooltip {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            right: -10px;
+            top: 30px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 16px;
+            width: 320px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .chart-card .card-header .info-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-left: 1px solid #eee;
+            border-top: 1px solid #eee;
+            transform: rotate(45deg);
+        }
+
+        .chart-card .card-body {
+            padding: 20px;
+            height: 400px;
         }
 
         /* 分析报告样式 */
@@ -170,6 +197,27 @@
             color: #ef6c00;
             font-weight: bold;
         }
+
+        .chart-info:hover .info-tooltip {
+            display: block;
+        }
+
+        .info-tooltip {
+            display: none;
+            position: absolute;
+            right: -20px;
+            top: 30px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 16px;
+            width: 320px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -210,35 +258,33 @@
                 </div>
 
                 <!-- 分析概览 -->
-                <div class="standard-card">
-                    <div class="overview-grid">
-                        <div class="overview-item">
-                            <i class="fas fa-chart-pie"></i>
-                            <div class="info">
-                                <h4>总计划数</h4>
-                                <div class="number">126<span class="unit">个</span></div>
-                            </div>
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <i class="fas fa-chart-pie"></i>
+                        <div class="info">
+                            <h4>总计划数</h4>
+                            <div class="number">126<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-check-circle"></i>
-                            <div class="info">
-                                <h4>已完成</h4>
-                                <div class="number">85<span class="unit">个</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info">
+                            <h4>已完成</h4>
+                            <div class="number">85<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-clock"></i>
-                            <div class="info">
-                                <h4>进行中</h4>
-                                <div class="number">32<span class="unit">个</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info">
+                            <h4>进行中</h4>
+                            <div class="number">32<span class="unit">个</span></div>
                         </div>
-                        <div class="overview-item">
-                            <i class="fas fa-hourglass-start"></i>
-                            <div class="info">
-                                <h4>未开始</h4>
-                                <div class="number">9<span class="unit">个</span></div>
-                            </div>
+                    </div>
+                    <div class="overview-item">
+                        <i class="fas fa-hourglass-start"></i>
+                        <div class="info">
+                            <h4>未开始</h4>
+                            <div class="number">9<span class="unit">个</span></div>
                         </div>
                     </div>
                 </div>
@@ -260,8 +306,6 @@
                                     <option value="sales">销售计划</option>
                                     <option value="profit">利润计划</option>
                                     <option value="cost">成本计划</option>
-                                    <option value="production">生产计划</option>
-                                    <option value="quality">质量计划</option>
                                 </select>
                                 <select class="standard-select">
                                     <option value="">完成状态</option>
@@ -294,56 +338,93 @@
 
                 <!-- 分析图表 -->
                 <div class="charts-container">
-                    <!-- 完成情况分析 -->
                     <div class="chart-card">
                         <div class="card-header">
-                            <h3>完成情况分析</h3>
-                            <div class="card-tools">
-                                <button class="standard-button" onclick="exportChart('completion')">
-                                    <i class="fas fa-download"></i>
-                                </button>
+                            <h3>
+                                <i class="fas fa-chart-line"></i>
+                                完成情况分析
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    <div style="margin-bottom: 8px;">统计说明：展示各类计划的完成情况分布</div>
+                                    <div style="margin-bottom: 6px;">统计维度：</div>
+                                    - 按计划状态（已完成/进行中/未开始）统计
+                                    <div style="margin: 6px 0;">计算方式：</div>
+                                    - 完成率 = 已完成计划数 / 总计划数 × 100%
+                                    - 进行率 = 进行中计划数 / 总计划数 × 100%
+                                    - 待开始率 = 未开始计划数 / 总计划数 × 100%
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div id="completionChart" style="width: 100%; height: 100%;"></div>
                         </div>
                     </div>
-                    <!-- 趋势分析 -->
+
                     <div class="chart-card">
                         <div class="card-header">
-                            <h3>趋势分析</h3>
-                            <div class="card-tools">
-                                <button class="standard-button" onclick="exportChart('trend')">
-                                    <i class="fas fa-download"></i>
-                                </button>
+                            <h3>
+                                <i class="fas fa-chart-line"></i>
+                                趋势分析
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    <div style="margin-bottom: 8px;">统计说明：展示计划完成率的变化趋势</div>
+                                    <div style="margin-bottom: 6px;">统计维度：</div>
+                                    - 按月度统计各类计划的完成情况
+                                    <div style="margin: 6px 0;">计算方式：</div>
+                                    - 计划完成率 = 当月已完成计划数 / 当月计划总数 × 100%
+                                    - 计划达成率 = 当月达标计划数 / 当月已完成计划数 × 100%
+                                    - 同比增长率 = (本月完成率 - 上月完成率) / 上月完成率 × 100%
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div id="trendChart" style="width: 100%; height: 100%;"></div>
                         </div>
                     </div>
-                    <!-- 类型分布 -->
+
                     <div class="chart-card">
                         <div class="card-header">
-                            <h3>计划类型分布</h3>
-                            <div class="card-tools">
-                                <button class="standard-button" onclick="exportChart('type')">
-                                    <i class="fas fa-download"></i>
-                                </button>
+                            <h3>
+                                <i class="fas fa-chart-bar"></i>
+                                计划达成率分析
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    <div style="margin-bottom: 8px;">统计说明：展示不同类型计划的达成率对比</div>
+                                    <div style="margin-bottom: 6px;">统计维度：</div>
+                                    - 按计划类型（销售/利润/成本）统计
+                                    <div style="margin: 6px 0;">计算方式：</div>
+                                    - 达成率 = 达标计划数 / 已完成计划数 × 100%
+                                    - 完成质量 = 计划达成率 × 完成及时率
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div id="typeChart" style="width: 100%; height: 100%;"></div>
+                            <div id="achievementChart" style="width: 100%; height: 100%;"></div>
                         </div>
                     </div>
-                    <!-- 部门对比 -->
+
                     <div class="chart-card">
                         <div class="card-header">
-                            <h3>部门完成率对比</h3>
-                            <div class="card-tools">
-                                <button class="standard-button" onclick="exportChart('department')">
-                                    <i class="fas fa-download"></i>
-                                </button>
+                            <h3>
+                                <i class="fas fa-chart-bar"></i>
+                                部门完成率对比
+                            </h3>
+                            <div class="chart-info">
+                                <i class="fas fa-question-circle info-icon"></i>
+                                <div class="info-tooltip">
+                                    <div style="margin-bottom: 8px;">统计说明：展示各部门的计划完成情况对比</div>
+                                    <div style="margin-bottom: 6px;">统计维度：</div>
+                                    - 按部门统计计划完成情况
+                                    <div style="margin: 6px 0;">计算方式：</div>
+                                    - 部门完成率 = 部门已完成计划数 / 部门计划总数 × 100%
+                                    - 部门达成率 = 部门达标计划数 / 部门已完成计划数 × 100%
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -392,6 +473,220 @@
 
     <script src="../../../../js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script src="../../../../js/modules/operation/plan/analysis/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化所有图表
+            setTimeout(() => {
+                initCompletionChart();
+                initTrendChart();
+                initAchievementChart();
+                initDepartmentChart();
+            }, 200);
+        });
+
+        // 完成情况分析图表
+        function initCompletionChart() {
+            const chart = echarts.init(document.getElementById('completionChart'));
+            const option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    bottom: '5%',
+                    data: ['已完成', '进行中', '未开始']
+                },
+                series: [{
+                    name: '完成情况',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '16',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: 85, name: '已完成', itemStyle: {color: '#81D8D0'}},
+                        {value: 32, name: '进行中', itemStyle: {color: '#A5E6E1'}},
+                        {value: 9, name: '未开始', itemStyle: {color: '#C9F0EC'}}
+                    ]
+                }]
+            };
+            chart.setOption(option);
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // 趋势分析图表
+        function initTrendChart() {
+            const chart = echarts.init(document.getElementById('trendChart'));
+            const option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['完成率', '达成率', '同比增长'],
+                    bottom: '5%'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '百分比',
+                    axisLabel: {
+                        formatter: '{value}%'
+                    }
+                },
+                series: [
+                    {
+                        name: '完成率',
+                        type: 'line',
+                        smooth: true,
+                        data: [75, 78, 82, 85, 88, 90],
+                        itemStyle: {color: '#81D8D0'}
+                    },
+                    {
+                        name: '达成率',
+                        type: 'line',
+                        smooth: true,
+                        data: [70, 72, 75, 78, 82, 85],
+                        itemStyle: {color: '#A5E6E1'}
+                    },
+                    {
+                        name: '同比增长',
+                        type: 'bar',
+                        data: [5, 4, 5, 3, 4, 2],
+                        itemStyle: {color: '#C9F0EC'}
+                    }
+                ]
+            };
+            chart.setOption(option);
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // 计划达成率分析图表
+        function initAchievementChart() {
+            const chart = echarts.init(document.getElementById('achievementChart'));
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['达成率', '完成质量'],
+                    bottom: '5%'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['销售计划', '利润计划', '成本计划']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '百分比',
+                    axisLabel: {
+                        formatter: '{value}%'
+                    }
+                },
+                series: [
+                    {
+                        name: '达成率',
+                        type: 'bar',
+                        data: [92, 85, 78],
+                        itemStyle: {color: '#81D8D0'}
+                    },
+                    {
+                        name: '完成质量',
+                        type: 'bar',
+                        data: [88, 82, 75],
+                        itemStyle: {color: '#A5E6E1'}
+                    }
+                ]
+            };
+            chart.setOption(option);
+            window.addEventListener('resize', () => chart.resize());
+        }
+
+        // 部门完成率对比图表
+        function initDepartmentChart() {
+            const chart = echarts.init(document.getElementById('departmentChart'));
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['完成率', '达成率'],
+                    bottom: '5%'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['销售部', '生产部', '采购部', '财务部']
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '百分比',
+                    axisLabel: {
+                        formatter: '{value}%'
+                    }
+                },
+                series: [
+                    {
+                        name: '完成率',
+                        type: 'bar',
+                        data: [95, 88, 82, 90],
+                        itemStyle: {color: '#81D8D0'}
+                    },
+                    {
+                        name: '达成率',
+                        type: 'bar',
+                        data: [92, 85, 78, 88],
+                        itemStyle: {color: '#A5E6E1'}
+                    }
+                ]
+            };
+            chart.setOption(option);
+            window.addEventListener('resize', () => chart.resize());
+        }
+    </script>
 </body>
 </html> 
