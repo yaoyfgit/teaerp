@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>预付申请 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+    <style>
+        /* 调整页面整体布局 */
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #f5f5f5;
+        }
+        
+        .app {
+            max-width: 100%;
+            width: 100%;
+            padding: 0;
+            background-color: #f5f5f5;
+            padding-bottom: 70px; /* 为底部按钮留出空间 */
+        }
+
+        /* 调整表单区域样式 */
+        .detail-section {
+            margin: 12px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+        }
+        
+        .detail-section-title {
+            padding: 12px;
+            font-size: 14px;
+            color: #666;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .form-content {
+            padding: 12px;
+        }
+        
+        .form-row {
+            margin-bottom: 16px;
+        }
+        
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .form-control-wrapper {
+            width: 100%;
+        }
+        
+        .form-control {
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 12px;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            box-sizing: border-box;
+        }
+        
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        textarea.form-control {
+            height: auto;
+            padding: 12px;
+            resize: none;
+        }
+        
+        /* 调整底部按钮样式 */
+        .bottom-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 -1px 4px rgba(0,0,0,0.1);
+            z-index: 100;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .bottom-bar .btn {
+            height: 44px;
+            border-radius: 22px;
+            font-size: 16px;
+            background-color: #8fd4d2;
+            color: #fff;
+            border: none;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* 调整金额大写显示 */
+        .amount-uppercase {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* 调整文件上传样式 */
+        .file-upload {
+            margin-top: 8px;
+        }
+        
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        /* 修复导航栏样式 */
+        .nav-bar {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">预付申请</div>
+        </div>
+        
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">付款类别</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" value="采购预付" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 付款明细 -->
+        <div class="detail-section">
+            <div class="detail-section-title">付款明细</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">收款对象</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="supplier">
+                            <option value="">请选择供应商</option>
+                            <option value="1">供应商A</option>
+                            <option value="2">供应商B</option>
+                            <option value="3">供应商C</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">预付金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="amount" step="0.01" onchange="updateAmountUppercase()">
+                        <div class="amount-uppercase" id="amount-uppercase">零元整</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">付款方式</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="payment-method" onchange="toggleBankInfo()">
+                            <option value="1">银行转账</option>
+                            <option value="2">现金</option>
+                            <option value="3">微信</option>
+                            <option value="4">支付宝</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row bank-info">
+                    <div class="form-label">开户银行</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="bank-name">
+                            <option value="">请选择开户银行</option>
+                            <option value="1">中国工商银行</option>
+                            <option value="2">中国建设银行</option>
+                            <option value="3">中国农业银行</option>
+                            <option value="4">中国银行</option>
+                            <option value="5">交通银行</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row bank-info">
+                    <div class="form-label">账号</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="bank-account" placeholder="请输入账号">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">备注</div>
+                    <div class="form-control-wrapper">
+                        <textarea class="form-control" id="remark" rows="3" placeholder="请输入备注信息"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">凭证</div>
+                    <div class="form-control-wrapper">
+                        <div class="file-upload">
+                            <input type="file" class="file-input" id="voucher" accept="image/*,.pdf">
+                            <label for="voucher" class="file-label">
+                                <i class="fas fa-upload"></i>
+                                上传凭证
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-primary" onclick="submitPrepayment()">
+                <i class="fas fa-check"></i> 提交申请
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 页面加载时初始化
+        window.onload = function() {
+            toggleBankInfo();
+        };
+        
+        function toggleBankInfo() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            const bankInfoFields = document.querySelectorAll('.bank-info');
+            
+            // 如果是银行转账，显示开户银行
+            if (paymentMethod === '1') {
+                bankInfoFields.forEach(field => field.style.display = 'flex');
+            } 
+            // 如果是微信或支付宝，只显示账号
+            else if (paymentMethod === '3' || paymentMethod === '4') {
+                bankInfoFields[0].style.display = 'none';
+                bankInfoFields[1].style.display = 'flex';
+            } 
+            // 如果是现金，隐藏银行信息
+            else {
+                bankInfoFields.forEach(field => field.style.display = 'none');
+            }
+        }
+        
+        function updateAmountUppercase() {
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            document.getElementById('amount-uppercase').textContent = convertToChineseAmount(amount);
+        }
+        
+        function convertToChineseAmount(amount) {
+            // 简化版的金额转中文大写函数
+            if (amount === 0) return '零元整';
+            
+            const numbers = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+            const units = ['', '拾', '佰', '仟', '万', '拾', '佰', '仟', '亿'];
+            const decimals = ['角', '分'];
+            
+            // 处理负数
+            let prefix = '';
+            if (amount < 0) {
+                prefix = '负';
+                amount = -amount;
+            }
+            
+            // 分离整数和小数部分
+            const intPart = Math.floor(amount);
+            const decimalPart = Math.round((amount - intPart) * 100);
+            
+            let result = prefix;
+            
+            // 处理整数部分
+            if (intPart > 0) {
+                const intStr = intPart.toString();
+                for (let i = 0; i < intStr.length; i++) {
+                    const digit = parseInt(intStr[i]);
+                    const pos = intStr.length - i - 1;
+                    if (digit !== 0) {
+                        result += numbers[digit] + units[pos];
+                    } else {
+                        if (result.charAt(result.length - 1) !== '零' && pos !== 0) {
+                            result += '零';
+                        }
+                    }
+                }
+                result += '元';
+            }
+            
+            // 处理小数部分
+            if (decimalPart > 0) {
+                const decStr = decimalPart.toString().padStart(2, '0');
+                for (let i = 0; i < 2; i++) {
+                    const digit = parseInt(decStr[i]);
+                    if (digit !== 0) {
+                        result += numbers[digit] + decimals[i];
+                    }
+                }
+            } else {
+                result += '整';
+            }
+            
+            return result;
+        }
+        
+        function submitPrepayment() {
+            // 验证表单
+            const supplier = document.getElementById('supplier').value;
+            if (!supplier) {
+                alert('请选择收款对象');
+                return;
+            }
+            
+            const amount = document.getElementById('amount').value;
+            if (!amount || parseFloat(amount) <= 0) {
+                alert('请输入有效的预付金额');
+                return;
+            }
+            
+            const paymentMethod = document.getElementById('payment-method').value;
+            
+            // 验证付款方式相关字段
+            if (paymentMethod === '1') {
+                const bankName = document.getElementById('bank-name').value;
+                if (!bankName) {
+                    alert('请选择开户银行');
+                    return;
+                }
+                
+                const bankAccount = document.getElementById('bank-account').value;
+                if (!bankAccount) {
+                    alert('请输入账号');
+                    return;
+                }
+            } else if (paymentMethod === '3' || paymentMethod === '4') {
+                const bankAccount = document.getElementById('bank-account').value;
+                if (!bankAccount) {
+                    alert('请输入账号');
+                    return;
+                }
+            }
+            
+            // 收集表单数据
+            const formData = {
+                paymentCategory: '采购预付',
+                supplier: document.getElementById('supplier').value,
+                amount: document.getElementById('amount').value,
+                paymentMethod: document.getElementById('payment-method').value,
+                bankName: document.getElementById('bank-name').value,
+                bankAccount: document.getElementById('bank-account').value,
+                remark: document.getElementById('remark').value,
+                // 凭证文件需要单独处理
+                voucher: document.getElementById('voucher').files[0] ? document.getElementById('voucher').files[0].name : ''
+            };
+            
+            console.log('提交的预付申请数据:', formData);
+            
+            // 模拟提交成功
+            alert('预付申请已提交成功');
+            
+            // 跳转到应付管理页面
+            window.location.href = 'payable-management.html';
+        }
+    </script>
+</body>
+</html>

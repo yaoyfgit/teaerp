@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>应付管理 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+    <style>
+        .tab-container {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        .card-actions .btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .card-actions .btn i {
+            font-size: 14px;
+        }
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .tab-item.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        /* 修改卡片样式，确保宽度适合移动端 */
+        .card-vertical {
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        /* 确保列表容器不会溢出 */
+        .bill-list {
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* 调整卡片内部布局 */
+        .card-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .card-body {
+            padding: 12px 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .card-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* 确保app容器宽度适合移动端 */
+        .app {
+            max-width: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* 确保搜索栏和筛选标签不会溢出 */
+        .search-bar, .filter-tags {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="../index.html" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">应付管理</div>
+        </div>
+        <!-- 搜索区域 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索供应商或单据编号">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+            </div>
+        </div>
+        
+        <!-- 筛选条件 -->
+        <div class="filter-tags">
+            <div class="filter-tag active">全部</div>
+            <div class="filter-tag">待付款</div>
+            <div class="filter-tag">部分付款</div>
+            <div class="filter-tag">已付款</div>
+        </div>
+        <!-- 统计信息 
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value">¥58,500.00</div>
+                <div class="stat-label">应付总额</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">¥20,000.00</div>
+                <div class="stat-label">已付金额</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">¥38,500.00</div>
+                <div class="stat-label">未付金额</div>
+            </div>
+        </div>-->
+
+
+        <!-- 标签页切换 -->
+        <div class="tab-container">
+            <div class="tab-item active" onclick="switchTab('unpaid')">待付款</div>
+            <div class="tab-item" onclick="switchTab('paid')">已付款</div>
+        </div>    
+            <!-- 待付款列表 -->
+            <div class="bill-list" id="unpaid-list">
+                <!-- 使用上中下布局的卡片 -->
+                <div class="card-vertical" onclick="viewBillDetail('CG202403010001')">
+                    <div class="card-header">
+                        <div class="card-title">采购付款单</div>
+                        <div class="status-badge warning">待付款</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <span class="detail-label">供应商:</span>
+                            <span class="detail-value">供应商A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">单据日期:</span>
+                            <span class="detail-value">2024-03-01</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">应付金额:</span>
+                            <span class="detail-value" >50,000.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">已付金额:</span>
+                            <span class="detail-value">0.00</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="showApproval('CG202403010001', event)">
+                            <i class="fas fa-check-circle"></i> 审批
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-vertical" onclick="viewBillDetail('CG202403010001')">
+                    <div class="card-header">
+                        <div class="card-title">采购付款单</div>
+                        <div class="status-badge warning">待付款</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <span class="detail-label">供应商:</span>
+                            <span class="detail-value">供应商A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">单据日期:</span>
+                            <span class="detail-value">2024-03-01</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">应付金额:</span>
+                            <span class="detail-value" >50,000.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">已付金额:</span>
+                            <span class="detail-value">0.00</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success" onclick="showPayment('CG202403010001', event)">
+                            <i class="fas fa-money-bill"></i> 付款
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-vertical" onclick="viewBillDetail('FY202403010002')">
+                    <div class="card-header">
+                        <div class="card-title">采购预付单</div>
+                        <div class="status-badge info">部分付款</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <span class="detail-label">供应商:</span>
+                            <span class="detail-value">供应商A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">单据日期:</span>
+                            <span class="detail-value">2024-03-01</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">应付金额:</span>
+                            <span class="detail-value" >2,000.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">已付金额:</span>
+                            <span class="detail-value">1,000.00</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success" onclick="showPayment('CG202403010001', event)">
+                            <i class="fas fa-money-bill"></i> 付款
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 已付款列表 -->
+            <div class="bill-list" id="paid-list" style="display: none;">
+                <!-- 使用上中下布局的卡片 -->
+                <div class="card-vertical" onclick="viewBillDetail('CG202403010001')">
+                    <div class="card-header">
+                        <div class="card-title">采购付款单</div>
+                        <div class="status-badge success">已付款</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <span class="detail-label">供应商:</span>
+                            <span class="detail-value">供应商C</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">单据日期:</span>
+                            <span class="detail-value">2024-03-01</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">应付金额:</span>
+                            <span class="detail-value" >50,000.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">已付金额:</span>
+                            <span class="detail-value">50,000.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-vertical" onclick="viewBillDetail('FY202403010002')">
+                    <div class="card-header">
+                        <div class="card-title">采购预付单</div>
+                        <div class="status-badge success">已付款</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-row">
+                            <span class="detail-label">供应商:</span>
+                            <span class="detail-value">供应商A</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">单据日期:</span>
+                            <span class="detail-value">2024-03-01</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">应付金额:</span>
+                            <span class="detail-value" >2,000.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">已付金额:</span>
+                            <span class="detail-value">2,000.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        function viewBillDetail(billId) {
+            window.location.href = `payable-detail.html?id=${billId}`;
+        }
+        
+        function filterBills() {
+            const filter = document.getElementById('bill-filter').value;
+            console.log(`筛选条件: ${filter}`);
+            // 这里应该根据筛选条件过滤单据列表
+        }
+        
+        function switchTab(tabName) {
+            // 切换标签页激活状态
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // 切换对应的列表显示
+            document.getElementById('unpaid-list').style.display = tabName === 'unpaid' ? 'block' : 'none';
+            document.getElementById('paid-list').style.display = tabName === 'paid' ? 'block' : 'none';
+        }
+        function showApproval(billId, event) {
+            event.stopPropagation(); // 阻止事件冒泡
+            // 跳转到审批页面
+            window.location.href = `approval.html?id=${billId}`;
+        }
+        function showPayment(billId, event) {
+            event.stopPropagation(); // 阻止事件冒泡
+            // 跳转到付款页面
+            window.location.href = `payment-apply.html?id=${billId}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>工作台 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <style>
+        .workbench-container {
+            padding: 16px;
+        }
+        
+        .module-section {
+            margin-bottom: 24px;
+        }
+        
+        .module-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        
+        .module-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .module-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+        
+        .module-name {
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        /* 不同模块的图标颜色 */
+        .icon-finance {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .icon-purchase {
+            background-color: #f6ffed;
+            color: #52c41a;
+        }
+        
+        .icon-sales {
+            background-color: #fff2e8;
+            color: #fa8c16;
+        }
+        
+        .icon-inventory {
+            background-color: #f9f0ff;
+            color: #722ed1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <div class="title">工作台</div>
+        </div>
+        
+        <div class="workbench-container">
+            <!-- 财务管理模块 -->
+            <div class="module-section">
+                <div class="module-title">财务管理</div>
+                <div class="module-grid">
+                    <a href="finance/supplier-reconciliation.html" class="module-item">
+                        <div class="module-icon icon-finance">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="module-name">供应商对账</div>
+                    </a>
+                    <a href="finance/payable-management.html" class="module-item">
+                        <div class="module-icon icon-finance">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="module-name">应付管理</div>
+                    </a>
+                    <a href="finance/prepayment-create.html" class="module-item">
+                        <div class="module-icon icon-finance">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="module-name">预付申请</div>
+                    </a>
+                    <a href="finance/expense-create.html" class="module-item">
+                        <div class="module-icon icon-finance">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="module-name">新增费用</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 采购管理模块 -->
+            <div class="module-section">
+                <div class="module-title">采购管理</div>
+                <div class="module-grid">
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="module-name">采购订单</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        <div class="module-name">采购入库</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                        <div class="module-name">采购退货</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-purchase">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="module-name">采购分析</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 销售管理模块 -->
+            <div class="module-section">
+                <div class="module-title">销售管理</div>
+                <div class="module-grid">
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div class="module-name">销售订单</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="module-name">销售出库</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="module-name">销售退货</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-sales">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="module-name">销售分析</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 库存管理模块 -->
+            <div class="module-section">
+                <div class="module-title">库存管理</div>
+                <div class="module-grid">
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-warehouse"></i>
+                        </div>
+                        <div class="module-name">库存查询</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-dolly"></i>
+                        </div>
+                        <div class="module-name">库存调拨</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="module-name">库存盘点</div>
+                    </a>
+                    <a href="#" class="module-item">
+                        <div class="module-icon icon-inventory">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="module-name">库存预警</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </a>
+            <a href="workbench.html" class="nav-item active">
+                <i class="fas fa-th-large"></i>
+                <span>工作台</span>
+            </a>
+            <a href="message.html" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>消息</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

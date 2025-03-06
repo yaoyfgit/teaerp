@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新增费用 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+    <style>
+        .expense-item {
+            background-color: #fafafa;
+            border-radius: 8px;
+            margin: 12px 16px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .btn-remove-item {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--error-color);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+
+        .btn-remove-item:hover {
+            background-color: rgba(252, 129, 129, 0.1);
+            border-radius: 4px;
+        }
+
+        .expense-item .form-row:first-child {
+            margin-top: 0;
+        }
+
+        .expense-item .form-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .related-bills-list {
+            padding: 0 16px;
+        }
+
+        .related-bill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .related-bill-info {
+            flex: 1;
+        }
+
+        .related-bill-no {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .related-bill-type {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .related-bill-amount {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .btn-remove-bill {
+            color: var(--error-color);
+            background: none;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        .file-upload {
+            display: inline-block;
+        }
+
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .file-label i {
+            margin-right: 6px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .amount-uppercase {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">新增费用</div>
+        </div>
+        
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">费用类型</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="expense-type">
+                            <option value="">请选择费用类型</option>
+                            <option value="1">运费</option>
+                            <option value="2">装卸费</option>
+                            <option value="3">包装费</option>
+                            <option value="4">保险费</option>
+                            <option value="5">其他费用</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">收款对象</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="supplier">
+                            <option value="">请选择收款对象</option>
+                            <option value="1">供应商A</option>
+                            <option value="2">供应商B</option>
+                            <option value="3">供应商C</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">费用金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="expense-amount" step="0.01" onchange="updateAmountUppercase()">
+                        <div class="amount-uppercase" id="amount-uppercase">零元整</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">税率(%)</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="tax-rate" value="13" onchange="calculateTax()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">税额</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="tax-amount" step="0.01" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">含税金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="amount-include-tax" step="0.01" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">抵扣进项税</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="deduct-tax">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">费用分配方式</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="allocation-method">
+                            <option value="1">按金额</option>
+                            <option value="2">按数量</option>
+                            <option value="3">按重量</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">备注</div>
+                    <div class="form-control-wrapper">
+                        <textarea class="form-control" id="remark" rows="3" placeholder="请输入备注信息"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">凭证</div>
+                    <div class="form-control-wrapper">
+                        <div class="file-upload">
+                            <input type="file" id="voucher" class="file-input" accept="image/*">
+                            <label for="voucher" class="file-label">
+                                <i class="fas fa-upload"></i> 上传凭证
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 关联单据 -->
+        <div class="detail-section">
+            <div class="detail-section-title">关联单据</div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>应付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="related-bills-body">
+                        <tr>
+                            <td colspan="3" class="text-center">暂无关联单据</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-row" style="border-bottom: none; margin-top: 10px;">
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="selectRelatedBills()">
+                        <i class="fas fa-plus"></i> 添加关联单据
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function addExpenseItem() {
+                const template = document.querySelector('.expense-item').cloneNode(true);
+                // 清空克隆项的输入值
+                template.querySelectorAll('input[type="number"]').forEach(input => {
+                    input.value = '';
+                });
+                template.querySelectorAll('textarea').forEach(textarea => {
+                    textarea.value = '';
+                });
+                template.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                // 重置税率为13%
+                template.querySelector('[name="taxRate"]').value = '13';
+                
+                document.getElementById('expense-items').appendChild(template);
+            }
+            
+            function removeExpenseItem(button) {
+                const items = document.querySelectorAll('.expense-item');
+                if (items.length > 1) {
+                    button.closest('.expense-item').remove();
+                } else {
+                    alert('至少保留一个费用项');
+                }
+            }
+            
+            function calculateTax(input) {
+                const item = input.closest('.expense-item');
+                const amount = parseFloat(item.querySelector('[name="amountExcludeTax"]').value) || 0;
+                const taxRate = parseFloat(item.querySelector('[name="taxRate"]').value) || 0;
+                
+                const taxAmount = amount * taxRate / 100;
+                const amountIncludeTax = amount + taxAmount;
+                
+                item.querySelector('[name="taxAmount"]').value = taxAmount.toFixed(2);
+                item.querySelector('[name="amountIncludeTax"]').value = amountIncludeTax.toFixed(2);
+                
+                calculatePayable(item.querySelector('[name="discountAmount"]'));
+            }
+            
+            function calculatePayable(input) {
+                const item = input.closest('.expense-item');
+                const amountIncludeTax = parseFloat(item.querySelector('[name="amountIncludeTax"]').value) || 0;
+                const discountAmount = parseFloat(item.querySelector('[name="discountAmount"]').value) || 0;
+                
+                const payableAmount = amountIncludeTax - discountAmount;
+                item.querySelector('[name="payableAmount"]').value = payableAmount.toFixed(2);
+            }
+            
+            function showRelatedBillSelector() {
+                // 这里应该打开一个选择关联单据的页面或弹窗
+                const billsList = document.getElementById('related-bills');
+                const billItem = document.createElement('div');
+                billItem.className = 'related-bill-item';
+                billItem.innerHTML = `
+                    <div class="related-bill-info">
+                        <div class="related-bill-no">CG202403010001</div>
+                        <div class="related-bill-type">采购入库单</div>
+                    </div>
+                    <div class="related-bill-amount">¥50,000.00</div>
+                    <button class="btn-remove-bill" onclick="this.closest('.related-bill-item').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                billsList.appendChild(billItem);
+            }
+            
+            function submitExpense() {
+                const expenseType = document.getElementById('expense-type').value;
+                if (!expenseType) {
+                    alert('请选择费用类型');
+                    return;
+                }
+                
+                const supplier = document.getElementById('supplier').value;
+                if (!supplier) {
+                    alert('请选择收款对象');
+                    return;
+                }
+                
+                const amount = document.getElementById('expense-amount').value;
+                if (!amount || parseFloat(amount) <= 0) {
+                    alert('请输入有效的费用金额');
+                    return;
+                }
+                
+                // 收集表单数据
+                const formData = {
+                    expenseType: document.getElementById('expense-type').value,
+                    supplier: document.getElementById('supplier').value,
+                    amount: document.getElementById('expense-amount').value,
+                    taxRate: document.getElementById('tax-rate').value,
+                    taxAmount: document.getElementById('tax-amount').value,
+                    amountIncludeTax: document.getElementById('amount-include-tax').value,
+                    deductTax: document.getElementById('deduct-tax').value,
+                    allocationMethod: document.getElementById('allocation-method').value,
+                    remark: document.getElementById('remark').value
+                };
+                
+                console.log('提交的费用数据:', formData);
+                
+                // 模拟提交成功
+                alert('费用已提交成功');
+                
+                // 跳转到应付管理页面
+                window.location.href = 'payable-management.html';
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>付款申请 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">付款申请</div>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">业务类别</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="business-type" value="采购付款" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">应付合计</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control highlight" id="total-payable" value="50,000.00" readonly>
+                        <div class="amount-uppercase" id="total-payable-uppercase">伍万元整</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">应付金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control highlight" id="actual-payable" value="20,000.00" readonly>
+                        <div class="amount-uppercase" id="actual-payable-uppercase">贰万元整</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">收款对象</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="supplier-name" value="供应商A" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">付款方式</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="payment-method" onchange="toggleBankInfo()">
+                            <option value="1">银行转账</option>
+                            <option value="2">现金</option>
+                            <option value="3">微信</option>
+                            <option value="4">支付宝</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row bank-info">
+                    <div class="form-label">开户银行</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="bank-name">
+                            <option value="">请选择开户银行</option>
+                            <option value="1">中国工商银行</option>
+                            <option value="2">中国建设银行</option>
+                            <option value="3">中国农业银行</option>
+                            <option value="4">中国银行</option>
+                            <option value="5">交通银行</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row bank-info">
+                    <div class="form-label">账号</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="bank-account" placeholder="请输入账号">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">备注</div>
+                    <div class="form-control-wrapper">
+                        <textarea class="form-control" id="remark" rows="3" placeholder="请输入备注信息"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 冲销预付款 -->
+        <div class="detail-section">
+            <div class="detail-section-title">
+                冲销预付款
+                <button class="btn-add-item" onclick="selectPrepayment()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>已付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="related-bills-body">
+                        <tr>
+                            <td>YF202403010001</td>
+                            <td>采购预付单</td>
+                            <td>30,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 关联单据 -->
+        <div class="detail-section">
+            <div class="detail-section-title">关联单据</div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>应付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody id="related-bills-body">
+                        <tr>
+                            <td>CG202403010001</td>
+                            <td>采购入库单</td>
+                            <td>50,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-primary" onclick="submitPaymentApply()">
+                <i class="fas fa-check"></i> 提交
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 页面加载时初始化
+        window.onload = function() {
+            // 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const billIds = urlParams.get('billIds');
+            
+            if (billIds) {
+                loadBillsInfo(billIds.split(','));
+            }
+            
+            // 初始化付款方式相关字段显示
+            toggleBankInfo();
+        };
+        
+        function loadBillsInfo(billIds) {
+            // 这里应该是从API加载数据
+            console.log(`加载单据信息: ${billIds.join(', ')}`);
+            
+            // 模拟加载数据
+            let totalAmount = 0;
+            const tbody = document.getElementById('related-bills-body');
+            tbody.innerHTML = '';
+            
+            billIds.forEach(billId => {
+                let billType = '';
+                let amount = 0;
+                
+                if (billId.startsWith('CG')) {
+                    billType = '采购入库单';
+                    amount = 50000;
+                } else if (billId.startsWith('FY')) {
+                    billType = '采购费用单';
+                    amount = 2000;
+                } else if (billId.startsWith('TH')) {
+                    billType = '采购退货单';
+                    amount = -5000;
+                }
+                
+                totalAmount += amount;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${billId}</td>
+                    <td>${billType}</td>
+                    <td>¥${amount.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // 更新应付合计和应付金额
+            document.getElementById('total-payable').value = `¥${totalAmount.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('actual-payable').value = `¥${totalAmount.toLocaleString('zh-CN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            // 更新金额大写
+            document.getElementById('total-payable-uppercase').textContent = convertToChineseAmount(totalAmount);
+            document.getElementById('actual-payable-uppercase').textContent = convertToChineseAmount(totalAmount);
+        }
+        function submitPaymentApply() {
+            const paymentMethod = document.getElementById('payment-method').value;
+            
+            // 验证付款方式相关字段
+            if (paymentMethod === '1') {
+                const bankName = document.getElementById('bank-name').value;
+                if (!bankName) {
+                    alert('请选择开户银行');
+                    return;
+                }
+                
+                const bankAccount = document.getElementById('bank-account').value;
+                if (!bankAccount) {
+                    alert('请输入账号');
+                    return;
+                }
+            } else if (paymentMethod === '3' || paymentMethod === '4') {
+                const bankAccount = document.getElementById('bank-account').value;
+                if (!bankAccount) {
+                    alert('请输入账号');
+                    return;
+                }
+            }
+            
+            // 收集表单数据
+            const formData = {
+                businessType: document.getElementById('business-type').value,
+                totalPayable: document.getElementById('total-payable').value,
+                actualPayable: document.getElementById('actual-payable').value,
+                supplierName: document.getElementById('supplier-name').value,
+                paymentMethod: document.getElementById('payment-method').value,
+                bankName: document.getElementById('bank-name').value,
+                bankAccount: document.getElementById('bank-account').value,
+                remark: document.getElementById('remark').value,
+                // 获取预付款信息
+                prepayments: Array.from(document.querySelectorAll('.related-bill-item')).map(item => ({
+                    billNo: item.querySelector('.related-bill-no').textContent,
+                    billType: item.querySelector('.related-bill-type').textContent,
+                    amount: item.querySelector('.related-bill-amount').textContent
+                })),
+                // 获取关联单据信息
+                relatedBills: Array.from(document.querySelectorAll('#related-bills-body tr')).map(row => ({
+                    billNo: row.cells[0].textContent,
+                    billType: row.cells[1].textContent,
+                    amount: row.cells[2].textContent
+                }))
+            };
+            
+            console.log('提交的付款申请数据:', formData);
+            
+            // 模拟提交成功
+            alert('付款申请已提交成功');
+            
+            // 修改跳转地址
+            window.location.href = 'payable-management.html';
+        }
+    </script>
+</body>
+</html>

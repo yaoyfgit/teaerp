@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>供应商对账 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">供应商对账</div>
+        </div>
+        
+        <!-- 搜索区域 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索供应商">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+            </div>
+        </div>
+        
+        <!-- 筛选条件 -->
+        <div class="filter-tags">
+            <div class="filter-tag active">全部</div>
+            <div class="filter-tag">采购入库单</div>
+            <div class="filter-tag">采购退货单</div>
+            <div class="filter-tag">采购费用单</div>
+        </div>
+        
+        <!-- 单据列表 -->
+        <div class="bill-list">
+            <!-- 采购入库单示例 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill1" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('CG202403010001')">
+                    <div class="bill-header">
+                        <div class="bill-type">采购入库单</div>
+                        <div class="bill-no">CG202403010001</div>
+                        <div class="bill-status warning">未申请</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-01</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">供应商:</div>
+                            <div class="bill-value">供应商A</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">应付金额:</div>
+                            <div class="bill-value">¥50,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已付金额:</div>
+                            <div class="bill-value">¥0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未付金额:</div>
+                            <div class="bill-value highlight">¥50,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 采购退货单示例 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill2" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('TH202403020001')">
+                    <div class="bill-header">
+                        <div class="bill-type">采购退货单</div>
+                        <div class="bill-no">TH202403020001</div>
+                        <div class="bill-status info">已申请</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-02</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">供应商:</div>
+                            <div class="bill-value">供应商B</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">应付金额:</div>
+                            <div class="bill-value">¥50,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已付金额:</div>
+                            <div class="bill-value">¥0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未付金额:</div>
+                            <div class="bill-value highlight">¥50,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 采购费用单示例1 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill3" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('FY202403050001')">
+                    <div class="bill-header">
+                        <div class="bill-type">采购费用单</div>
+                        <div class="bill-no">FY202403050001</div>
+                        <div class="bill-status success">已付款</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-05</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">供应商:</div>
+                            <div class="bill-value">供应商C</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">费用金额:</div>
+                            <div class="bill-value">¥15,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已付金额:</div>
+                            <div class="bill-value">¥0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未付金额:</div>
+                            <div class="bill-value highlight">¥15,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 采购费用单示例2 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill4" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('expense', 'FY202403060001')">
+                    <div class="bill-header">
+                        <div class="bill-type">采购费用单</div>
+                        <div class="bill-no">FY202403060001</div>
+                        <div class="bill-status success">已付款</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-06</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">供应商:</div>
+                            <div class="bill-value">供应商D</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">费用金额:</div>
+                            <div class="bill-value">¥8,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已付金额:</div>
+                            <div class="bill-value">¥8,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未付金额:</div>
+                            <div class="bill-value">¥0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 对账单列表 -->
+        <div class="detail-section">
+            <!-- 内容保持不变 -->
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-secondary" onclick="addExpense()">
+                <i class="fas fa-plus-circle"></i> 新增费用
+            </button>
+            <button class="btn btn-secondary" onclick="supplementExpense()">
+                <i class="fas fa-edit"></i> 补录费用
+            </button>
+            <button class="btn btn-primary" onclick="applyPayment()">
+                <i class="fas fa-money-bill-wave"></i> 申请付款
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        function viewBillDetail(billNo) {
+            // 查看单据详情
+            window.location.href = 'supplier-bill-detail.html?id=' + billNo;
+        }
+        
+        function addExpense() {
+            // 新增费用
+            window.location.href = 'expense-create.html';
+        }
+        
+        function supplementExpense() {
+            // 补录费用
+            const selectedBills = getSelectedBills();
+            if (selectedBills.length === 0) {
+                alert('请选择需要补录费用的采购入库单');
+                return;
+            }
+            if (selectedBills.length > 1) {
+                alert('每次只能为一张采购入库单补录费用');
+                return;
+            }
+            window.location.href = 'expense-supplement.html?billId=' + selectedBills[0];
+        }
+        
+        function applyPayment() {
+            // 申请付款
+            const selectedBills = getSelectedBills();
+            if (selectedBills.length === 0) {
+                alert('请选择需要申请付款的单据');
+                return;
+            }
+            window.location.href = 'payment-apply.html?billIds=' + selectedBills.join(',');
+        }
+        
+        function getSelectedBills() {
+            // 获取选中的单据
+            const checkboxes = document.querySelectorAll('.bill-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.closest('.bill-card').querySelector('.bill-no').textContent);
+        }
+    </script>
+</body>
+</html>

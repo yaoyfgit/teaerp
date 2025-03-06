@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>应付单详情 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">应付单详情</div>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">收款对象</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" value="供应商A" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">业务类型</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" value="付款申请单" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">单据号</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" value="FK202403010001" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">付款状态</div>
+                    <div class="form-control-wrapper">
+                        <span class="status-badge warning">部分付款</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 付款明细 -->
+        <div class="detail-section">
+            <div class="detail-section-title">付款明细</div>
+            <div class="form-content">
+                <div class="product-item">
+                    <div class="product-header">
+                        <span class="product-name">茶叶A</span>
+                        <span class="product-code">CP001</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-info">
+                            <div class="info-item">
+                                <span class="info-label">采购单价</span>
+                                <span class="info-value">100.00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">采购数量</span>
+                                <span class="info-value">500</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="info-item">
+                                <span class="info-label">采购金额</span>
+                                <span class="info-value">50,000.00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">税率</span>
+                                <span class="info-value">13%</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="info-item">
+                                <span class="info-label">税额</span>
+                                <span class="info-value">6,500.00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">含税金额</span>
+                                <span class="info-value">56,500.00</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="info-item">
+                                <span class="info-label">折扣金额</span>
+                                <span class="info-value">500.00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">应付金额</span>
+                                <span class="info-value highlight">56,000.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 费用明细 -->
+        <div class="detail-section">
+            <div class="detail-section-title">费用明细</div>
+            <div class="form-content">
+                <div class="expense-item">
+                    <div class="expense-header">
+                        <span class="expense-type">供应商A</span>
+                    </div>
+                    <div class="expense-body">
+                        <div class="expense-info">
+                            <div class="info-item">
+                                <span class="info-label">费用类型</span>
+                                <span class="info-value">运费</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">数量</span>
+                                <span class="info-value">1</span>
+                            </div>
+                        </div>
+                        <div class="expense-info">
+                            <div class="info-item">
+                                <span class="info-label">不含税金额</span>
+                                <span class="info-value">1,769.91</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">税率</span>
+                                <span class="info-value">13%</span>
+                            </div>
+                        </div>
+                        <div class="expense-info">
+                            <div class="info-item">
+                                <span class="info-label">税额</span>
+                                <span class="info-value">230.09</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">含税金额</span>
+                                <span class="info-value">2,000.00</span>
+                            </div>
+                        </div>
+                        <div class="expense-info">
+                            <div class="info-item">
+                                <span class="info-label">折扣金额</span>
+                                <span class="info-value">0.00</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">应付金额</span>
+                                <span class="info-value highlight">2,000.00</span>
+                            </div>
+                        </div>
+                        <div class="expense-info">
+                            <div class="info-item">
+                                <span class="info-label">抵扣进项税</span>
+                                <span class="info-value">是</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">费用分配方式</span>
+                                <span class="info-value highlight">按金额</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关联单据 -->
+        <div class="detail-section">
+            <div class="detail-section-title">关联单据</div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>应付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CG202403010001</td>
+                            <td>采购入库单</td>
+                            <td>56,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>FY202403010001</td>
+                            <td>采购费用单</td>
+                            <td>2,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 付款信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">付款信息</div>
+            <div class="form-content">
+                <div class="payment-list">
+                    <div class="payment-item">
+                        <div class="payment-header">
+                            <span class="payment-date">2024-03-01</span>
+                            <span class="payment-amount">30,000.00</span>
+                        </div>
+                        <div class="payment-body">
+                            <div class="payment-info">
+                                <span class="info-label">付款单号</span>
+                                <span class="info-value">FK202403010001</span>
+                            </div>
+                            <div class="payment-info">
+                                <span class="info-label">付款方式</span>
+                                <span class="info-value">银行转账</span>
+                            </div>
+                            <div class="payment-info">
+                                <span class="info-label">开户银行</span>
+                                <span class="info-value">中国工商银行</span>
+                            </div>
+                            <div class="payment-info">
+                                <span class="info-label">账号</span>
+                                <span class="info-value">6222021234567890123</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+</body>
+</html>

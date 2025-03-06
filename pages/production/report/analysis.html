@@ -56,12 +56,12 @@
                             <div class="stat-value">92.3<span class="stat-unit">%</span></div>
                         </div>
                     </div>
-                </div>
+                            </div>
                 <div class="standard-card stat-card success">
                     <div class="card-body">
                         <div class="stat-icon">
                             <i class="fas fa-check-double"></i>
-                        </div>
+                            </div>
                         <div class="stat-info">
                             <div class="stat-label">计划达成率</div>
                             <div class="stat-value">92.3<span class="stat-unit">%</span></div>
@@ -72,7 +72,7 @@
                     <div class="card-body">
                         <div class="stat-icon">
                             <i class="fas fa-exclamation-triangle"></i>
-                        </div>
+                            </div>
                         <div class="stat-info">
                             <div class="stat-label">不良品率</div>
                             <div class="stat-value">3.2<span class="stat-unit">%</span></div>
@@ -89,8 +89,8 @@
                             <div class="stat-value">1.8<span class="stat-unit">%</span></div>
                         </div>
                     </div>
+                    </div>
                 </div>
-            </div>
 
             <!-- 主要内容卡片 -->
                 <div class="standard-card">
@@ -102,32 +102,32 @@
                     <div class="toolbar">
                         <div class="search-box">
                             <select class="form-control">
-                                <option value="month">本月</option>
-                                <option value="quarter">本季度</option>
-                                <option value="year">本年度</option>
-                                <option value="custom">自定义</option>
-                            </select>
+                                    <option value="month">本月</option>
+                                    <option value="quarter">本季度</option>
+                                    <option value="year">本年度</option>
+                                    <option value="custom">自定义</option>
+                                </select>
                             <input type="date" class="form-control" value="2024-01-01">
-                            <span class="date-separator">至</span>
+                                <span class="date-separator">至</span>
                             <input type="date" class="form-control" value="2024-01-31">
                             <select class="form-control">
-                                <option value="">全部工序</option>
+                                    <option value="">全部工序</option>
                                 <option value="1">窨花</option>
                                 <option value="2">压花</option>
                                 <option value="3">提花</option>
                                 <option value="4">拼配</option>
                                 <option value="5">分装</option>
                                 <option value="6">拆卸</option>
-                            </select>
+                                </select>
                             <button class="btn-primary" onclick="handleSearch()">
                                 <i class="fas fa-search"></i>
                                 查询
-                            </button>
-                        </div>
+                                </button>
+                            </div>
                         <button class="btn-export" onclick="handleExport()">
                             <i class="fas fa-file-excel"></i>
                             导出报表
-                        </button>
+                                </button>
                     </div>
 
                     <!-- 图表区域 -->
@@ -147,8 +147,8 @@
                                             <br>- 计划达成率 = 实际产量 ÷ 计划产量 × 100%
                                             <br>- 统计维度：按工序统计
                                             <br>- 数据更新：每日更新一次
-                                        </div>
-                                    </div>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="chart-content" id="workOrderChart"></div>
                             </div>
@@ -166,8 +166,8 @@
                                             <br>- 标准耗时：工艺要求的标准工序用时
                                             <br>- 统计维度：按工序统计
                                             <br>- 数据更新：每日更新一次
-                                        </div>
-                                    </div>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="chart-content" id="processingTimeChart"></div>
                             </div>
@@ -186,8 +186,8 @@
                                             <br>- 退料率 = 退料数量 ÷ 领料数量 × 100%
                                             <br>- 统计范围：所有已确认的退料记录
                                             <br>- 数据更新：实时更新
-                                        </div>
-                                    </div>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="chart-content" id="materialReturnChart"></div>
                             </div>
@@ -204,8 +204,8 @@
                                             <br>- 不良品率 = 不良品数量 ÷ 生产总数量 × 100%
                                             <br>- 统计范围：所有已确认的不良品记录
                                             <br>- 数据更新：实时更新
-                                        </div>
-                                    </div>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="chart-content" id="defectChart"></div>
                             </div>
@@ -568,11 +568,11 @@
                 tooltip: { trigger: 'item' },
                 legend: { orient: 'vertical', left: 'left' },
                 series: [{
-                    type: 'pie',
-                    radius: '50%',
-                    data: [
-                        { value: 45, name: '工艺参数偏差' },
-                        { value: 25, name: '原料质量问题' },
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            { value: 45, name: '工艺参数偏差' },
+                            { value: 25, name: '原料质量问题' },
                         { value: 20, name: '操作不当' },
                         { value: 10, name: '设备故障' }
                     ],

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单据详情 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">单据详情</div>
+        </div>
+        
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="detail-list">
+                <div class="detail-item">
+                    <div class="detail-label">付款类别</div>
+                    <div class="detail-value" id="payment-category">采购付款</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">收款对象</div>
+                    <div class="detail-value" id="supplier">供应商A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">单据编号</div>
+                    <div class="detail-value" id="bill-no">CG202403010001</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">单据日期</div>
+                    <div class="detail-value" id="bill-date">2024-03-01</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">申请状态</div>
+                    <div class="detail-value">
+                        <span class="status-badge warning" id="apply-status">未申请</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 付款明细 -->
+        <div class="detail-section" id="payment-details-section">
+            <div class="detail-section-title">付款明细</div>
+            <div class="product-list">
+                <div class="product-item">
+                    <div class="product-header">
+                        <div class="product-name">茶叶A</div>
+                        <div class="product-code">CY001</div>
+                    </div>
+                    <div class="product-body">
+                        <div class="form-row">
+                            <div class="form-label">采购单价</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="100.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">采购数量</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="500" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">采购金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="50,000.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税率</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="13%" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="6,500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">含税金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="56,500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">折扣金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">应付金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="56,000.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">备注</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="-" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">凭证</div>
+                            <div class="form-control-wrapper">
+                                <a href="#" class="view-voucher">查看凭证</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 费用明细 -->
+        <div class="detail-section" id="expense-section">
+            <div class="detail-section-title">费用明细</div>
+            <div class="expense-list">
+                <div class="expense-item">
+                    <div class="expense-header">
+                        <div class="expense-type">运费</div>
+                        <div class="expense-amount">2,000.00</div>
+                    </div>
+                    <div class="expense-body">
+                        <div class="form-row">
+                            <div class="form-label">数量</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="1" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">不含税金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="1,769.91" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税率</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="13%" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="230.09" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">含税金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="2,000.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">折扣金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="0.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">应付金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="2,000.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">抵扣进项税</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="是" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">费用分配方式</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="按金额" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">备注</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="长途运输费用" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">凭证</div>
+                            <div class="form-control-wrapper">
+                                <a href="#" class="view-voucher">查看凭证</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 关联单据 -->
+        <div class="detail-section">
+            <div class="detail-section-title">关联单据</div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>应付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CG202403010001</td>
+                            <td>采购入库单</td>
+                            <td>50,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>FY202403010002</td>
+                            <td>采购费用单</td>
+                            <td>2,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 付款信息 -->
+        <div class="detail-section" id="payment-info-section">
+            <div class="detail-section-title">付款信息</div>
+            <div class="payment-list">
+                <div class="payment-item">
+                    <div class="payment-header">
+                        <div class="payment-date">2024-03-05</div>
+                        <div class="payment-amount">20,000.00</div>
+                    </div>
+                    <div class="payment-body">
+                        <div class="form-row">
+                            <div class="form-label">付款单号</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="FK202403050001" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">付款方式</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="银行转账" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">开户银行</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="中国工商银行" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">账号</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="6222 **** **** 1234" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">备注</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="首期付款" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-secondary" onclick="supplementExpense()">
+                <i class="fas fa-edit"></i> 补录费用
+            </button>
+            <button class="btn btn-primary" onclick="applyPayment()">
+                <i class="fas fa-money-bill-wave"></i> 申请付款
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 页面加载时获取URL参数
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const billId = urlParams.get('id');
+            
+            if (billId) {
+                loadBillDetail(billId);
+            }
+            
+            // 根据单据类型显示或隐藏某些区域
+            const billType = document.getElementById('payment-category').textContent;
+            if (billType === '费用付款') {
+                document.getElementById('payment-details-section').style.display = 'none';
+            } else {
+                // 采购付款类型
+                document.getElementById('expense-section').style.display = 'block';
+            }
+        };
+        
+        function loadBillDetail(billId) {
+            // 这里应该是从API加载数据
+            console.log(`加载单据详情: ${billId}`);
+            
+            // 根据单据ID判断单据类型并显示相应内容
+            if (billId.startsWith('CG')) {
+                // 采购入库单
+                document.getElementById('payment-category').textContent = '采购付款';
+                document.getElementById('bill-no').textContent = billId;
+            } else if (billId.startsWith('TH')) {
+                // 采购退货单
+                document.getElementById('payment-category').textContent = '采购付款';
+                document.getElementById('bill-no').textContent = billId;
+            } else if (billId.startsWith('FY')) {
+                // 采购费用单
+                document.getElementById('payment-category').textContent = '费用付款';
+                document.getElementById('bill-no').textContent = billId;
+                document.getElementById('payment-details-section').style.display = 'none';
+            }
+        }
+        
+        function supplementExpense() {
+            const billNo = document.getElementById('bill-no').textContent;
+            window.location.href = `expense-supplement.html?billId=${billNo}`;
+        }
+        
+        function applyPayment() {
+            const billNo = document.getElementById('bill-no').textContent;
+            window.location.href = `payment-apply.html?billIds=${billNo}`;
+        }
+    </script>
+</body>
+</html>

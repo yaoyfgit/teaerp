@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>补录费用 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">补录费用</div>
+        </div>
+        
+        <!-- 基本信息 -->
+        <div class="detail-section">
+            <div class="detail-section-title">基本信息</div>
+            <div class="form-content">
+                <div class="form-row">
+                    <div class="form-label">付款类别</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" value="采购付款" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">收款对象</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="supplier-name" value="供应商A" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 付款明细 -->
+        <div class="detail-section">
+            <div class="detail-section-title">付款明细</div>
+            <div id="payment-items">
+                <div class="product-item">
+                    <div class="product-header">
+                        <div class="product-name">茶叶A</div>
+                        <div class="product-code">CY001</div>
+                    </div>
+                    <div class="product-body">
+                        <div class="form-row">
+                            <div class="form-label">采购单价</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="purchasePrice" value="100.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">采购数量</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="purchaseQuantity" value="500" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">采购金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="purchaseAmount" value="50000.00" onchange="calculateTax(this)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税率(%)</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="taxRate" value="13" onchange="calculateTax(this)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">税额</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="taxAmount" step="0.01" value="6500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">含税金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="amountIncludeTax" step="0.01" value="56500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">折扣金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="discountAmount" step="0.01" value="0" onchange="calculatePayable(this)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">应付金额</div>
+                            <div class="form-control-wrapper">
+                                <input type="number" class="form-control" name="payableAmount" step="0.01" value="56500.00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">备注</div>
+                            <div class="form-control-wrapper">
+                                <textarea class="form-control" name="remark" rows="2" placeholder="请输入备注"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label">凭证</div>
+                            <div class="form-control-wrapper">
+                                <div class="file-upload">
+                                    <input type="file" id="voucher" class="file-input" accept="image/*">
+                                    <label for="voucher" class="file-label">
+                                        <i class="fas fa-upload"></i> 上传凭证
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 关联单据 -->
+        <div class="detail-section">
+            <div class="detail-section-title">关联单据</div>
+            <div class="form-content">
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>单据编号</th>
+                            <th>单据类型</th>
+                            <th>应付金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="related-bill-no">CG202403010001</td>
+                            <td>采购入库单</td>
+                            <td>¥50,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-primary" onclick="submitExpenseSupplement()">
+                <i class="fas fa-check"></i> 提交
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 页面加载时获取URL参数
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const billId = urlParams.get('billId');
+            
+            if (billId) {
+                loadBillInfo(billId);
+            }
+            
+            // 初始化计算
+            calculateTax(document.querySelector('[name="purchaseAmount"]'));
+        };
+        
+        function loadBillInfo(billId) {
+            // 这里应该是从API加载数据
+            console.log(`加载单据信息: ${billId}`);
+            
+            // 设置关联单据信息
+            document.getElementById('related-bill-no').textContent = billId;
+            
+            // 根据单据类型设置不同的默认值
+            if (billId.startsWith('CG')) {
+                // 采购入库单
+                document.querySelector('[name="purchaseAmount"]').value = "50000.00";
+            } else if (billId.startsWith('TH')) {
+                // 采购退货单
+                document.querySelector('[name="purchaseAmount"]').value = "20000.00";
+            }
+            
+            // 重新计算税额和应付金额
+            calculateTax(document.querySelector('[name="purchaseAmount"]'));
+        }
+        
+        function calculateTax(input) {
+            const form = input.closest('.product-body');
+            const amount = parseFloat(form.querySelector('[name="purchaseAmount"]').value) || 0;
+            const taxRate = parseFloat(form.querySelector('[name="taxRate"]').value) || 0;
+            
+            const taxAmount = amount * taxRate / 100;
+            const amountIncludeTax = amount + taxAmount;
+            
+            form.querySelector('[name="taxAmount"]').value = taxAmount.toFixed(2);
+            form.querySelector('[name="amountIncludeTax"]').value = amountIncludeTax.toFixed(2);
+            
+            calculatePayable(form.querySelector('[name="discountAmount"]'));
+        }
+        
+        function calculatePayable(input) {
+            const form = input.closest('.product-body');
+            const amountIncludeTax = parseFloat(form.querySelector('[name="amountIncludeTax"]').value) || 0;
+            const discountAmount = parseFloat(form.querySelector('[name="discountAmount"]').value) || 0;
+            
+            const payableAmount = amountIncludeTax - discountAmount;
+            
+            form.querySelector('[name="payableAmount"]').value = payableAmount.toFixed(2);
+        }
+        
+        function submitExpenseSupplement() {
+            const amount = document.querySelector('[name="purchaseAmount"]').value;
+            if (!amount || parseFloat(amount) <= 0) {
+                alert('请输入有效的采购金额');
+                return;
+            }
+            
+            const taxRate = document.querySelector('[name="taxRate"]').value;
+            if (!taxRate || parseFloat(taxRate) < 0) {
+                alert('请输入有效的税率');
+                return;
+            }
+            
+            // 提交表单数据
+            alert('费用补录已提交');
+            window.location.href = 'supplier-bill-detail.html?id=' + document.getElementById('related-bill-no').textContent;
+        }
+    </script>
+</body>
+</html>

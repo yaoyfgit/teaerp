@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TeaERP 移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 首页内容 -->
+        <div class="page-container" id="home-page">
+            <div class="header">
+                <div class="title">TeaERP</div>
+                <div class="user-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+            
+            <!-- 待办任务 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">待办任务</div>
+                    <a href="#" class="section-more">更多 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-icon warning">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div class="task-content">
+                            <div class="task-title">待审批付款申请</div>
+                            <div class="task-desc">供应商A的付款申请需要审批</div>
+                        </div>
+                        <div class="task-badge">5</div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-icon primary">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="task-content">
+                            <div class="task-title">待对账单据</div>
+                            <div class="task-desc">有3笔采购入库单需要对账</div>
+                        </div>
+                        <div class="task-badge">3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 公告 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">公告</div>
+                    <a href="#" class="section-more">更多 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="notice-list">
+                    <div class="notice-item">
+                        <div class="notice-title">系统升级通知</div>
+                        <div class="notice-time">2024-03-15</div>
+                        <div class="notice-desc">系统将于本周六晚上22:00-次日凌晨2:00进行升级维护，请提前做好相关工作安排。</div>
+                    </div>
+                    <div class="notice-item">
+                        <div class="notice-title">财务月结通知</div>
+                        <div class="notice-time">2024-03-10</div>
+                        <div class="notice-desc">请各部门于本月25日前完成所有单据提交，财务部将于月底进行结账。</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分析看板 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">分析看板</div>
+                </div>
+                <div class="dashboard">
+                    <div class="dashboard-item">
+                        <div class="dashboard-title">本月应付</div>
+                        <div class="dashboard-value">¥125,000</div>
+                        <div class="dashboard-chart">
+                            <!-- 这里可以放置简单图表 -->
+                        </div>
+                    </div>
+                    <div class="dashboard-item">
+                        <div class="dashboard-title">已付款</div>
+                        <div class="dashboard-value">¥85,000</div>
+                        <div class="dashboard-chart">
+                            <!-- 这里可以放置简单图表 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 工作台页面 -->
+        <div class="page-container hidden" id="workspace-page">
+            <div class="header">
+                <div class="title">工作台</div>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-section">
+                    <div class="menu-section-title">财务管理</div>
+                    <div class="menu-items">
+                        <a href="finance/supplier-reconciliation.html" class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="menu-name">供应商对账</div>
+                        </a>
+                        <a href="finance/payable-management.html" class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="menu-name">应付管理</div>
+                        </a>
+                        <a href="finance/prepayment-create.html" class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="menu-name">预付申请</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 消息页面 -->
+        <div class="page-container hidden" id="message-page">
+            <div class="header">
+                <div class="title">消息</div>
+            </div>
+            
+            <div class="message-list">
+                <div class="message-item unread">
+                    <div class="message-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-title">付款申请已审批</div>
+                        <div class="message-desc">您提交的付款申请(FK202403150001)已审批通过</div>
+                        <div class="message-time">10:30</div>
+                    </div>
+                </div>
+                <div class="message-item">
+                    <div class="message-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-title">系统通知</div>
+                        <div class="message-desc">您有一个新的待办任务需要处理</div>
+                        <div class="message-time">昨天</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 我的页面 -->
+        <div class="page-container hidden" id="profile-page">
+            <div class="header">
+                <div class="title">我的</div>
+            </div>
+            
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">管理员</div>
+                    <div class="profile-role">系统管理员</div>
+                </div>
+            </div>
+            
+            <div class="menu-list">
+                <a href="#" class="menu-list-item">
+                    <i class="fas fa-cog"></i>
+                    <span>账户设置</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-list-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>安全中心</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-list-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>帮助与反馈</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="#" class="menu-list-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span>关于</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            
+            <div class="logout-button">
+                <button class="btn btn-outline-danger">退出登录</button>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="tab-bar">
+            <div class="tab-item active" data-page="home-page">
+                <i class="fas fa-home"></i>
+                <span>首页</span>
+            </div>
+            <div class="tab-item" data-page="workspace-page">
+                <i class="fas fa-th-large"></i>
+                <span>工作台</span>
+            </div>
+            <div class="tab-item" data-page="message-page">
+                <i class="fas fa-comment"></i>
+                <span>消息</span>
+            </div>
+            <div class="tab-item" data-page="profile-page">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mobile.js"></script>
+</body>
+</html>

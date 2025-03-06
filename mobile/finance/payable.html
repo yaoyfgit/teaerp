@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>应付管理 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">应付管理</div>
+        </div>
+        
+        <!-- 搜索区域 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索供应商或单据编号">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+            </div>
+        </div>
+        
+        <!-- 筛选条件 -->
+        <div class="filter-tags">
+            <div class="filter-tag active">全部</div>
+            <div class="filter-tag">待付款</div>
+            <div class="filter-tag">已申请</div>
+            <div class="filter-tag">已付款</div>
+            <div class="filter-tag">已逾期</div>
+        </div>
+        
+        <!-- 应付单列表 -->
+        <div class="bill-list">
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">采购入库单</div>
+                    <div class="bill-no">CG202403010001</div>
+                    <div class="bill-status warning">待付款</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">供应商:</div>
+                        <div class="bill-value">供应商A</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-03-01</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应付金额:</div>
+                        <div class="bill-value highlight">¥50,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已付金额:</div>
+                        <div class="bill-value">¥0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">到期日:</div>
+                        <div class="bill-value">2024-04-01</div>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button class="action-button" onclick="viewPayable(1)">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="action-button primary" onclick="applyPayment(1)">
+                        <i class="fas fa-money-bill-wave"></i> 申请付款
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">采购费用单</div>
+                    <div class="bill-no">FY202403020001</div>
+                    <div class="bill-status info">已申请</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">供应商:</div>
+                        <div class="bill-value">供应商B</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-03-02</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应付金额:</div>
+                        <div class="bill-value highlight">¥15,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已付金额:</div>
+                        <div class="bill-value">¥0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">到期日:</div>
+                        <div class="bill-value">2024-04-02</div>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button class="action-button" onclick="viewPayable(2)">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="action-button" disabled>
+                        <i class="fas fa-clock"></i> 审批中
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">采购入库单</div>
+                    <div class="bill-no">CG202402150001</div>
+                    <div class="bill-status success">已付款</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">供应商:</div>
+                        <div class="bill-value">供应商C</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-02-15</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应付金额:</div>
+                        <div class="bill-value">¥30,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已付金额:</div>
+                        <div class="bill-value highlight">¥30,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">付款日期:</div>
+                        <div class="bill-value">2024-03-10</div>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button class="action-button" onclick="viewPayable(3)">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="action-button" onclick="viewPaymentDetail(3)">
+                        <i class="fas fa-receipt"></i> 付款详情
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">采购入库单</div>
+                    <div class="bill-no">CG202402010001</div>
+                    <div class="bill-status danger">已逾期</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">供应商:</div>
+                        <div class="bill-value">供应商D</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-02-01</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应付金额:</div>
+                        <div class="bill-value highlight">¥45,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已付金额:</div>
+                        <div class="bill-value">¥0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">到期日:</div>
+                        <div class="bill-value danger">2024-03-01</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">逾期天数:</div>
+                        <div class="bill-value danger">15天</div>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button class="action-button" onclick="viewPayable(4)">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="action-button primary" onclick="applyPayment(4)">
+                        <i class="fas fa-money-bill-wave"></i> 申请付款
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 加载更多 -->
+        <div class="load-more">
+            <i class="fas fa-spinner"></i> 加载更多
+        </div>
+        
+        <!-- 浮动操作按钮 -->
+        <div class="fab" onclick="createPrepayment()">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 筛选标签点击事件
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // 这里可以添加筛选逻辑
+                    filterBills(this.textContent.trim());
+                });
+            });
+            
+            // 加载更多点击事件
+            const loadMore = document.querySelector('.load-more');
+            if (loadMore) {
+                loadMore.addEventListener('click', function() {
+                    this.innerHTML = '<i class="fas fa-spinner"></i> 加载中...';
+                    // 模拟加载更多数据
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-spinner"></i> 加载更多';
+                        // 这里可以添加加载更多的逻辑
+                    }, 1000);
+                });
+            }
+        });
+        
+        // 筛选账单
+        function filterBills(filterType) {
+            console.log('筛选类型:', filterType);
+            // 这里实现筛选逻辑
+        }
+    </script>
+</body>
+</html>
