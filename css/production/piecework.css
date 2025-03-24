@@ -1,0 +1,524 @@
+/* 计件管理模块样式 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.page-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    margin: 0;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #81D8D0;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(129, 216, 208, 0.2);
+}
+
+.standard-button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.standard-button:hover {
+    background-color: #e9e9e9;
+}
+
+.standard-button.primary {
+    background-color: #81D8D0;
+    color: white;
+    border-color: #81D8D0;
+}
+
+.standard-button.primary:hover {
+    background-color: #6ECDC5;
+    border-color: #6ECDC5;
+}
+
+.standard-button.danger {
+    background-color: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+}
+
+.standard-button.danger:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+    color: #444;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.button-link {
+    background: none;
+    border: none;
+    color: #81D8D0;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.button-link:hover {
+    text-decoration: underline;
+}
+
+.button-link.danger {
+    color: #ff6b6b;
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    margin: 0 3px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.page-btn.active {
+    background-color: #81D8D0;
+    color: white;
+    border-color: #81D8D0;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    margin-left: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 600px;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #999;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 表单样式 */
+/* 计件管理模块样式 */
+/* 统计卡片样式 */
+.stats-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stats-card {
+    flex: 1;
+    min-width: 220px;
+    background-color: var(--bg-white);
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card:nth-child(1) {
+    border-left: 4px solid #8e44ad;
+}
+
+.stats-card:nth-child(2) {
+    border-left: 4px solid #27ae60;
+}
+
+.stats-card:nth-child(3) {
+    border-left: 4px solid #f39c12;
+}
+
+.stats-card:nth-child(4) {
+    border-left: 4px solid #3498db;
+}
+
+.stats-card i {
+    font-size: 24px;
+    margin-right: 16px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.stats-card:nth-child(1) i {
+    color: #8e44ad;
+    background-color: rgba(142, 68, 173, 0.1);
+}
+
+.stats-card:nth-child(2) i {
+    color: #27ae60;
+    background-color: rgba(39, 174, 96, 0.1);
+}
+
+.stats-card:nth-child(3) i {
+    color: #f39c12;
+    background-color: rgba(243, 156, 18, 0.1);
+}
+
+.stats-card:nth-child(4) i {
+    color: #3498db;
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.stats-info {
+    flex: 1;
+}
+
+.stats-title {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.stats-value {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* 报表状态标签 */
+.report-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.report-status.draft {
+    background-color: #fff8e1;
+    color: #f39c12;
+    border: 1px solid #f39c12;
+}
+
+.report-status.submitted {
+    background-color: #e3f2fd;
+    color: #2196f3;
+    border: 1px solid #2196f3;
+}
+
+.report-status.approved {
+    background-color: #e8f5e9;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+}
+
+.report-status.rejected {
+    background-color: #ffebee;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+/* 计件项表格样式 */
+.piecework-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.piecework-table th {
+    background: #fafafa;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13px;
+}
+
+.piecework-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.piecework-table .total-row {
+    background-color: #f5f5f5;
+    font-weight: 500;
+}
+
+.piecework-table .quantity-input {
+    width: 80px;
+    text-align: center;
+}
+
+/* 查看详情样式 */
+.view-section {
+    margin-bottom: 20px;
+}
+
+.view-section-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.view-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    gap: 20px;
+}
+
+.view-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.view-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.view-field {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.view-field-full {
+    width: 100%;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* 按钮链接样式 */
+.button-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.button-link:hover {
+    background-color: rgba(143, 212, 210, 0.1);
+}
+
+.button-link.primary {
+    color: #2196f3;
+}
+
+.button-link.primary:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.button-link.danger {
+    color: #e74c3c;
+}
+
+.button-link.danger:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* 表单样式调整 */
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-section-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.required {
+    color: #e74c3c;
+}

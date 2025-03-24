@@ -13,8 +13,149 @@
     <div class="app-container">
         <!-- 侧边栏 -->
         <div class="sidebar">
-            <div class="main-menu"></div>
+            <div class="main-menu">
+                <ul>
+                    <li>
+                        <a href="index.html" class="menu-item">
+                            <i class="fas fa-home"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>销售管理</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li>
+                                <a href="pages/sales/order/list.html">
+                                    <span>订单管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/sales/customer/list.html">
+                                    <span>客户管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/sales/contract/list.html">
+                                    <span>合同管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <i class="fas fa-warehouse"></i>
+                            <span>库存管理</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li>
+                                <a href="pages/inventory/inbound/list.html">
+                                    <span>入库管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/inventory/outbound/list.html">
+                                    <span>出库管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/inventory/stock/list.html">
+                                    <span>库存查询</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- 在生产管理子菜单中添加标准管理选项 -->
+                    <li>
+                        <div class="menu-item">
+                            <i class="fas fa-industry"></i>
+                            <span>生产管理</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li>
+                                <a href="pages/production/plan/list.html">
+                                    <span>生产计划</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/production/task/list.html">
+                                    <span>生产任务</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/production/process/list.html">
+                                    <span>工艺管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/production/standard/manage.html">
+                                    <span>标准管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>统计分析</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li>
+                                <a href="pages/analytics/sales/dashboard.html">
+                                    <span>销售分析</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/analytics/production/dashboard.html">
+                                    <span>生产分析</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/analytics/inventory/dashboard.html">
+                                    <span>库存分析</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <i class="fas fa-cog"></i>
+                            <span>系统设置</span>
+                            <i class="fas fa-chevron-down arrow"></i>
+                        </div>
+                        <ul class="submenu">
+                            <li>
+                                <a href="pages/settings/user/list.html">
+                                    <span>用户管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/settings/role/list.html">
+                                    <span>角色管理</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/settings/permission/list.html">
+                                    <span>权限设置</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="pages/settings/parameter/list.html">
+                                    <span>系统参数</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
+        
         <!-- 主内容区 -->
         <div class="main-content">
             <!-- 顶部导航栏 -->

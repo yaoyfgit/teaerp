@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>应收管理</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            background-color: #fff;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .card-status {
+            font-size: 13px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .card-status.pending {
+            background-color: #fff7e6;
+            color: #fa8c16;
+        }
+        
+        .card-status.completed {
+            background-color: #f6ffed;
+            color: #52c41a;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .card-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .info-value.highlight {
+            color: #f5222d;
+            font-weight: 500;
+        }
+        
+        .card-footer {
+            padding: 10px 15px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .filter-section {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .filter-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .filter-item {
+            flex: 1;
+        }
+        
+        .filter-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .filter-control {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #ddd;
+            border-radius: 18px;
+            padding: 0 15px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+        
+        .action-bar {
+            position: sticky;
+            top: 44px;
+            background-color: #fff;
+            padding: 10px 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-bar {
+            display: flex;
+            background-color: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 10px;
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab-item.active {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        
+        .tab-item.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background-color: #1890ff;
+        }
+        
+        .empty-state {
+            padding: 40px 0;
+            text-align: center;
+            color: #999;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+        
+        .empty-state-text {
+            font-size: 14px;
+        }
+        
+        .btn {
+            height: 36px;
+            border-radius: 18px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1890ff, #096dd9);
+            border: none;
+            color: #fff;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .header-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .action-button {
+            color: #333;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <div class="header">
+            <a href="javascript:history.back();" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">应收管理</div>
+            <div class="header-action">
+                <a href="new-receivable.html" class="action-button">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 筛选区域 -->
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="filter-item">
+                    <div class="filter-label">客户</div>
+                    <select class="filter-control">
+                        <option value="">全部</option>
+                        <option value="1">客户A</option>
+                        <option value="2">客户B</option>
+                        <option value="3">客户C</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <div class="filter-label">状态</div>
+                    <select class="filter-control">
+                        <option value="">全部</option>
+                        <option value="pending">待收款</option>
+                        <option value="partial">部分收款</option>
+                        <option value="completed">已收款</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-item">
+                    <div class="filter-label">日期范围</div>
+                    <input type="date" class="filter-control" placeholder="开始日期">
+                </div>
+                <div class="filter-item">
+                    <div class="filter-label">&nbsp;</div>
+                    <input type="date" class="filter-control" placeholder="结束日期">
+                </div>
+            </div>
+            <div class="filter-row">
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+            </div>
+        </div>
+        
+        <!-- 标签页 -->
+        <div class="tab-bar">
+            <div class="tab-item active">全部</div>
+            <div class="tab-item">待收款</div>
+            <div class="tab-item">已收款</div>
+        </div>
+        
+        <!-- 应收列表 -->
+        <div class="card-list">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">应收单号: AR-2023-0001</div>
+                    <div class="card-status pending">待收款</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-info">
+                        <div class="info-item">
+                            <div class="info-label">客户</div>
+                            <div class="info-value">客户A</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">应收金额</div>
+                            <div class="info-value highlight">¥10,000.00</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">创建日期</div>
+                            <div class="info-value">2023-12-15</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">到期日</div>
+                            <div class="info-value">2024-01-15</div>
+                        </div>
+                    </div>
+                    <div class="info-item" style="margin-top: 5px;">
+                        <div class="info-label">备注</div>
+                        <div class="info-value">销售货款</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline" onclick="location.href='adjust-receivable.html?id=AR-2023-0001'">
+                        <i class="fas fa-edit"></i> 调整
+                    </button>
+                    <button class="btn btn-primary" onclick="showReceiveModal('AR-2023-0001')">
+                        <i class="fas fa-check"></i> 收款
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">应收单号: AR-2023-0002</div>
+                    <div class="card-status completed">已收款</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-info">
+                        <div class="info-item">
+                            <div class="info-label">客户</div>
+                            <div class="info-value">客户B</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">应收金额</div>
+                            <div class="info-value highlight">¥5,000.00</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">创建日期</div>
+                            <div class="info-value">2023-12-10</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">收款日期</div>
+                            <div class="info-value">2023-12-20</div>
+                        </div>
+                    </div>
+                    <div class="info-item" style="margin-top: 5px;">
+                        <div class="info-label">备注</div>
+                        <div class="info-value">服务费</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline" onclick="viewReceivableDetail('AR-2023-0002')">
+                        <i class="fas fa-eye"></i> 查看详情
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-primary" onclick="location.href='new-receivable.html'">
+                <i class="fas fa-plus"></i> 新增应收
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // 显示收款模态框
+        function showReceiveModal(receivableId) {
+            document.getElementById('receivable-id').value = receivableId;
+            // 模拟获取应收金额
+            document.getElementById('receivable-amount').value = '¥10,000.00';
+            // 设置默认收款日期为今天
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('receive-date').value = today;
+            // 显示模态框
+            document.getElementById('receive-modal').classList.add('active');
+        }
+        
+        // 关闭收款模态框
+        function closeReceiveModal() {
+            document.getElementById('receive-modal').classList.remove('active');
+        }
+        
+        // 提交收款
+        function submitReceive() {
+            const receivableId = document.getElementById('receivable-id').value;
+            const receiveAmount = document.getElementById('receive-amount').value;
+            const receiveDate = document.getElementById('receive-date').value;
+            const receiveMethod = document.getElementById('receive-method').value;
+            const receiveRemark = document.getElementById('receive-remark').value;
+            
+            // 验证收款金额
+            if (!receiveAmount || parseFloat(receiveAmount) <= 0) {
+                alert('请输入有效的收款金额');
+                return;
+            }
+            
+            // 验证收款日期
+            if (!receiveDate) {
+                alert('请选择收款日期');
+                return;
+            }
+            
+            // 模拟提交收款
+            console.log('提交收款:', {
+                receivableId,
+                receiveAmount,
+                receiveDate,
+                receiveMethod,
+                receiveRemark
+            });
+            
+            // 关闭模态框
+            closeReceiveModal();
+            
+            // 显示成功提示
+            alert('收款成功');
+            
+            // 刷新页面
+            location.reload();
+        }
+        
+        // 查看应收详情
+        function viewReceivableDetail(receivableId) {
+            // 跳转到应收详情页面
+            location.href = 'receivable-detail.html?id=' + receivableId;
+        }
+        
+        // 初始化标签页切换
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabItems = document.querySelectorAll('.tab-item');
+            tabItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    tabItems.forEach(tab => tab.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 这里应该根据选中的标签页筛选数据
+                    const tabName = this.textContent.trim();
+                    console.log('切换到标签页:', tabName);
+                    
+                    // 模拟加载数据
+                    simulateLoading();
+                });
+            });
+            
+            // 初始化下拉刷新
+            initPullToRefresh();
+            
+            // 初始化上拉加载更多
+            initLoadMore();
+        });
+        
+        // 模拟加载数据
+        function simulateLoading() {
+            const loadMoreText = document.getElementById('load-more-text');
+            loadMoreText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在加载...';
+            
+            setTimeout(() => {
+                loadMoreText.textContent = '上拉加载更多';
+            }, 1000);
+        }
+        
+        // 初始化下拉刷新
+        function initPullToRefresh() {
+            let startY = 0;
+            let distance = 0;
+            const threshold = 100;
+            const pullToRefresh = document.getElementById('pull-to-refresh');
+            const container = document.querySelector('.container');
+            
+            container.addEventListener('touchstart', function(e) {
+                if (container.scrollTop === 0) {
+                    startY = e.touches[0].clientY;
+                }
+            });
+            
+            container.addEventListener('touchmove', function(e) {
+                if (container.scrollTop === 0 && e.touches[0].clientY > startY) {
+                    distance = e.touches[0].clientY - startY;
+                    if (distance > 0 && distance < threshold) {
+                        pullToRefresh.style.display = 'flex';
+                        pullToRefresh.style.height = distance + 'px';
+                        e.preventDefault();
+                    }
+                }
+            });
+            
+            container.addEventListener('touchend', function() {
+                if (distance > 0) {
+                    if (distance > threshold / 2) {
+                        // 触发刷新
+                        pullToRefresh.style.height = '50px';
+                        setTimeout(() => {
+                            // 模拟刷新完成
+                            pullToRefresh.style.height = '0';
+                            setTimeout(() => {
+                                pullToRefresh.style.display = 'none';
+                                distance = 0;
+                            }, 300);
+                        }, 1000);
+                    } else {
+                        // 取消刷新
+                        pullToRefresh.style.height = '0';
+                        setTimeout(() => {
+                            pullToRefresh.style.display = 'none';
+                            distance = 0;
+                        }, 300);
+                    }
+                }
+            });
+        }
+        
+        // 初始化上拉加载更多
+        function initLoadMore() {
+            const container = document.querySelector('.container');
+            const loadMore = document.getElementById('load-more');
+            
+            container.addEventListener('scroll', function() {
+                const scrollHeight = container.scrollHeight;
+                const scrollTop = container.scrollTop;
+                const clientHeight = container.clientHeight;
+                
+                if (scrollTop + clientHeight >= scrollHeight - 50) {
+                    // 触发加载更多
+                    simulateLoading();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

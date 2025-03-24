@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新增应收</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* 页面特定样式 */
+        .expense-item {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .form-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid #e8e8e8;
+            padding: 0 12px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            padding: 10px 12px;
+        }
+        
+        .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff4d4f;
+            background-color: #fff2f0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .delete-button:hover {
+            background-color: #ffccc7;
+        }
+        
+        .btn {
+            height: 44px;
+            border-radius: 22px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1890ff, #096dd9);
+            border: none;
+            color: #fff;
+        }
+        
+        .btn-primary:active {
+            background: linear-gradient(135deg, #096dd9, #0050b3);
+        }
+        
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #595959;
+            border: 1px solid #d9d9d9;
+        }
+        
+        .btn-secondary:active {
+            background-color: #e8e8e8;
+        }
+        
+        .btn-sm {
+            height: 32px;
+            font-size: 13px;
+            padding: 0 12px;
+        }
+        
+        .btn-danger {
+            background-color: #ff4d4f;
+            color: #fff;
+        }
+        
+        .detail-section {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .detail-section-title {
+            font-size: 15px;
+            font-weight: 500;
+            padding: 15px;
+            background-color: #fafafa;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .form-content {
+            padding: 15px;
+            background-color: #fff;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .file-label {
+            height: 44px;
+            border-radius: 8px;
+            border: 1px dashed #d9d9d9;
+            background-color: #fafafa;
+            transition: all 0.3s;
+        }
+        
+        .file-label:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+        
+        .related-document {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .document-type {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .document-number {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .document-amount {
+            font-size: 14px;
+            color: #ff4d4f;
+            font-weight: 500;
+        }
+        
+        .bottom-bar {
+            padding: 15px;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+        
+        .title {
+            font-size: 17px;
+            font-weight: 500;
+        }
+        
+        /* 添加动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .expense-item {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .related-document {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 内容保持不变 -->
+    </div>
+
+    <script src="../js/mobile.js"></script>
+    <script>
+        // JavaScript 代码保持不变
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化文件上传控件
+            const fileInputs = document.querySelectorAll('.file-input');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const fileName = e.target.files[0] ? e.target.files[0].name : '';
+                    const label = input.nextElementSibling;
+                    if (fileName) {
+                        label.innerHTML = `<i class="fas fa-file"></i> ${fileName}`;
+                    } else {
+                        label.innerHTML = `<i class="fas fa-upload"></i> 上传凭证`;
+                    }
+                });
+            });
+            
+            // 初始化表单控件
+            const formControls = document.querySelectorAll('.form-control');
+            formControls.forEach(control => {
+                // 添加焦点样式
+                control.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                control.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>客户对账 - TeaERP移动端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+</head>
+<body>
+    <div class="app">
+        <div class="nav-bar">
+            <a href="javascript:history.back()" class="back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">客户对账</div>
+        </div>
+        
+        <!-- 搜索区域 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索客户">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+            </div>
+        </div>
+        
+        <!-- 筛选条件 -->
+        <div class="filter-tags">
+            <div class="filter-tag active">全部</div>
+            <div class="filter-tag">销售出库单</div>
+            <div class="filter-tag">销售退货单</div>
+            <div class="filter-tag">其他应收单</div>
+        </div>
+        
+        <!-- 单据列表 -->
+        <div class="bill-list">
+            <!-- 销售出库单示例 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill1" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('CG202403010001')">
+                    <div class="bill-header">
+                        <div class="bill-type">销售出库单</div>
+                        <div class="bill-no">XS202403010001</div>
+                        <div class="bill-status warning">未提交</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-01</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">客户名称:</div>
+                            <div class="bill-value">客户A</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">应收金额:</div>
+                            <div class="bill-value">50,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已收金额:</div>
+                            <div class="bill-value">0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未收金额:</div>
+                            <div class="bill-value">50,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 销售退货单示例 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill2" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('TH202403020001')">
+                    <div class="bill-header">
+                        <div class="bill-type">销售退货单</div>
+                        <div class="bill-no">TH202403020001</div>
+                        <div class="bill-status info warning">未申请</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-02</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">客户名称:</div>
+                            <div class="bill-value">客户B</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">应收金额:</div>
+                            <div class="bill-value">50,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已收金额:</div>
+                            <div class="bill-value">0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未收金额:</div>
+                            <div class="bill-value">50,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他应收单示例1 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill3" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('FY202403050001')">
+                    <div class="bill-header">
+                        <div class="bill-type">其他应收单</div>
+                        <div class="bill-no">FY202403050001</div>
+                        <div class="bill-status success">已申请</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-05</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">客户名称:</div>
+                            <div class="bill-value">客户C</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">费用金额:</div>
+                            <div class="bill-value">15,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已收金额:</div>
+                            <div class="bill-value">0.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未收金额:</div>
+                            <div class="bill-value">15,000.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 销售费用单示例2 -->
+            <div class="bill-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="bill4" class="bill-checkbox">
+                </div>
+                <div class="bill-content" onclick="viewBillDetail('expense', 'FY202403060001')">
+                    <div class="bill-header">
+                        <div class="bill-type">销售费用单</div>
+                        <div class="bill-no">FY202403060001</div>
+                        <div class="bill-status success">已申请</div>
+                    </div>
+                    <div class="bill-body">
+                        <div class="bill-item">
+                            <div class="bill-label">单据日期:</div>
+                            <div class="bill-value">2024-03-06</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">客户名称:</div>
+                            <div class="bill-value">客户D</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">费用金额:</div>
+                            <div class="bill-value">8,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">已收金额:</div>
+                            <div class="bill-value">8,000.00</div>
+                        </div>
+                        <div class="bill-item">
+                            <div class="bill-label">未收金额:</div>
+                            <div class="bill-value">0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 对账单列表 -->
+        <div class="detail-section">
+            <!-- 内容保持不变 -->
+        </div>
+        
+        <!-- 底部操作按钮 -->
+        <div class="bottom-bar">
+            <button class="btn btn-secondary" onclick="addExpense()">
+                <i class="fas fa-plus-circle"></i> 新增费用
+            </button>
+            <button class="btn btn-secondary" onclick="supplementExpense()">
+                <i class="fas fa-edit"></i> 补录费用
+            </button>
+            <button class="btn btn-primary" onclick="applyPayment()">
+                <i class="fas fa-money-bill-wave"></i> 申请收款
+            </button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>客户对账</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/finance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* 页面特定样式，覆盖finance.css中的部分样式 */
+        .bill-card {
+            background-color: white;
+            margin: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .bill-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bill-type-tag {
+            width: 4px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        
+        .bill-type-tag.outbound {
+            background-color: #ffa500;
+        }
+        
+        .bill-type-tag.return {
+            background-color: #ffa500;
+        }
+        
+        .bill-type-tag.expense {
+            background-color: #52c41a;
+        }
+        
+        .bill-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+        
+        .bill-no {
+            font-size: 13px;
+            color: #999;
+            margin-left: 5px;
+        }
+        
+        .bill-body {
+            padding: 10px 15px;
+        }
+        
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        
+        .bill-label {
+            color: #666;
+        }
+        
+        .bill-value {
+            color: #333;
+            text-align: right;
+        }
+        
+        .bill-footer {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .checkbox-wrapper {
+            margin-right: auto;
+        }
+        
+        .bill-checkbox {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-left: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color, #4cd3c2);
+            color: white;
+            border: none;
+        }
+        
+        .filter-tag {
+            background-color: #f5f5f5;
+        }
+        
+        .filter-tag.active {
+            background-color: var(--primary-color, #4cd3c2);
+        }
+        
+        .bottom-bar {
+            background-color: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .bottom-bar .btn-primary {
+            background-color: var(--primary-color, #4cd3c2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <div class="header">
+            <a href="javascript:history.back();" class="back-button">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="title">客户对账</div>
+        </div>
+        
+        <!-- 搜索区域 -->
+        <div class="search-bar">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索客户名称">
+            </div>
+            <div class="filter-button">
+                <i class="fas fa-filter"></i>
+            </div>
+        </div>
+        
+        <!-- 筛选标签 -->
+        <div class="filter-tags">
+            <div class="filter-tag active">全部</div>
+            <div class="filter-tag">未收款</div>
+            <div class="filter-tag">已收款</div>
+        </div>
+        
+        <!-- 单据列表 -->
+        <div class="bill-list">
+            <!-- 销售出库单 -->
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type-tag outbound"></div>
+                    <div class="bill-title">销售出库单</div>
+                    <div class="bill-no">CK202403020001</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-03-01</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">客户名称:</div>
+                        <div class="bill-value">客户A</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应收金额:</div>
+                        <div class="bill-value">50,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已收金额:</div>
+                        <div class="bill-value">0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">未收金额:</div>
+                        <div class="bill-value">50,000.00</div>
+                    </div>
+                </div>
+                <div class="bill-footer">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="bill-checkbox" value="CK202403020001">
+                    </div>
+                    <button class="btn btn-outline" onclick="viewBillDetail('CK202403020001')">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="btn btn-primary" onclick="showReceiveModal('CK202403020001')">
+                        <i class="fas fa-check"></i> 收款
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 销售退货单 -->
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type-tag return"></div>
+                    <div class="bill-title">销售退货单</div>
+                    <div class="bill-no">TH202403020001</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-03-02</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">客户名称:</div>
+                        <div class="bill-value">客户B</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">应收金额:</div>
+                        <div class="bill-value">-20,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已收金额:</div>
+                        <div class="bill-value">0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">未收金额:</div>
+                        <div class="bill-value">-20,000.00</div>
+                    </div>
+                </div>
+                <div class="bill-footer">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="bill-checkbox" value="TH202403020001">
+                    </div>
+                    <button class="btn btn-outline" onclick="viewBillDetail('TH202403020001')">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="btn btn-primary" onclick="showReceiveModal('TH202403020001')">
+                        <i class="fas fa-check"></i> 收款
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 销售费用单 -->
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type-tag expense"></div>
+                    <div class="bill-title">销售费用单</div>
+                    <div class="bill-no">FY202403050001</div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-item">
+                        <div class="bill-label">单据日期:</div>
+                        <div class="bill-value">2024-03-05</div>
+                    </div>    
+                    <div class="bill-item">
+                        <div class="bill-label">费用金额:</div>
+                        <div class="bill-value">8,000.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">已收金额:</div>
+                        <div class="bill-value">0.00</div>
+                    </div>
+                    <div class="bill-item">
+                        <div class="bill-label">未收金额:</div>
+                        <div class="bill-value">8,000.00</div>
+                    </div>
+                </div>
+                <div class="bill-footer">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" class="bill-checkbox" value="FY202403050001">
+                    </div>
+                    <button class="btn btn-outline" onclick="viewBillDetail('FY202403050001')">
+                        <i class="fas fa-eye"></i> 查看
+                    </button>
+                    <button class="btn btn-primary" onclick="showReceiveModal('FY202403050001')">
+                        <i class="fas fa-check"></i> 收款
+                    </button>
+                </div>
+            </div>
+        </div>
+                        
+        <!-- 底部操作栏 -->
+        <div class="bottom-bar">
+            <div class="btn btn-secondary" id="select-all-btn">
+                <i class="fas fa-check-square"></i> 全选
+            </div>
+            <div class="btn btn-primary" id="batch-receive-btn">
+                <i class="fas fa-money-bill-wave"></i> 批量收款
+            </div>
+        </div>
+    </div>
+                    
+    <!-- 收款模态框 -->
+    <div class="modal" id="receive-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">收款</div>
+                <button class="modal-close" onclick="closeReceiveModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-label">收款单号</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="receive-no" readonly value="SK202403100001">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">客户名称</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="customer-name" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">应收金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" id="receivable-amount" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">收款金额</div>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" id="receive-amount" step="0.01">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">收款日期</div>
+                    <div class="form-control-wrapper">
+                        <input type="date" class="form-control" id="receive-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">收款方式</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="receive-method">
+                            <option value="1">银行转账</option>
+                            <option value="2">现金</option>
+                            <option value="3">支票</option>
+                            <option value="4">其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">备注</div>
+                    <div class="form-control-wrapper">
+                        <textarea class="form-control" id="receive-remark" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeReceiveModal()">取消</button>
+                <button class="btn btn-primary" onclick="submitReceive()">确认收款</button>
+            </div>
+        </div>
+    </div>
+                    
+    <!-- 筛选模态框 -->
+    <div class="modal" id="filter-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">筛选条件</div>
+                <button class="modal-close" onclick="closeFilterModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-label">客户</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="filter-customer">
+                            <option value="">全部</option>
+                            <option value="1">客户A</option>
+                            <option value="2">客户B</option>
+                            <option value="3">客户C</option>
+                            <option value="4">客户D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">单据类型</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="filter-bill-type">
+                            <option value="">全部</option>
+                            <option value="1">销售出库单</option>
+                            <option value="2">销售退货单</option>
+                            <option value="3">销售费用单</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">单据状态</div>
+                    <div class="form-control-wrapper">
+                        <select class="form-control" id="filter-bill-status">
+                            <option value="">全部</option>
+                            <option value="1">未收款</option>
+                            <option value="2">部分收款</option>
+                            <option value="3">已收款</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">日期范围</div>
+                    <div class="form-control-wrapper" style="display: flex; gap: 10px;">
+                        <input type="date" class="form-control" id="filter-start-date" style="flex: 1;">
+                        <span style="line-height: 36px;">至</span>
+                        <input type="date" class="form-control" id="filter-end-date" style="flex: 1;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="resetFilter()">重置</button>
+                <button class="btn btn-primary" onclick="applyFilter()">确定</button>
+            </div>
+        </div>
+    </div>
+                
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置当前日期
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('receive-date').value = today;
+            
+            // 初始化筛选标签点击事件
+            const filterTags = document.querySelectorAll('.filter-tag');
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // 根据标签筛选单据
+                    filterBillsByTag(this.textContent.trim());
+                });
+            });
+            
+            // 初始化筛选按钮点击事件
+            document.querySelector('.filter-button').addEventListener('click', function() {
+                showFilterModal();
+            });
+            
+            // 初始化全选按钮点击
+                        // 初始化全选按钮点击
+                        document.getElementById('select-all-btn').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('.bill-checkbox');
+                const isAllSelected = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = !isAllSelected;
+                });
+                
+                updateBatchReceiveButton();
+            });
+            
+            // 初始化批量收款按钮点击事件
+            document.getElementById('batch-receive-btn').addEventListener('click', function() {
+                const selectedBills = getSelectedBills();
+                if (selectedBills.length === 0) {
+                    alert('请至少选择一个单据');
+                    return;
+                }
+                
+                showBatchReceiveModal(selectedBills);
+            });
+            
+            // 初始化单据复选框点击事件
+            document.querySelectorAll('.bill-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateBatchReceiveButton();
+                });
+            });
+            
+            // 更新批量收款按钮状态
+            updateBatchReceiveButton();
+        });
+        
+        // 根据标签筛选单据
+        function filterBillsByTag(tag) {
+            const billCards = document.querySelectorAll('.bill-card');
+            
+            if (tag === '全部') {
+                billCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
+            }
+            
+            billCards.forEach(card => {
+                const status = card.querySelector('.bill-status').textContent.trim();
+                if (status === tag) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // 获取选中的单据
+        function getSelectedBills() {
+            const selectedBills = [];
+            document.querySelectorAll('.bill-checkbox:checked').forEach(checkbox => {
+                selectedBills.push(checkbox.value);
+            });
+            return selectedBills;
+        }
+        
+        // 更新批量收款按钮状态
+        function updateBatchReceiveButton() {
+            const selectedCount = document.querySelectorAll('.bill-checkbox:checked').length;
+            const batchReceiveBtn = document.getElementById('batch-receive-btn');
+            
+            if (selectedCount > 0) {
+                batchReceiveBtn.textContent = `批量收款 (${selectedCount})`;
+                batchReceiveBtn.classList.add('active');
+            } else {
+                batchReceiveBtn.textContent = '批量收款';
+                batchReceiveBtn.classList.remove('active');
+            }
+        }
+        
+        // 显示收款模态框
+        function showReceiveModal(billNo) {
+            // 模拟获取单据数据
+            const billData = getBillData(billNo);
+            
+            // 填充模态框数据
+            document.getElementById('customer-name').value = billData.customerName;
+            document.getElementById('receivable-amount').value = billData.receivableAmount;
+            document.getElementById('receive-amount').value = billData.receivableAmount;
+            
+            // 显示模态框
+            document.getElementById('receive-modal').style.display = 'flex';
+        }
+        
+        // 关闭收款模态框
+        function closeReceiveModal() {
+            document.getElementById('receive-modal').style.display = 'none';
+        }
+        
+        // 提交收款
+        function submitReceive() {
+            const receiveData = {
+                receiveNo: document.getElementById('receive-no').value,
+                customerName: document.getElementById('customer-name').value,
+                receivableAmount: document.getElementById('receivable-amount').value,
+                receiveAmount: document.getElementById('receive-amount').value,
+                receiveDate: document.getElementById('receive-date').value,
+                receiveMethod: document.getElementById('receive-method').value,
+                remark: document.getElementById('receive-remark').value
+            };
+            
+            // 模拟提交数据
+            console.log('提交收款数据:', receiveData);
+            
+            // 关闭模态框
+            closeReceiveModal();
+            
+            // 刷新页面或更新单据状态
+            alert('收款成功');
+            // location.reload();
+        }
+        
+        // 显示筛选模态框
+        function showFilterModal() {
+            document.getElementById('filter-modal').style.display = 'flex';
+        }
+        
+        // 关闭筛选模态框
+        function closeFilterModal() {
+            document.getElementById('filter-modal').style.display = 'none';
+        }
+        
+        // 应用筛选条件
+        function applyFilter() {
+            const filterData = {
+                customer: document.getElementById('filter-customer').value,
+                billType: document.getElementById('filter-bill-type').value,
+                billStatus: document.getElementById('filter-bill-status').value,
+                startDate: document.getElementById('filter-start-date').value,
+                endDate: document.getElementById('filter-end-date').value
+            };
+            
+            // 模拟筛选数据
+            console.log('应用筛选条件:', filterData);
+            
+            // 关闭模态框
+            closeFilterModal();
+            
+            // 刷新页面或更新单据列表
+            alert('筛选条件已应用');
+        }
+        
+        // 重置筛选条件
+        function resetFilter() {
+            document.getElementById('filter-customer').value = '';
+            document.getElementById('filter-bill-type').value = '';
+            document.getElementById('filter-bill-status').value = '';
+            document.getElementById('filter-start-date').value = '';
+            document.getElementById('filter-end-date').value = '';
+        }
+        
+        // 查看单据详情
+        function viewBillDetail(billNo) {
+            // 模拟跳转到单据详情页面
+            console.log('查看单据详情:', billNo);
+            alert('查看单据详情: ' + billNo);
+            // location.href = `bill-detail.html?billNo=${billNo}`;
+        }
+        
+        // 模拟获取单据数据
+        function getBillData(billNo) {
+            // 这里应该是从服务器获取数据，这里只是模拟
+            const billsData = {
+                'CK202403020001': {
+                    billNo: 'CK202403020001',
+                    billType: '销售出库单',
+                    customerName: '客户A',
+                    billDate: '2024-03-01',
+                    receivableAmount: '50000.00',
+                    receivedAmount: '0.00',
+                    unreceivedAmount: '50000.00',
+                    status: '未收款'
+                },
+                'TH202403020001': {
+                    billNo: 'TH202403020001',
+                    billType: '销售退货单',
+                    customerName: '客户B',
+                    billDate: '2024-03-02',
+                    receivableAmount: '-20000.00',
+                    receivedAmount: '0.00',
+                    unreceivedAmount: '-20000.00',
+                    status: '未收款'
+                },
+                'FY202403050001': {
+                    billNo: 'FY202403050001',
+                    billType: '销售费用单',
+                    customerName: '客户C',
+                    billDate: '2024-03-05',
+                    receivableAmount: '8000.00',
+                    receivedAmount: '8000.00',
+                    unreceivedAmount: '0.00',
+                    status: '已收款'
+                }
+            };
+            
+            return billsData[billNo] || {};
+        }
+        
+        // 显示批量收款模态框
+        function showBatchReceiveModal(selectedBills) {
+            // 计算总金额
+            let totalAmount = 0;
+            selectedBills.forEach(billNo => {
+                const billData = getBillData(billNo);
+                totalAmount += parseFloat(billData.unreceivedAmount);
+            });
+            
+            // 填充模态框数据
+            document.getElementById('customer-name').value = '多个客户';
+            document.getElementById('receivable-amount').value = totalAmount.toFixed(2);
+            document.getElementById('receive-amount').value = totalAmount.toFixed(2);
+            
+            // 显示模态框
+            document.getElementById('receive-modal').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

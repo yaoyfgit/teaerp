@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增计件日报 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #8fd4d2;
+            --primary-hover-color: #a8e0de;
+            --primary-active-color: #7bc5c3;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --success-color: #4caf50;
+            --info-color: #2196f3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 220px;
+            background-color: #fff;
+            border-right: 1px solid #eee;
+            transition: all 0.3s;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-navbar {
+            height: 60px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .toggle-menu {
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 40px;
+        }
+        
+        .top-nav {
+            flex: 1;
+        }
+        
+        .top-nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .top-nav ul li {
+            margin-right: 20px;
+        }
+        
+        .top-nav ul li a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .top-nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .username {
+            margin-right: 10px;
+            color: #333;
+        }
+        
+        .logout {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .logout:hover {
+            color: var(--danger-color);
+        }
+        
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .breadcrumb i {
+            margin: 0 8px;
+            font-size: 12px;
+        }
+        
+        .breadcrumb i:first-child {
+            margin-left: 0;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        /* 表单样式 */
+        .form-section {
+            margin-bottom: 24px;
+        }
+        
+        .form-section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+            margin-bottom: 16px;
+        }
+        
+        .form-group {
+            padding: 0 10px;
+            margin-bottom: 16px;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .form-group.full-width {
+            width: 100%;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .form-group .required {
+            color: #f44336;
+            margin-left: 4px;
+        }
+        
+        .form-control {
+            width: 100%;
+            height: 36px;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(143, 212, 210, 0.2);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            height: auto;
+            min-height: 80px;
+        }
+        
+        .btn {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 400;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover-color);
+            border-color: var(--primary-hover-color);
+            color: #fff;
+        }
+        
+        .btn-danger {
+            background-color: #fff;
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: var(--danger-color);
+            color: #fff;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 16px;
+        }
+        
+        /* 表格样式 */
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .standard-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #eee;
+        }
+        
+        .standard-table th,
+        .standard-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .standard-table th {
+            background-color: #f9f9f9;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .standard-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .standard-table input[type="text"],
+        .standard-table input[type="number"] {
+            width: 100%;
+            height: 32px;
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .standard-table input[type="text"]:focus,
+        .standard-table input[type="number"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .add-row-btn {
+            margin-top: 16px;
+        }
+        
+        /* 自定义样式 */
+        .total-row {
+            background-color: #f9f9f9;
+            font-weight: 500;
+        }
+        
+        .readonly-field {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-industry"></i>
+                    <span>生产管理</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-file-alt"></i>
+                    <span>计件日报</span>
+                    <i class="fas fa-angle-right"></i>
+                    <span>新增计件日报</span>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">新增计件日报</div>
+                    </div>
+                    <div class="card-body">
+                        <form id="pieceworkReportForm">
+                            <!-- 基本信息部分 -->
+                            <div class="form-section">
+                                <div class="form-section-title">基本信息</div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="employeeName">计件人员<span class="required">*</span></label>
+                                        <input type="text" class="form-control readonly-field" id="employeeName" name="employeeName" value="当前操作员" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reportDate">计件日期<span class="required">*</span></label>
+                                        <input type="date" class="form-control" id="reportDate" name="reportDate" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="workOrder">生产工单<span class="required">*</span></label>
+                                        <select class="form-control" id="workOrder" name="workOrder" required onchange="loadWorkOrderDetails()">
+                                            <option value="">请选择生产工单</option>
+                                            <option value="GD20230516001">GD20230516001</option>
+                                            <option value="GD20230516002">GD20230516002</option>
+                                            <option value="GD20230516003">GD20230516003</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="teaType">茶叶品种</label>
+                                        <input type="text" class="form-control readonly-field" id="teaType" name="teaType" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="productName">商品名称</label>
+                                        <input type="text" class="form-control readonly-field" id="productName" name="productName" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="materialCode">物料编号</label>
+                                        <input type="text" class="form-control readonly-field" id="materialCode" name="materialCode" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="specification">规格</label>
+                                        <input type="text" class="form-control readonly-field" id="specification" name="specification" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="actualQuantity">实际生产数量</label>
+                                        <input type="number" class="form-control readonly-field" id="actualQuantity" name="actualQuantity" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="unit">单位</label>
+                                        <input type="text" class="form-control readonly-field" id="unit" name="unit" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remarks">备注</label>
+                                        <textarea class="form-control" id="remarks" name="remarks" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 计件内容部分 -->
+                            <div class="form-section">
+                                <div class="form-section-title">计件内容</div>
+                                <div class="table-container">
+                                    <table class="standard-table" id="pieceworkTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="150">工艺</th>
+                                                <th width="150">工序</th>
+                                                <th width="120">计件数量</th>
+                                                <th width="100">计件单位</th>
+                                                <th width="100">计件单价</th>
+                                                <th width="120">计件金额</th>
+                                                <th width="200">备注</th>
+                                                <th width="80">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="pieceworkRow1">
+                                                <td>
+                                                    <input type="text" class="form-control readonly-field" name="craft" readonly>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="process" onchange="updatePriceAndUnit(this)">
+                                                        <option value="">请选择工序</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" name="quantity" min="0" value="0" onchange="calculateAmount(this)">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control readonly-field" name="unit" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control readonly-field" name="price" step="0.01" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control readonly-field" name="amount" step="0.01" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="remark">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger" onclick="removeRow(this)" title="删除"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="total-row">
+                                                <td colspan="5" style="text-align: right;"><strong>合计：</strong></td>
+                                                <td>
+                                                    <input type="number" class="form-control readonly-field" id="totalAmount" step="0.01" value="0.00" readonly>
+                                                </td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <button type="button" class="btn btn-primary add-row-btn" onclick="addNewRow()">
+                                    <i class="fas fa-plus"></i> 添加工序
+                                </button>
+                            </div>
+                            
+                            <!-- 表单提交按钮 -->
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="submitReport('submit')">
+                                    <i class="fas fa-paper-plane"></i> 提交
+                                </button>
+                                <button type="button" class="btn" onclick="submitReport('draft')">
+                                    <i class="fas fa-save"></i> 保存草稿
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="cancelReport()">
+                                    <i class="fas fa-times"></i> 取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 代码 -->
+    <script>
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置默认日期为今天
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('reportDate').value = today;
+            
+            // 加载侧边栏菜单
+            loadSidebar();
+        });
+        
+        // 加载侧边栏菜单
+        function loadSidebar() {
+            const sidebar = document.querySelector('.main-menu');
+            // 这里可以通过AJAX加载菜单，或者直接写入HTML
+            sidebar.innerHTML = `
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <a href="../../../index.html"><i class="fas fa-home"></i> 首页</a>
+                    </li>
+                    <li class="menu-item active">
+                        <a href="#"><i class="fas fa-industry"></i> 生产管理</a>
+                        <ul class="submenu">
+                            <li><a href="../workorder/list.html">生产工单</a></li>
+                            <li><a href="../process/list.html">工艺管理</a></li>
+                            <li class="active"><a href="report.html">计件日报</a></li>
+                            <li><a href="../scheme/list.html">计件方案</a></li>
+                        </ul>
+                    </li>
+                    <!-- 其他菜单项 -->
+                </ul>
+            `;
+        }
+        
+        // 加载工单详情
+        function loadWorkOrderDetails() {
+            const workOrderSelect = document.getElementById('workOrder');
+            const selectedWorkOrder = workOrderSelect.value;
+            
+            if (!selectedWorkOrder) {
+                clearWorkOrderFields();
+                return;
+            }
+            
+            // 模拟从服务器获取工单详情
+            // 实际应用中应该通过AJAX请求获取
+            const workOrderDetails = {
+                'GD20230516001': {
+                    teaType: '龙井茶',
+                    productName: '明前龙井特级',
+                    materialCode: 'LJ-TJ-001',
+                    specification: '250g/罐',
+                    actualQuantity: 100,
+                    unit: '罐',
+                    craft: '拼配'
+                },
+                'GD20230516002': {
+                    teaType: '铁观音',
+                    productName: '铁观音特级',
+                    materialCode: 'TGY-TJ-001',
+                    specification: '150g/盒',
+                    actualQuantity: 200,
+                    unit: '盒',
+                    craft: '分装'
+                },
+                'GD20230516003': {
+                    teaType: '普洱茶',
+                    productName: '普洱熟茶饼',
+                    materialCode: 'PER-SC-001',
+                    specification: '357g/饼',
+                    actualQuantity: 50,
+                    unit: '饼',
+                    craft: '拆卸'
+                }
+            };
+            
+            const details = workOrderDetails[selectedWorkOrder];
+            
+            // 填充工单相关字段
+            document.getElementById('teaType').value = details.teaType;
+            document.getElementById('productName').value = details.productName;
+            document.getElementById('materialCode').value = details.materialCode;
+            document.getElementById('specification').value = details.specification;
+            document.getElementById('actualQuantity').value = details.actualQuantity;
+            document.getElementById('unit').value = details.unit;
+            
+            // 设置工艺并加载相关工序
+            const craftInputs = document.querySelectorAll('input[name="craft"]');
+            craftInputs.forEach(input => {
+                input.value = details.craft;
+            });
+            
+            // 加载工序选项
+            loadProcessOptions(details.craft);
+        }
+        
+        // 清空工单相关字段
+        function clearWorkOrderFields() {
+            document.getElementById('teaType').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('materialCode').value = '';
+            document.getElementById('specification').value = '';
+            document.getElementById('actualQuantity').value = '';
+            document.getElementById('unit').value = '';
+            
+            const craftInputs = document.querySelectorAll('input[name="craft"]');
+            craftInputs.forEach(input => {
+                input.value = '';
+            });
+            
+            // 清空工序选项
+            const processSelects = document.querySelectorAll('select[name="process"]');
+            processSelects.forEach(select => {
+                select.innerHTML = '<option value="">请选择工序</option>';
+            });
+        }
+        
+        // 加载工序选项
+        function loadProcessOptions(craft) {
+            // 模拟从服务器获取工序数据
+            // 实际应用中应该通过AJAX请求获取
+            const processOptions = {
+                '拼配': [
+                    { id: 'PP001', name: '茶叶分级', unit: 'kg', price: 5.00 },
+                    { id: 'PP002', name: '茶叶混合', unit: 'kg', price: 3.50 },
+                    { id: 'PP003', name: '品质检验', unit: '批', price: 10.00 }
+                ],
+                '分装': [
+                    { id: 'FZ001', name: '称重分装', unit: '盒', price: 0.50 },
+                    { id: 'FZ002', name: '真空包装', unit: '盒', price: 0.80 },
+                    { id: 'FZ003', name: '装盒封口', unit: '盒', price: 0.60 }
+                ],
+                '拆卸': [
+                    { id: 'CX001', name: '茶饼拆解', unit: '饼', price: 2.00 },
+                    { id: 'CX002', name: '茶叶分类', unit: 'kg', price: 4.00 },
+                    { id: 'CX003', name: '包装回收', unit: '批', price: 8.00 }
+                ]
+            };
+            
+            const options = processOptions[craft] || [];
+            const processSelects = document.querySelectorAll('select[name="process"]');
+            
+            processSelects.forEach(select => {
+                // 清空现有选项
+                select.innerHTML = '<option value="">请选择工序</option>';
+                
+                // 添加新选项
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.id;
+                    optionElement.textContent = option.name;
+                    optionElement.dataset.unit = option.unit;
+                    optionElement.dataset.price = option.price;
+                    select.appendChild(optionElement);
+                });
+            });
+        }
+        
+        // 更新单价和单位
+        function updatePriceAndUnit(selectElement) {
+            const row = selectElement.closest('tr');
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            
+            if (selectedOption.value) {
+                const unit = selectedOption.dataset.unit;
+                const price = parseFloat(selectedOption.dataset.price);
+                
+                row.querySelector('input[name="unit"]').value = unit;
+                row.querySelector('input[name="price"]').value = price.toFixed(2);
+                
+                // 重新计算金额
+                calculateAmount(row.querySelector('input[name="quantity"]'));
+            } else {
+                row.querySelector('input[name="unit"]').value = '';
+                row.querySelector('input[name="price"]').value = '';
+                row.querySelector('input[name="amount"]').value = '';
+                
+                // 更新总金额
+                updateTotalAmount();
+            }
+        }
+        
+        // 计算金额
+        function calculateAmount(inputElement) {
+            const row = inputElement.closest('tr');
+            const quantity = parseFloat(inputElement.value) || 0;
+            const price = parseFloat(row.querySelector('input[name="price"]').value) || 0;
+            const amount = quantity * price;
+            
+            row.querySelector('input[name="amount"]').value = amount.toFixed(2);
+            
+            // 更新总金额
+            updateTotalAmount();
+        }
+        
+        // 更新总金额
+        function updateTotalAmount() {
+            let total = 0;
+            const amountInputs = document.querySelectorAll('input[name="amount"]');
+            
+            amountInputs.forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+            
+            document.getElementById('totalAmount').value = total.toFixed(2);
+        }
+        
+        // 添加新行
+        function addNewRow() {
+            const tbody = document.querySelector('#pieceworkTable tbody');
+            const rowCount = tbody.children.length + 1;
+            const newRow = document.createElement('tr');
+            newRow.id = 'pieceworkRow' + rowCount;
+            
+            // 获取当前工艺值
+            const craftValue = document.querySelector('input[name="craft"]').value;
+            
+            newRow.innerHTML = `
+                <td>
+                    <input type="text" class="form-control readonly-field" name="craft" value="${craftValue}" readonly>
+                </td>
+                <td>
+                    <select class="form-control" name="process" onchange="updatePriceAndUnit(this)">
+                        <option value="">请选择工序</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" class="form-control" name="quantity" min="0" value="0" onchange="calculateAmount(this)">
+                </td>
+                <td>
+                    <input type="text" class="form-control readonly-field" name="unit" readonly>
+                </td>
+                <td>
+                    <input type="number" class="form-control readonly-field" name="price" step="0.01" readonly>
+                </td>
+                <td>
+                    <input type="number" class="form-control readonly-field" name="amount" step="0.01" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="remark">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)" title="删除"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            `;
+            
+            tbody.appendChild(newRow);
+            
+            // 如果已经选择了工艺，加载对应的工序选项
+            if (craftValue) {
+                loadProcessOptions(craftValue);
+            }
+        }
+        
+        // 删除行
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const tbody = row.parentNode;
+            
+            // 如果只有一行，不允许删除
+            if (tbody.children.length <= 1) {
+                alert('至少保留一行计件内容！');
+                return;
+            }
+            
+            row.remove();
+            
+            // 更新总金额
+            updateTotalAmount();
+        }
+        
+        // 提交报表
+        function submitReport(type) {
+            // 表单验证
+            if (!validateForm()) {
+                return;
+            }
+            
+            // 收集表单数据
+            const formData = collectFormData();
+            formData.status = type === 'submit' ? '已提交' : '草稿';
+            
+            // 模拟提交到服务器
+            // 实际应用中应该通过AJAX请求提交
+            console.log('提交的数据:', formData);
+            
+            // 提示成功并跳转
+            const message = type === 'submit' ? '计件日报提交成功！' : '计件日报已保存为草稿！';
+            alert(message);
+            
+            // 跳转到列表页
+            window.location.href = 'report.html';
+        }
+        
+        // 表单验证
+        function validateForm() {
+            // 验证必填字段
+            const reportDate = document.getElementById('reportDate').value;
+            const workOrder = document.getElementById('workOrder').value;
+            
+            if (!reportDate) {
+                alert('请选择计件日期！');
+                document.getElementById('reportDate').focus();
+                return false;
+            }
+            
+            if (!workOrder) {
+                alert('请选择生产工单！');
+                document.getElementById('workOrder').focus();
+                return false;
+            }
+            
+            // 验证计件内容
+            const processSelects = document.querySelectorAll('select[name="process"]');
+            const quantityInputs = document.querySelectorAll('input[name="quantity"]');
+            let hasValidRow = false;
+            
+            for (let i = 0; i < processSelects.length; i++) {
+                const process = processSelects[i].value;
+                const quantity = parseFloat(quantityInputs[i].value) || 0;
+                
+                if (process && quantity > 0) {
+                    hasValidRow = true;
+                    break;
+                }
+            }
+            
+            if (!hasValidRow) {
+                alert('请至少添加一条有效的计件内容！');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 收集表单数据
+        function collectFormData() {
+            const formData = {
+                employeeName: document.getElementById('employeeName').value,
+                reportDate: document.getElementById('reportDate').value,
+                workOrder: document.getElementById('workOrder').value,
+                teaType: document.getElementById('teaType').value,
+                productName: document.getElementById('productName').value,
+                materialCode: document.getElementById('materialCode').value,
+                specification: document.getElementById('specification').value,
+                actualQuantity: document.getElementById('actualQuantity').value,
+                unit: document.getElementById('unit').value,
+                remarks: document.getElementById('remarks').value,
+                totalAmount: document.getElementById('totalAmount').value,
+                items: []
+            };
+            
+            // 收集计件内容
+            const rows = document.querySelectorAll('#pieceworkTable tbody tr');
+            
+            rows.forEach(row => {
+                const process = row.querySelector('select[name="process"]').value;
+                const quantity = parseFloat(row.querySelector('input[name="quantity"]').value) || 0;
+                
+                // 只收集有效的行
+                if (process && quantity > 0) {
+                    formData.items.push({
+                        craft: row.querySelector('input[name="craft"]').value,
+                        process: process,
+                        processName: row.querySelector('select[name="process"] option:checked').textContent,
+                        quantity: quantity,
+                        unit: row.querySelector('input[name="unit"]').value,
+                        price: parseFloat(row.querySelector('input[name="price"]').value) || 0,
+                        amount: parseFloat(row.querySelector('input[name="amount"]').value) || 0,
+                        remark: row.querySelector('input[name="remark"]').value
+                    });
+                }
+            });
+            
+            return formData;
+        }
+        
+        // 取消操作
+        function cancelReport() {
+            if (confirm('确定要取消编辑吗？未保存的数据将丢失！')) {
+                window.location.href = 'report.html';
+            }
+        }
+        
+        // 添加菜单折叠/展开功能
+        document.querySelector('.toggle-menu').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+        });
+    </script>
+</body>
+</html>                

@@ -1,0 +1,271 @@
+/* 计件管理相关页面的样式 */
+
+/* 统计卡片样式 */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stats-card {
+    background-color: var(--bg-white);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card i {
+    font-size: 24px;
+    margin-right: 16px;
+    color: var(--primary-color);
+    background-color: rgba(143, 212, 210, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.stats-info {
+    flex: 1;
+}
+
+.stats-title {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.stats-value {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* 计件方案表格样式 */
+.scheme-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.scheme-table th {
+    background: #fafafa;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.scheme-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.scheme-table .status-active {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.scheme-table .status-inactive {
+    background-color: #ffebee;
+    color: var(--danger-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.scheme-table .status-draft {
+    background-color: #fff8e1;
+    color: var(--warning-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+/* 计件日报表格样式 */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.report-table th {
+    background: #fafafa;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.report-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.report-status.draft {
+    background-color: #fff8e1;
+    color: var(--warning-color);
+}
+
+.report-status.submitted {
+    background-color: #e3f2fd;
+    color: var(--info-color);
+}
+
+.report-status.approved {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+}
+
+.report-status.rejected {
+    background-color: #ffebee;
+    color: var(--danger-color);
+}
+
+/* 计件项表格样式 */
+.piecework-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+
+.piecework-table th {
+    background: #fafafa;
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13px;
+}
+
+.piecework-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.piecework-table .total-row {
+    background-color: #f5f5f5;
+    font-weight: 500;
+}
+
+.piecework-table .quantity-input {
+    width: 80px;
+    text-align: center;
+}
+
+/* 查看详情模态框样式 */
+.view-section {
+    margin-bottom: 24px;
+}
+
+.view-section-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.view-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    gap: 24px;
+}
+
+.view-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.view-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.view-field {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.view-field-full {
+    width: 100%;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* 按钮链接样式 */
+.button-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.button-link:hover {
+    background-color: rgba(143, 212, 210, 0.1);
+}
+
+.button-link.primary {
+    color: var(--info-color);
+}
+
+.button-link.primary:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+.button-link.danger {
+    color: var(--danger-color);
+}
+
+.button-link.danger:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* 表单模态框样式调整 */
+.modal-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .modal-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计件方案 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/menu.css">
+    <style>
+        /* 统计卡片样式 */
+        .stats-cards {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-card i {
+            font-size: 28px;
+            margin-right: 16px;
+            color: #8fd4d2;
+        }
+
+        .stats-info {
+            flex: 1;
+        }
+
+        .stats-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stats-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 搜索栏样式 */
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .search-item {
+            display: flex;
+            align-items: center;
+            margin-right: 16px;
+            margin-bottom: 8px;
+        }
+
+        .search-item label {
+            margin-right: 8px;
+            font-size: 14px;
+            color: #606266;
+            white-space: nowrap;
+        }
+
+        .search-actions {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .divider {
+            width: 1px;
+            height: 24px;
+            background-color: #dcdfe6;
+            margin: 0 12px;
+        }
+
+        /* 表格样式 */
+        .data-table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #f5f7fa;
+            color: #606266;
+            font-weight: 500;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        table tr:hover td {
+            background-color: #f5f7fa;
+        }
+
+        .status-normal {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background-color: #f0f9eb;
+            color: #67c23a;
+            border: 1px solid #e1f3d8;
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            margin: 0 4px;
+            padding: 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #606266;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination .btn:hover:not(:disabled) {
+            color: #8fd4d2;
+            border-color: #8fd4d2;
+        }
+
+        .pagination .btn.active {
+            background-color: #8fd4d2;
+            color: #fff;
+            border-color: #8fd4d2;
+        }
+
+        .pagination .btn:disabled {
+            color: #c0c4cc;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            margin-left: 16px;
+            font-size: 14px;
+            color: #606266;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #8fd4d2;
+            color: #fff;
+            border-color: #8fd4d2;
+        }
+
+        .btn-primary:hover {
+            background-color: #7bc9c7;
+            border-color: #7bc9c7;
+        }
+
+        .btn-success {
+            background-color: #67c23a;
+            color: #fff;
+            border-color: #67c23a;
+        }
+
+        .btn-success:hover {
+            background-color: #5daf34;
+            border-color: #5daf34;
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: #8fd4d2;
+            padding: 4px 8px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .btn-text:hover {
+            color: #7bc9c7;
+            background-color: rgba(143, 212, 210, 0.1);
+            border-radius: 4px;
+        }
+
+        .btn-text.danger {
+            color: #f56c6c;
+        }
+
+        .btn-text.danger:hover {
+            color: #e64242;
+            background-color: rgba(245, 108, 108, 0.1);
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            width: 600px;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #303133;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #909399;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 16px 20px;
+            border-top: 1px solid #ebeef5;
+        }
+
+        .modal-footer .btn {
+            margin-left: 10px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #606266;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 36px;
+            padding: 0 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #606266;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #8fd4d2;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .required {
+            color: #f56c6c;
+            margin-left: 4px;
+        }
+
+        /* 信息组样式 */
+        .info-group {
+            display: flex;
+            margin-bottom: 16px;
+        }
+
+        .info-item {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-item label {
+            width: 80px;
+            color: #909399;
+            font-size: 14px;
+        }
+
+        .info-item span {
+            flex: 1;
+            color: #303133;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-industry"></i>
+                    <span>生产管理</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-calculator"></i>
+                    <span>计件方案</span>
+                </div>
+                
+                <!-- 统计卡片 -->
+                <div class="stats-cards">
+                    <div class="stats-card">
+                        <i class="fas fa-list-alt"></i>
+                        <div class="stats-info">
+                            <div class="stats-title">方案总数</div>
+                            <div class="stats-value">60 个</div>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stats-info">
+                            <div class="stats-title">生效方案</div>
+                            <div class="stats-value">42 个</div>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-edit"></i>
+                        <div class="stats-info">
+                            <div class="stats-title">待审核方案</div>
+                            <div class="stats-value">8 个</div>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-pause-circle"></i>
+                        <div class="stats-info">
+                            <div class="stats-title">已暂停方案</div>
+                            <div class="stats-value">10 个</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 搜索栏 -->
+                <div class="search-bar">
+                    <div class="search-item">
+                        <label>工艺</label>
+                        <select class="form-control" id="craftTypeFilter">
+                            <option value="">全部工艺</option>
+                            <option value="blending">拼配</option>
+                            <option value="packaging">分装</option>
+                            <option value="processing">加工</option>
+                        </select>
+                    </div>
+                    <div class="search-item">
+                        <label>状态</label>
+                        <select class="form-control" id="statusFilter">
+                            <option value="">全部状态</option>
+                            <option value="active">生效中</option>
+                            <option value="pending">待审核</option>
+                            <option value="paused">已暂停</option>
+                        </select>
+                    </div>
+                    <div class="search-item">
+                        <label>关键词</label>
+                        <input type="text" class="form-control" id="keywordFilter" placeholder="搜索物料名称/工序">
+                    </div>
+                    <div class="search-actions">
+                        <button class="btn btn-primary" onclick="searchSchemes()">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                        <div class="divider"></div>
+                        <button class="btn btn-primary" onclick="showAddSchemeModal()">
+                            <i class="fas fa-plus"></i> 新增方案
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 计件方案列表 -->
+                <div class="data-table">
+                    <table id="schemeTable">
+                        <thead>
+                            <tr>
+                                <th width="60">序号</th>
+                                <th width="100">工艺</th>
+                                <th width="180">物料名称</th>
+                                <th width="120">规格</th>
+                                <th width="120">工序</th>
+                                <th width="100">单价</th>
+                                <th width="100">计件单位</th>
+                                <th width="100">状态</th>
+                                <th width="180">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 表格数据将通过 JavaScript 动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 分页 -->
+                <div class="pagination">
+                    <button class="btn" disabled><i class="fas fa-angle-double-left"></i></button>
+                    <button class="btn" disabled><i class="fas fa-angle-left"></i></button>
+                    <button class="btn active">1</button>
+                    <button class="btn">2</button>
+                    <button class="btn">3</button>
+                    <button class="btn"><i class="fas fa-angle-right"></i></button>
+                    <button class="btn"><i class="fas fa-angle-double-right"></i></button>
+                    <span class="page-info">共 10 页，60 条记录</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 计件方案模态框 -->
+    <div class="modal" id="schemeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">新增计件方案</h3>
+                <button class="close" onclick="closeSchemeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="schemeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="craftType">工艺 <span class="required">*</span></label>
+                            <select class="form-control" id="craftType" name="craftType" required>
+                                <option value="">请选择</option>
+                                <option value="blending">拼配</option>
+                                <option value="packaging">分装</option>
+                                <option value="disassembly">拆卸</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="materialName">物料名称 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="materialName" name="materialName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="specification">规格 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="specification" name="specification" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="process">工序 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="process" name="process" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="unitPrice">单价 <span class="required">*</span></label>
+                            <input type="number" step="0.01" class="form-control" id="unitPrice" name="unitPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pieceworkUnit">计件单位 <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="pieceworkUnit" name="pieceworkUnit" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="schemeStatus">状态 <span class="required">*</span></label>
+                            <select class="form-control" id="schemeStatus" name="schemeStatus" required>
+                                <option value="">请选择</option>
+                                <option value="active">生效中</option>
+                                <option value="inactive">已失效</option>
+                                <option value="draft">草稿</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeSchemeModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveScheme()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 查看计件方案模态框 -->
+    <div class="modal" id="viewSchemeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">查看计件方案</h3>
+                <button class="close" onclick="closeViewSchemeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 内容将通过JavaScript动态生成 -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeViewSchemeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../js/app.js"></script>
+    <script>
+        // 模拟数据
+        const schemesData = {
+            'scheme001': {
+                id: 'scheme001',
+                craftType: 'blending',
+                craftName: '拼配',
+                materialName: '茶叶感官评方法',
+                specification: '500g',
+                process: '拼配',
+                unitPrice: 0.05,
+                pieceworkUnit: '斤',
+                status: 'active',
+                statusName: '生效中'
+            },
+            'scheme002': {
+                id: 'scheme002',
+                craftType: 'packaging',
+                craftName: '分装',
+                materialName: '茶叶加工不适',
+                specification: '200g',
+                process: '分装',
+                unitPrice: 0.08,
+                pieceworkUnit: '斤',
+                status: 'active',
+                statusName: '生效中'
+            },
+            'scheme003': {
+                id: 'scheme003',
+                craftType: 'blending',
+                craftName: '拼配',
+                materialName: '茶叶加工工艺通用技术条件',
+                specification: '100g',
+                process: '拼配',
+                unitPrice: 0.06,
+                pieceworkUnit: '斤',
+                status: 'active',
+                statusName: '生效中'
+            },
+            'scheme004': {
+                id: 'scheme004',
+                craftType: 'disassembly',
+                craftName: '拆卸',
+                materialName: '浙江省茶叶加工技术规范',
+                specification: '250g',
+                process: '拆卸',
+                unitPrice: 0.07,
+                pieceworkUnit: '斤',
+                status: 'inactive',
+                statusName: '已失效'
+            },
+            'scheme005': {
+                id: 'scheme005',
+                craftType: 'blending',
+                craftName: '拼配',
+                materialName: '龙井茶制作工艺标准',
+                specification: '50g',
+                process: '拼配',
+                unitPrice: 0.09,
+                pieceworkUnit: '斤',
+                status: 'draft',
+                statusName: '草稿'
+            },
+            'scheme006': {
+                id: 'scheme006',
+                craftType: 'packaging',
+                craftName: '分装',
+                materialName: '碧螺春制作工艺标准',
+                specification: '100g',
+                process: '分装',
+                unitPrice: 0.04,
+                pieceworkUnit: '斤',
+                status: 'draft',
+                statusName: '草稿'
+            }
+        };
+        
+        let currentSchemeId = null;
+        let isEditing = false;
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化菜单
+            if (typeof Menu !== 'undefined' && Menu.renderMenu) {
+                Menu.renderMenu();
+            }
+            // 初始化菜单切换功能
+            initMenuToggle();
+            
+            // 加载计件方案数据
+            refreshSchemeTable();
+        });
+        
+        // 刷新计件方案表格
+        function refreshSchemeTable() {
+            const tableBody = document.querySelector('#schemeTable tbody');
+            tableBody.innerHTML = '';
+            
+            let index = 1;
+            Object.values(schemesData).forEach(scheme => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index++}</td>
+                    <td>${scheme.craftName}</td>
+                    <td>${scheme.materialName}</td>
+                    <td>${scheme.specification}</td>
+                    <td>${scheme.process}</td>
+                    <td>${scheme.unitPrice}</td>
+                    <td>${scheme.pieceworkUnit}</td>
+                    <td><span class="status-normal">${scheme.statusName}</span></td>
+                    <td>
+                        <button class="btn btn-text" onclick="viewScheme('${scheme.id}')">查看</button>
+                        <button class="btn btn-text" onclick="editScheme('${scheme.id}')">编辑</button>
+                        <button class="btn btn-text danger" onclick="deleteScheme('${scheme.id}')">删除</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // 搜索计件方案
+        function searchSchemes() {
+            const craftType = document.getElementById('craftTypeFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const keyword = document.getElementById('keywordFilter').value.toLowerCase();
+            
+            // 在实际应用中，这里应该是发送请求到服务器进行搜索
+            // 这里仅做前端过滤演示
+            const filteredSchemes = Object.values(schemesData).filter(scheme => {
+                const matchCraftType = !craftType || scheme.craftType === craftType;
+                const matchStatus = !status || scheme.status === status;
+                const matchKeyword = !keyword || 
+                    scheme.materialName.toLowerCase().includes(keyword) || 
+                    scheme.process.toLowerCase().includes(keyword);
+                
+                return matchCraftType && matchStatus && matchKeyword;
+            });
+            
+            const tableBody = document.querySelector('#schemeTable tbody');
+            tableBody.innerHTML = '';
+            
+            if (filteredSchemes.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="9" class="text-center">没有找到匹配的计件方案</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            let index = 1;
+            filteredSchemes.forEach(scheme => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index++}</td>
+                    <td>${scheme.craftName}</td>
+                    <td>${scheme.materialName}</td>
+                    <td>${scheme.specification}</td>
+                    <td>${scheme.process}</td>
+                    <td>${scheme.unitPrice}</td>
+                    <td>${scheme.pieceworkUnit}</td>
+                    <td><span class="status-normal">${scheme.statusName}</span></td>
+                    <td>
+                        <button class="btn btn-text" onclick="viewScheme('${scheme.id}')">查看</button>
+                        <button class="btn btn-text" onclick="editScheme('${scheme.id}')">编辑</button>
+                        <button class="btn btn-text danger" onclick="deleteScheme('${scheme.id}')">删除</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // 显示新增计件方案模态框
+        function showAddSchemeModal() {
+            document.getElementById('modalTitle').textContent = '新增计件方案';
+            document.getElementById('schemeForm').reset();
+            document.getElementById('schemeModal').classList.add('active');
+            currentSchemeId = null;
+            isEditing = false;
+        }
+        
+        // 关闭计件方案模态框
+        function closeSchemeModal() {
+            document.getElementById('schemeModal').classList.remove('active');
+        }
+        
+        // 关闭查看计件方案模态框
+        function closeViewSchemeModal() {
+            document.getElementById('viewSchemeModal').classList.remove('active');
+        }
+        
+        // 查看计件方案
+        function viewScheme(schemeId) {
+            const scheme = schemesData[schemeId];
+            if (!scheme) {
+                alert('未找到该计件方案');
+                return;
+            }
+            
+            const modalBody = document.querySelector('#viewSchemeModal .modal-body');
+            modalBody.innerHTML = `
+                <div class="info-group">
+                    <div class="info-item">
+                        <label>工艺:</label>
+                        <span>${scheme.craftName}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>物料名称:</label>
+                        <span>${scheme.materialName}</span>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info-item">
+                        <label>规格:</label>
+                        <span>${scheme.specification}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>工序:</label>
+                        <span>${scheme.process}</span>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info-item">
+                        <label>单价:</label>
+                        <span>${scheme.unitPrice}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>计件单位:</label>
+                        <span>${scheme.pieceworkUnit}</span>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info-item">
+                        <label>状态:</label>
+                        <span>${scheme.statusName}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('viewSchemeModal').classList.add('active');
+        }
+        
+        // 编辑计件方案
+        function editScheme(schemeId) {
+            const scheme = schemesData[schemeId];
+            if (!scheme) {
+                alert('未找到该计件方案');
+                return;
+            }
+            
+            document.getElementById('modalTitle').textContent = '编辑计件方案';
+            
+            document.getElementById('craftType').value = scheme.craftType;
+            document.getElementById('materialName').value = scheme.materialName;
+            document.getElementById('specification').value = scheme.specification;
+            document.getElementById('process').value = scheme.process;
+            document.getElementById('unitPrice').value = scheme.unitPrice;
+            document.getElementById('pieceworkUnit').value = scheme.pieceworkUnit;
+            document.getElementById('schemeStatus').value = scheme.status;
+            
+            document.getElementById('schemeModal').classList.add('active');
+            currentSchemeId = schemeId;
+            isEditing = true;
+        }
+        
+        // 删除计件方案
+        function deleteScheme(schemeId) {
+            if (confirm('确定要删除该计件方案吗？')) {
+                // 在实际应用中，这里应该是发送请求到服务器进行删除
+                delete schemesData[schemeId];
+                refreshSchemeTable();
+                alert('删除成功');
+            }
+        }
+        
+        // 保存计件方案
+        function saveScheme() {
+            const form = document.getElementById('schemeForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const craftType = document.getElementById('craftType').value;
+            const materialName = document.getElementById('materialName').value;
+            const specification = document.getElementById('specification').value;
+            const process = document.getElementById('process').value;
+            const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+            const pieceworkUnit = document.getElementById('pieceworkUnit').value;
+            const status = document.getElementById('schemeStatus').value;
+            
+            // 获取工艺名称
+            const craftName = document.querySelector(`#craftType option[value="${craftType}"]`).textContent;
+            // 获取状态名称
+            const statusName = document.querySelector(`#schemeStatus option[value="${status}"]`).textContent;
+            
+            const schemeData = {
+                craftType,
+                craftName,
+                materialName,
+                specification,
+                process,
+                unitPrice,
+                pieceworkUnit,
+                status,
+                statusName
+            };
+            
+            if (isEditing && currentSchemeId) {
+                // 编辑现有方案
+                schemeData.id = currentSchemeId;
+                schemesData[currentSchemeId] = schemeData;
+                alert('计件方案更新成功');
+            } else {
+                // 新增方案
+                const newId = 'scheme' + (Object.keys(schemesData).length + 1).toString().padStart(3, '0');
+                schemeData.id = newId;
+                schemesData[newId] = schemeData;
+                alert('计件方案添加成功');
+            }
+            
+            closeSchemeModal();
+            refreshSchemeTable();
+        }
+        
+        // 初始化菜单切换功能
+        function initMenuToggle() {
+            const toggleBtn = document.querySelector('.toggle-menu');
+            const appContainer = document.querySelector('.app-container');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

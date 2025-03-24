@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计件日报 - 茶叶ERP系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/menu.css">
+    <style>
+        /* 统计卡片样式 */
+        .stats-cards {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-card i {
+            font-size: 28px;
+            margin-right: 16px;
+            color: #8fd4d2;
+        }
+
+        .stats-info {
+            flex: 1;
+        }
+
+        .stats-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stats-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 搜索栏样式 */
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .search-item {
+            display: flex;
+            align-items: center;
+            margin-right: 16px;
+            margin-bottom: 8px;
+        }
+
+        .search-item label {
+            margin-right: 8px;
+            font-size: 14px;
+            color: #606266;
+            white-space: nowrap;
+        }
+
+        .search-actions {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .divider {
+            width: 1px;
+            height: 24px;
+            background-color: #dcdfe6;
+            margin: 0 12px;
+        }
+
+        /* 表格样式 */
+        .data-table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #f5f7fa;
+            color: #606266;
+            font-weight: 500;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        table tr:hover td {
+            background-color: #f5f7fa;
+        }
+
+        .status-normal {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background-color: #f0f9eb;
+            color: #67c23a;
+            border: 1px solid #e1f3d8;
+        }
+
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            margin: 0 4px;
+            padding: 0 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #606266;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination .btn:hover:not(:disabled) {
+            color: #8fd4d2;
+            border-color: #8fd4d2;
+        }
+
+        .pagination .btn.active {
+            background-color: #8fd4d2;
+            color: #fff;
+            border-color: #8fd4d2;
+        }
+
+        .pagination .btn:disabled {
+            color: #c0c4cc;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            margin-left: 16px;
+            font-size: 14px;
+            color: #606266;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: #8fd4d2;
+            color: #fff;
+            border-color: #8fd4d2;
+        }
+
+        .btn-primary:hover {
+            background-color: #7bc9c7;
+            border-color: #7bc9c7;
+        }
+
+        .btn-success {
+            background-color: #67c23a;
+            color: #fff;
+            border-color: #67c23a;
+        }
+
+        .btn-success:hover {
+            background-color: #5daf34;
+            border-color: #5daf34;
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: #8fd4d2;
+            padding: 4px 8px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .btn-text:hover {
+            color: #7bc9c7;
+            background-color: rgba(143, 212, 210, 0.1);
+            border-radius: 4px;
+        }
+
+        .btn-text.danger {
+            color: #f56c6c;
+        }
+
+        .btn-text.danger:hover {
+            color: #e64242;
+            background-color: rgba(245, 108, 108, 0.1);
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            width: 600px;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid #ebeef5;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #303133;
+        }
+
+        .close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #909399;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 16px 20px;
+            border-top: 1px solid #ebeef5;
+        }
+
+        .modal-footer .btn {
+            margin-left: 10px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #606266;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 36px;
+            padding: 0 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #606266;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #8fd4d2;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .required {
+            color: #f56c6c;
+            margin-left: 4px;
+        }
+
+        /* 信息组样式 */
+        .info-group {
+            display: flex;
+            margin-bottom: 16px;
+        }
+
+        .info-item {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-item label {
+            width: 80px;
+            color: #909399;
+            font-size: 14px;
+        }
+
+        .info-item span {
+            flex: 1;
+            color: #303133;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-industry"></i>
+                    <span>生产管理</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-calculator"></i>
+                    <span>计件日报</span>
+                </div>
+            
+            <main class="app-content">
+                <div class="content-header">
+                    <h2>计件日报</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="addReportBtn">
+                            <i class="icon-add"></i> 新增计件日报
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="content-body">
+                    <div class="filter-bar">
+                        <div class="filter-group">
+                            <label for="dateRange">日期范围</label>
+                            <div class="date-range">
+                                <input type="date" id="startDate" class="form-control">
+                                <span>至</span>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label for="employeeFilter">计件人员</label>
+                            <input type="text" id="employeeFilter" class="form-control" placeholder="请输入计件人员">
+                        </div>
+                        <div class="filter-group">
+                            <label for="statusFilter">状态</label>
+                            <select id="statusFilter" class="form-control">
+                                <option value="">全部</option>
+                                <option value="draft">草稿</option>
+                                <option value="submitted">已提交</option>
+                                <option value="approved">已审核</option>
+                                <option value="rejected">已驳回</option>
+                            </select>
+                        </div>
+                        <div class="filter-actions">
+                            <button class="btn btn-outline" id="resetFilterBtn">重置</button>
+                            <button class="btn btn-primary" id="searchBtn">查询</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table" id="reportTable">
+                            <thead>
+                                <tr>
+                                    <th width="40">序号</th>
+                                    <th width="100">日期</th>
+                                    <th width="80">计件人员</th>
+                                    <th width="140">生产工单</th>
+                                    <th width="100">茶叶品种</th>
+                                    <th width="120">商品名称</th>
+                                    <th width="100">物料编号</th>
+                                    <th width="80">规格</th>
+                                    <th width="100">实际生产数量</th>
+                                    <th width="50">单位</th>
+                                    <th width="120">物料名称</th>
+                                    <th width="80">工艺</th>
+                                    <th width="80">工序</th>
+                                    <th width="80">计件数量</th>
+                                    <th width="80">计件单位</th>
+                                    <th width="80">计件单价</th>
+                                    <th width="80">计件金额</th>
+                                    <th width="80">状态</th>
+                                    <th width="150">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 数据将通过JS动态加载 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="page-btn" id="firstPageBtn" title="首页">&lt;&lt;</button>
+                        <button class="page-btn" id="prevPageBtn" title="上一页">&lt;</button>
+                        <button class="page-btn" id="page1Btn">1</button>
+                        <button class="page-btn" id="page2Btn">2</button>
+                        <button class="page-btn" id="page3Btn">3</button>
+                        <button class="page-btn" id="nextPageBtn" title="下一页">&gt;</button>
+                        <button class="page-btn" id="lastPageBtn" title="末页">&gt;&gt;</button>
+                        <span id="pageInfo">第 1 页 / 共 1 页</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer class="app-footer">
+            <p>&copy; 2023 茶叶ERP系统 版权所有</p>
+        </footer>
+    </div>
+    
+    <!-- 新增/编辑计件日报模态框 -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="reportModalTitle">新增计件日报</h3>
+                <button class="modal-close" onclick="closeReportModal()">&times;</button>
+            </div>
+            <form id="reportForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="reportDateInput">计件日期</label>
+                            <input type="date" id="reportDateInput" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="employeeName">计件人员</label>
+                            <input type="text" id="employeeName" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="productionOrder">生产工单</label>
+                            <select id="productionOrder" class="form-control" required onchange="loadOrderDetails()">
+                                <option value="">请选择工单</option>
+                                <!-- 工单选项将通过JS动态加载 -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="teaVariety">茶叶品种</label>
+                            <input type="text" id="teaVariety" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="productName">商品名称</label>
+                            <input type="text" id="productName" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="materialCode">物料编号</label>
+                            <input type="text" id="materialCode" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="specification">规格</label>
+                            <input type="text" id="specification" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="actualProduction">实际生产数量</label>
+                            <input type="number" id="actualProduction" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="unit">单位</label>
+                            <input type="text" id="unit" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>计件内容</h4>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="materialName">物料名称</label>
+                            <input type="text" id="materialName" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="processType">工艺</label>
+                            <select id="processType" class="form-control" required onchange="loadProcessSteps()">
+                                <option value="">请选择工艺</option>
+                                <option value="拼配">拼配</option>
+                                <option value="分装">分装</option>
+                                <option value="拆卸">拆卸</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="processStep">工序</label>
+                            <select id="processStep" class="form-control" required onchange="loadPieceworkRate()">
+                                <option value="">请选择工序</option>
+                                <!-- 工序选项将通过JS动态加载 -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pieceworkQuantity">计件数量</label>
+                            <input type="number" id="pieceworkQuantity" class="form-control" required min="0" onchange="calculateAmount()">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pieceworkUnit">计件单位</label>
+                            <input type="text" id="pieceworkUnit" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pieceworkRate">计件单价</label>
+                            <input type="number" id="pieceworkRate" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pieceworkAmount">计件金额</label>
+                            <input type="number" id="pieceworkAmount" class="form-control readonly-field" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="remarks">备注</label>
+                    <textarea id="remarks" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="btn btn-outline" onclick="closeReportModal()">取消</button>
+                    <button type="button" class="btn btn-outline" onclick="saveAsDraft()">保存草稿</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 查看计件日报模态框 -->
+    <div class="modal" id="viewReportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">查看计件日报</h3>
+                <button class="modal-close" onclick="closeViewReportModal()">&times;</button>
+            </div>
+            <div id="reportDetails">
+                <div class="info-row">
+                    <div class="info-label">计件日期:</div>
+                    <div class="info-value" id="viewReportDate"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">计件人员:</div>
+                    <div class="info-value" id="viewEmployeeName"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">生产工单:</div>
+                    <div class="info-value" id="viewProductionOrder"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">茶叶品种:</div>
+                    <div class="info-value" id="viewTeaVariety"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">商品名称:</div>
+                    <div class="info-value" id="viewProductName"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">物料编号:</div>
+                    <div class="info-value" id="viewMaterialCode"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">规格:</div>
+                    <div class="info-value" id="viewSpecification"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">实际生产数量:</div>
+                    <div class="info-value" id="viewActualProduction"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">单位:</div>
+                    <div class="info-value" id="viewUnit"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">物料名称:</div>
+                    <div class="info-value" id="viewMaterialName"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">工艺:</div>
+                    <div class="info-value" id="viewProcessType"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">工序:</div>
+                    <div class="info-value" id="viewProcessStep"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">计件数量:</div>
+                    <div class="info-value" id="viewPieceworkQuantity"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">计件单位:</div>
+                    <div class="info-value" id="viewPieceworkUnit"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">计件单价:</div>
+                    <div class="info-value" id="viewPieceworkRate"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">计件金额:</div>
+                    <div class="info-value" id="viewPieceworkAmount"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">备注:</div>
+                    <div class="info-value" id="viewRemarks"></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">状态:</div>
+                    <div class="info-value" id="viewStatus"></div>
+            </div>
+            </div>
+                <div class="button-group">
+                    <button type="button" class="btn btn-outline" onclick="closeViewReportModal()">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editReportBtn">编辑</button>
+                    <button type="button" class="btn btn-success" id="approveReportBtn">审核通过</button>
+                    <button type="button" class="btn btn-danger" id="rejectReportBtn">驳回</button>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // 全局变量
+            let currentPage = 1;
+            let totalPages = 1;
+            let currentReportId = null;
+            
+            // 页面加载完成后执行
+            document.addEventListener('DOMContentLoaded', function() {
+                // 加载菜单
+                loadMenu();
+                
+                // 加载计件日报数据
+                loadReportData();
+                
+                // 绑定新增按钮事件
+                document.getElementById('addReportBtn').addEventListener('click', showAddReportModal);
+                
+                // 绑定表单提交事件
+                document.getElementById('reportForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    submitReport();
+                });
+            });
+            
+            // 加载菜单
+            function loadMenu() {
+                const menuData = [
+                    {
+                        title: '生产管理',
+                        icon: 'icon-production',
+                        children: [
+                            { title: '生产工单', url: '/pages/production/order/list.html' },
+                            { title: '生产任务', url: '/pages/production/task/list.html' },
+                            { title: '计件管理', children: [
+                                { title: '计件日报', url: '/pages/production/piecework/report.html', active: true },
+                                { title: '计件标准', url: '/pages/production/piecework/standard.html' }
+                            ]}
+                        ]
+                    }
+                ];
+                
+                const menuContainer = document.getElementById('mainMenu');
+                menuContainer.innerHTML = '';
+                
+                menuData.forEach(menu => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    
+                    const menuHeader = document.createElement('div');
+                    menuHeader.className = 'menu-header';
+                    menuHeader.innerHTML = `<i class="${menu.icon}"></i><span>${menu.title}</span>`;
+                    
+                    menuItem.appendChild(menuHeader);
+                    
+                    if (menu.children && menu.children.length > 0) {
+                        const subMenu = document.createElement('div');
+                        subMenu.className = 'sub-menu';
+                        
+                        menu.children.forEach(subItem => {
+                            if (subItem.children && subItem.children.length > 0) {
+                                const subMenuGroup = document.createElement('div');
+                                subMenuGroup.className = 'sub-menu-group';
+                                
+                                const subMenuHeader = document.createElement('div');
+                                subMenuHeader.className = 'sub-menu-header';
+                                subMenuHeader.textContent = subItem.title;
+                                
+                                subMenuGroup.appendChild(subMenuHeader);
+                                
+                                const subMenuItems = document.createElement('div');
+                                subMenuItems.className = 'sub-menu-items';
+                                
+                                subItem.children.forEach(subSubItem => {
+                                    const subSubLink = document.createElement('a');
+                                    subSubLink.href = subSubItem.url;
+                                    subSubLink.className = subSubItem.active ? 'active' : '';
+                                    subSubLink.textContent = subSubItem.title;
+                                    
+                                    subMenuItems.appendChild(subSubLink);
+                                });
+                                
+                                subMenuGroup.appendChild(subMenuItems);
+                                subMenu.appendChild(subMenuGroup);
+                            } else {
+                                const subLink = document.createElement('a');
+                                subLink.href = subItem.url;
+                                subLink.className = subItem.active ? 'active' : '';
+                                subLink.textContent = subItem.title;
+                                
+                                subMenu.appendChild(subLink);
+                            }
+                        });
+                        
+                        menuItem.appendChild(subMenu);
+                    }
+                    
+                    menuContainer.appendChild(menuItem);
+                });
+            }
+            
+            // 加载计件日报数据
+            function loadReportData() {
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const reportData = [
+                    {
+                        id: 1,
+                        date: '2023-12-01',
+                        employee: '张三',
+                        productionOrder: 'MO20231201001',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.678',
+                        specification: '200g',
+                        actualProduction: 130,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 130,
+                        pieceworkUnit: '斤',
+                        rate: 0.50,
+                        amount: 65.0,
+                        status: 'submitted',
+                        remarks: '无'
+                    },
+                    {
+                        id: 2,
+                        date: '2023-12-01',
+                        employee: '李四',
+                        productionOrder: 'MO20231201002',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.789',
+                        specification: '200g',
+                        actualProduction: 140,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 140,
+                        pieceworkUnit: '斤',
+                        rate: 0.55,
+                        amount: 77.0,
+                        status: 'approved',
+                        remarks: '优质完成'
+                    },
+                    {
+                        id: 3,
+                        date: '2023-12-02',
+                        employee: '王五',
+                        productionOrder: 'MO20231202001',
+                        teaVariety: '龙井',
+                        productName: '西湖龙井',
+                        materialCode: '123.46.678',
+                        specification: '250g',
+                        actualProduction: 120,
+                        unit: '斤',
+                        materialName: '西湖龙井',
+                        processType: '分装',
+                        processStep: '精选',
+                        quantity: 120,
+                        pieceworkUnit: '斤',
+                        rate: 0.60,
+                        amount: 72.0,
+                        status: 'draft',
+                        remarks: '待完成'
+                    }
+                ];
+                
+                renderReportTable(reportData);
+                updatePagination(reportData.length, 10);
+            }
+            
+            // 显示新增计件日报模态框
+            function showAddReportModal() {
+                // 重置表单
+                document.getElementById('reportForm').reset();
+                
+                // 设置模态框标题
+                document.getElementById('reportModalTitle').textContent = '新增计件日报';
+                
+                // 设置当前日期
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('reportDateInput').value = today;
+                
+                // 加载工单选项
+                loadProductionOrders();
+                
+                // 显示模态框
+                document.getElementById('reportModal').style.display = 'block';
+                
+                // 重置当前编辑的报表ID
+                currentReportId = null;
+            }
+            
+            // 关闭计件日报模态框
+            function closeReportModal() {
+                document.getElementById('reportModal').style.display = 'none';
+            }
+            
+            // 关闭查看计件日报模态框
+            function closeViewReportModal() {
+                document.getElementById('viewReportModal').style.display = 'none';
+            }
+            
+            // 加载生产工单选项
+            function loadProductionOrders() {
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const orders = [
+                    { id: 'MO20231201001', name: '明前安吉白茶生产工单' },
+                    { id: 'MO20231201002', name: '明前安吉白茶生产工单' },
+                    { id: 'MO20231202001', name: '西湖龙井生产工单' }
+                ];
+                
+                const orderSelect = document.getElementById('productionOrder');
+                
+                // 保留第一个选项（请选择工单）
+                orderSelect.innerHTML = '<option value="">请选择工单</option>';
+                
+                orders.forEach(order => {
+                    const option = document.createElement('option');
+                    option.value = order.id;
+                    option.textContent = `${order.id} - ${order.name}`;
+                    orderSelect.appendChild(option);
+                });
+            }
+            
+            // 加载工单详情
+            function loadOrderDetails() {
+                const orderId = document.getElementById('productionOrder').value;
+                if (!orderId) return;
+                
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const orderDetails = {
+                    'MO20231201001': {
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.678',
+                        specification: '200g',
+                        actualProduction: 130,
+                        unit: '斤'
+                    },
+                    'MO20231201002': {
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.789',
+                        specification: '200g',
+                        actualProduction: 140,
+                        unit: '斤'
+                    },
+                    'MO20231202001': {
+                        teaVariety: '龙井',
+                        productName: '西湖龙井',
+                        materialCode: '123.46.678',
+                        specification: '250g',
+                        actualProduction: 120,
+                        unit: '斤'
+                    }
+                };
+                
+                const details = orderDetails[orderId];
+                if (!details) return;
+                
+                // 填充工单详情
+                document.getElementById('teaVariety').value = details.teaVariety;
+                document.getElementById('productName').value = details.productName;
+                document.getElementById('materialCode').value = details.materialCode;
+                document.getElementById('specification').value = details.specification;
+                document.getElementById('actualProduction').value = details.actualProduction;
+                document.getElementById('unit').value = details.unit;
+                
+                // 填充物料名称
+                document.getElementById('materialName').value = details.productName;
+                
+                // 设置计件单位
+                document.getElementById('pieceworkUnit').value = details.unit;
+            }
+            
+            // 加载工序选项
+            function loadProcessSteps() {
+                const processType = document.getElementById('processType').value;
+                if (!processType) return;
+                
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const processSteps = {
+                    '拼配': ['初采', '精选', '拼配'],
+                    '分装': ['精选', '分装', '包装'],
+                    '拆卸': ['拆解', '分类', '整理']
+                };
+                
+                const steps = processSteps[processType] || [];
+                
+                const stepSelect = document.getElementById('processStep');
+                
+                // 保留第一个选项（请选择工序）
+                stepSelect.innerHTML = '<option value="">请选择工序</option>';
+                
+                steps.forEach(step => {
+                    const option = document.createElement('option');
+                    option.value = step;
+                    option.textContent = step;
+                    stepSelect.appendChild(option);
+                });
+            }
+            
+            // 加载计件单价
+            function loadPieceworkRate() {
+                const processType = document.getElementById('processType').value;
+                const processStep = document.getElementById('processStep').value;
+                
+                if (!processType || !processStep) return;
+                
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const rateMap = {
+                    '拼配_初采': 0.50,
+                    '拼配_精选': 0.55,
+                    '拼配_拼配': 0.60,
+                    '分装_精选': 0.60,
+                    '分装_分装': 0.65,
+                    '分装_包装': 0.70,
+                    '拆卸_拆解': 0.55,
+                    '拆卸_分类': 0.50,
+                    '拆卸_整理': 0.45
+                };
+                
+                const key = `${processType}_${processStep}`;
+                const rate = rateMap[key] || 0;
+                
+                // 设置计件单价
+                document.getElementById('pieceworkRate').value = rate;
+                
+                // 计算计件金额
+                calculateAmount();
+            }
+            
+            // 计算计件金额
+            function calculateAmount() {
+                const quantity = parseFloat(document.getElementById('pieceworkQuantity').value) || 0;
+                const rate = parseFloat(document.getElementById('pieceworkRate').value) || 0;
+                
+                const amount = quantity * rate;
+                
+                // 设置计件金额
+                document.getElementById('pieceworkAmount').value = amount.toFixed(2);
+            }
+            
+            // 提交计件日报
+            function submitReport() {
+                // 获取表单数据
+                const formData = {
+                    date: document.getElementById('reportDateInput').value,
+                    employee: document.getElementById('employeeName').value,
+                    productionOrder: document.getElementById('productionOrder').value,
+                    teaVariety: document.getElementById('teaVariety').value,
+                    productName: document.getElementById('productName').value,
+                    materialCode: document.getElementById('materialCode').value,
+                    specification: document.getElementById('specification').value,
+                    actualProduction: document.getElementById('actualProduction').value,
+                    unit: document.getElementById('unit').value,
+                    materialName: document.getElementById('materialName').value,
+                    processType: document.getElementById('processType').value,
+                    processStep: document.getElementById('processStep').value,
+                    quantity: document.getElementById('pieceworkQuantity').value,
+                    pieceworkUnit: document.getElementById('pieceworkUnit').value,
+                    rate: document.getElementById('pieceworkRate').value,
+                    amount: document.getElementById('pieceworkAmount').value,
+                    remarks: document.getElementById('remarks').value,
+                    status: 'submitted'
+                };
+                
+                // 验证表单数据
+                if (!formData.date) {
+                    alert('请选择计件日期');
+                    return;
+                }
+                
+                if (!formData.employee) {
+                    alert('请输入计件人员');
+                    return;
+                }
+                
+                if (!formData.productionOrder) {
+                    alert('请选择生产工单');
+                    return;
+                }
+                
+                if (!formData.materialName) {
+                    alert('请输入物料名称');
+                    return;
+                }
+                
+                if (!formData.processType) {
+                    alert('请选择工艺');
+                    return;
+                }
+                
+                if (!formData.processStep) {
+                    alert('请选择工序');
+                    return;
+                }
+                
+                if (!formData.quantity || parseFloat(formData.quantity) <= 0) {
+                    alert('请输入有效的计件数量');
+                    return;
+                }
+                
+                // 这里应该是将数据提交到服务器，这里使用模拟数据
+                console.log('提交计件日报', formData);
+                
+                // 模拟提交成功
+                alert('计件日报提交成功');
+                
+                // 关闭模态框
+                closeReportModal();
+                
+                // 重新加载数据
+                loadReportData();
+            }
+            
+            // 保存为草稿
+            function saveAsDraft() {
+                // 获取表单数据
+                const formData = {
+                    date: document.getElementById('reportDateInput').value,
+                    employee: document.getElementById('employeeName').value,
+                    productionOrder: document.getElementById('productionOrder').value,
+                    teaVariety: document.getElementById('teaVariety').value,
+                    productName: document.getElementById('productName').value,
+                    materialCode: document.getElementById('materialCode').value,
+                    specification: document.getElementById('specification').value,
+                    actualProduction: document.getElementById('actualProduction').value,
+                    unit: document.getElementById('unit').value,
+                    materialName: document.getElementById('materialName').value,
+                    processType: document.getElementById('processType').value,
+                    processStep: document.getElementById('processStep').value,
+                    quantity: document.getElementById('pieceworkQuantity').value,
+                    pieceworkUnit: document.getElementById('pieceworkUnit').value,
+                    rate: document.getElementById('pieceworkRate').value,
+                    amount: document.getElementById('pieceworkAmount').value,
+                    remarks: document.getElementById('remarks').value,
+                    status: 'draft'
+                };
+                
+                // 这里应该是将数据提交到服务器，这里使用模拟数据
+                console.log('保存草稿', formData);
+                
+                // 模拟保存成功
+                alert('草稿保存成功');
+                
+                // 关闭模态框
+                closeReportModal();
+                
+                // 重新加载数据
+                loadReportData();
+            }
+            
+            // 查看计件日报
+            function viewReport(id) {
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const reportData = {
+                    1: {
+                        id: 1,
+                        date: '2023-12-01',
+                        employee: '张三',
+                        productionOrder: 'MO20231201001',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.678',
+                        specification: '200g',
+                        actualProduction: 130,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 130,
+                        pieceworkUnit: '斤',
+                        rate: 0.50,
+                        amount: 65.0,
+                        status: 'submitted',
+                        remarks: '无'
+                    },
+                    2: {
+                        id: 2,
+                        date: '2023-12-01',
+                        employee: '李四',
+                        productionOrder: 'MO20231201002',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.789',
+                        specification: '200g',
+                        actualProduction: 140,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 140,
+                        pieceworkUnit: '斤',
+                        rate: 0.55,
+                        amount: 77.0,
+                        status: 'approved',
+                        remarks: '优质完成'
+                    },
+                    3: {
+                        id: 3,
+                        date: '2023-12-02',
+                        employee: '王五',
+                        productionOrder: 'MO20231202001',
+                        teaVariety: '龙井',
+                        productName: '西湖龙井',
+                        materialCode: '123.46.678',
+                        specification: '250g',
+                        actualProduction: 120,
+                        unit: '斤',
+                        materialName: '西湖龙井',
+                        processType: '分装',
+                        processStep: '精选',
+                        quantity: 120,
+                        pieceworkUnit: '斤',
+                        rate: 0.60,
+                        amount: 72.0,
+                        status: 'draft',
+                        remarks: '待完成'
+                    }
+                };
+                
+                const report = reportData[id];
+                if (!report) return;
+                
+                // 设置当前编辑的报表ID
+                currentReportId = id;
+                
+                // 填充查看模态框
+                document.getElementById('viewReportDate').textContent = report.date;
+                document.getElementById('viewEmployeeName').textContent = report.employee;
+                document.getElementById('viewProductionOrder').textContent = report.productionOrder;
+                document.getElementById('viewTeaVariety').textContent = report.teaVariety;
+                document.getElementById('viewProductName').textContent = report.productName;
+                document.getElementById('viewMaterialCode').textContent = report.materialCode;
+                document.getElementById('viewSpecification').textContent = report.specification;
+                document.getElementById('viewActualProduction').textContent = report.actualProduction;
+                document.getElementById('viewUnit').textContent = report.unit;
+                document.getElementById('viewMaterialName').textContent = report.materialName;
+                document.getElementById('viewProcessType').textContent = report.processType;
+                document.getElementById('viewProcessStep').textContent = report.processStep;
+                document.getElementById('viewPieceworkQuantity').textContent = report.quantity;
+                document.getElementById('viewPieceworkUnit').textContent = report.pieceworkUnit;
+                document.getElementById('viewPieceworkRate').textContent = `¥${report.rate.toFixed(2)}`;
+                document.getElementById('viewPieceworkAmount').textContent = `¥${report.amount.toFixed(2)}`;
+                document.getElementById('viewRemarks').textContent = report.remarks || '无';
+                document.getElementById('viewStatus').textContent = getStatusText(report.status);
+                
+                // 根据状态显示/隐藏按钮
+                const editBtn = document.getElementById('editReportBtn');
+                const approveBtn = document.getElementById('approveReportBtn');
+                const rejectBtn = document.getElementById('rejectReportBtn');
+                
+                editBtn.style.display = report.status === 'draft' || report.status === 'rejected' ? '' : 'none';
+                approveBtn.style.display = report.status === 'submitted' ? '' : 'none';
+                rejectBtn.style.display = report.status === 'submitted' ? '' : 'none';
+                
+                // 绑定编辑按钮事件
+                editBtn.onclick = function() {
+                    closeViewReportModal();
+                    editReport(id);
+                };
+                
+                // 绑定审核通过按钮事件
+                approveBtn.onclick = function() {
+                    approveReport(id);
+                };
+                
+                // 绑定驳回按钮事件
+                rejectBtn.onclick = function() {
+                    rejectReport(id);
+                };
+                
+                // 显示模态框
+                document.getElementById('viewReportModal').style.display = 'block';
+            }
+            
+            // 编辑计件日报
+            function editReport(id) {
+                // 这里应该是从服务器获取数据，这里使用模拟数据
+                const reportData = {
+                    1: {
+                        id: 1,
+                        date: '2023-12-01',
+                        employee: '张三',
+                        productionOrder: 'MO20231201001',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.678',
+                        specification: '200g',
+                        actualProduction: 130,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 130,
+                        pieceworkUnit: '斤',
+                        rate: 0.50,
+                        amount: 65.0,
+                        status: 'submitted',
+                        remarks: '无'
+                    },
+                    2: {
+                        id: 2,
+                        date: '2023-12-01',
+                        employee: '李四',
+                        productionOrder: 'MO20231201002',
+                        teaVariety: '安吉白茶',
+                        productName: '明前安吉白茶',
+                        materialCode: '123.45.789',
+                        specification: '200g',
+                        actualProduction: 140,
+                        unit: '斤',
+                        materialName: '明前安吉白茶',
+                        processType: '拼配',
+                        processStep: '初采',
+                        quantity: 140,
+                        pieceworkUnit: '斤',
+                        rate: 0.55,
+                        amount: 77.0,
+                        status: 'approved',
+                        remarks: '优质完成'
+                    },
+                    3: {
+                        id: 3,
+                        date: '2023-12-02',
+                        employee: '王五',
+                        productionOrder: 'MO20231202001',
+                        teaVariety: '龙井',
+                        productName: '西湖龙井',
+                        materialCode: '123.46.678',
+                        specification: '250g',
+                        actualProduction: 120,
+                        unit: '斤',
+                        materialName: '西湖龙井',
+                        processType: '分装',
+                        processStep: '精选',
+                        quantity: 120,
+                        pieceworkUnit: '斤',
+                        rate: 0.60,
+                        amount: 72.0,
+                        status: 'draft',
+                        remarks: '待完成'
+                    }
+                };
+                
+                const report = reportData[id];
+                if (!report) return;
+                
+                // 设置当前编辑的报表ID
+                currentReportId = id;
+                
+                // 设置模态框标题
+                document.getElementById('reportModalTitle').textContent = '编辑计件日报';
+                
+                // 加载工单选项
+                loadProductionOrders();
+                
+                // 填充表单
+                document.getElementById('reportDateInput').value = report.date;
+                document.getElementById('employeeName').value = report.employee;
+                document.getElementById('productionOrder').value = report.productionOrder;
+                document.getElementById('teaVariety').value = report.teaVariety;
+                document.getElementById('productName').value = report.productName;
+                document.getElementById('materialCode').value = report.materialCode;
+                document.getElementById('specification').value = report.specification;
+                document.getElementById('actualProduction').value = report.actualProduction;
+                document.getElementById('unit').value = report.unit;
+                document.getElementById('materialName').value = report.materialName;
+                document.getElementById('processType').value = report.processType;
+                
+                // 加载工序选项
+                loadProcessSteps();
+                
+                // 设置工序
+                document.getElementById('processStep').value = report.processStep;
+                
+                // 加载计件单价
+                loadPieceworkRate();
+                
+                document.getElementById('pieceworkQuantity').value = report.quantity;
+                document.getElementById('pieceworkUnit').value = report.piecework                    
+                document.getElementById('pieceworkUnit').value = report.pieceworkUnit;
+                document.getElementById('pieceworkRate').value = report.rate;
+                document.getElementById('pieceworkAmount').value = report.amount;
+                document.getElementById('remarks').value = report.remarks || '';
+                
+                // 显示模态框
+                document.getElementById('reportModal').style.display = 'block';
+            }
+            
+            // 删除计件日报
+            function deleteReport(id) {
+                if (!confirm('确定要删除该计件日报吗？')) return;
+                
+                // 这里应该是向服务器发送删除请求，这里使用模拟数据
+                console.log('删除计件日报', id);
+                
+                // 模拟删除成功
+                alert('计件日报删除成功');
+                
+                // 重新加载数据
+                loadReportData();
+            }
+            
+            // 审核通过计件日报
+            function approveReport(id) {
+                if (!confirm('确定要审核通过该计件日报吗？')) return;
+                
+                // 这里应该是向服务器发送审核请求，这里使用模拟数据
+                console.log('审核通过计件日报', id);
+                
+                // 模拟审核成功
+                alert('计件日报审核通过成功');
+                
+                // 关闭模态框
+                closeViewReportModal();
+                
+                // 重新加载数据
+                loadReportData();
+            }
+            
+            // 驳回计件日报
+            function rejectReport(id) {
+                const reason = prompt('请输入驳回原因：');
+                if (reason === null) return; // 用户取消
+                
+                // 这里应该是向服务器发送驳回请求，这里使用模拟数据
+                console.log('驳回计件日报', id, reason);
+                
+                // 模拟驳回成功
+                alert('计件日报驳回成功');
+                
+                // 关闭模态框
+                closeViewReportModal();
+                
+                // 重新加载数据
+                loadReportData();
+            }
+            
+            // 渲染计件日报表格
+            function renderReportTable(data) {
+                const tableBody = document.querySelector('#reportTable tbody');
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    const emptyRow = document.createElement('tr');
+                    emptyRow.innerHTML = `<td colspan="19" style="text-align: center;">暂无数据</td>`;
+                    tableBody.appendChild(emptyRow);
+                    return;
+                }
+                
+                data.forEach((report, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${report.date}</td>
+                        <td>${report.employee}</td>
+                        <td>${report.productionOrder}</td>
+                        <td>${report.teaVariety}</td>
+                        <td>${report.productName}</td>
+                        <td>${report.materialCode}</td>
+                        <td>${report.specification}</td>
+                        <td>${report.actualProduction}</td>
+                        <td>${report.unit}</td>
+                        <td>${report.materialName}</td>
+                        <td>${report.processType}</td>
+                        <td>${report.processStep}</td>
+                        <td>${report.quantity}</td>
+                        <td>${report.pieceworkUnit}</td>
+                        <td>¥${report.rate.toFixed(2)}</td>
+                        <td>¥${report.amount.toFixed(2)}</td>
+                        <td><span class="report-status ${report.status}">${getStatusText(report.status)}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="viewReport(${report.id})">查看</button>
+                            ${report.status === 'draft' || report.status === 'rejected' ? `<button class="btn btn-sm btn-outline" onclick="editReport(${report.id})">编辑</button>` : ''}
+                            ${report.status === 'draft' ? `<button class="btn btn-sm btn-danger" onclick="deleteReport(${report.id})">删除</button>` : ''}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            // 获取状态文本
+            function getStatusText(status) {
+                const statusMap = {
+                    'draft': '草稿',
+                    'submitted': '已提交',
+                    'approved': '已审核',
+                    'rejected': '已驳回'
+                };
+                return statusMap[status] || status;
+            }
+            
+            // 更新分页
+            function updatePagination(total, pageSize) {
+                totalPages = Math.ceil(total / pageSize) || 1;
+                
+                // 更新页码按钮
+                document.getElementById('page1Btn').textContent = currentPage <= 2 ? '1' : (currentPage - 1).toString();
+                document.getElementById('page2Btn').textContent = currentPage <= 1 ? '2' : currentPage.toString();
+                document.getElementById('page3Btn').textContent = currentPage <= 0 ? '3' : (currentPage + 1).toString();
+                
+                // 更新页码信息
+                document.getElementById('pageInfo').textContent = `第 ${currentPage} 页 / 共 ${totalPages} 页`;
+                
+                // 禁用/启用分页按钮
+                document.getElementById('firstPageBtn').disabled = currentPage === 1;
+                document.getElementById('prevPageBtn').disabled = currentPage === 1;
+                document.getElementById('nextPageBtn').disabled = currentPage === totalPages;
+                document.getElementById('lastPageBtn').disabled = currentPage === totalPages;
+                
+                // 隐藏超出范围的页码按钮
+                document.getElementById('page1Btn').style.display = parseInt(document.getElementById('page1Btn').textContent) > 0 && parseInt(document.getElementById('page1Btn').textContent) <= totalPages ? '' : 'none';
+                document.getElementById('page2Btn').style.display = parseInt(document.getElementById('page2Btn').textContent) > 0 && parseInt(document.getElementById('page2Btn').textContent) <= totalPages ? '' : 'none';
+                document.getElementById('page3Btn').style.display = parseInt(document.getElementById('page3Btn').textContent) > 0 && parseInt(document.getElementById('page3Btn').textContent) <= totalPages ? '' : 'none';
+            }
+            
+            // 跳转到指定页
+            function goToPage(page) {
+                if (page < 1 || page > totalPages) return;
+                
+                currentPage = page;
+                loadReportData(); // 重新加载数据
+            }
+            
+            // 跳转到第一页
+            function goToFirstPage() {
+                goToPage(1);
+            }
+            
+            // 跳转到上一页
+            function goToPrevPage() {
+                goToPage(currentPage - 1);
+            }
+            
+            // 跳转到下一页
+            function goToNextPage() {
+                goToPage(currentPage + 1);
+            }
+            
+            // 跳转到最后一页
+            function goToLastPage() {
+                goToPage(totalPages);
+            }
+            
+            // 跳转到指定页码按钮对应的页
+            function goToPageBtn(btnId) {
+                const page = parseInt(document.getElementById(btnId).textContent);
+                goToPage(page);
+            }
+        </script>
+    </body>
+</html>

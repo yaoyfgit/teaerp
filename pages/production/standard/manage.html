@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标准管理 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../../css/common.css">
+    <link rel="stylesheet" href="../../../css/layout.css">
+    <link rel="stylesheet" href="../../../css/menu.css">
+    <style>
+        /* 统计卡片样式 */
+        .statistics-cards {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .statistics-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: linear-gradient(135deg, #f6f8fc 0%, #f0f4f8 100%);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #8fd4d2;
+        }
+
+        .statistics-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e9eff5 100%);
+        }
+
+        .statistics-card i {
+            font-size: 24px;
+            margin-right: 12px;
+            color: #8fd4d2;
+        }
+
+        .statistics-card .card-content {
+            flex: 1;
+        }
+
+        .statistics-card .card-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .statistics-card .card-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .statistics-card .card-unit {
+            font-size: 14px;
+            color: #666;
+            margin-left: 4px;
+        }
+
+        /* 工具栏样式 - 参考demand.html */
+        .standard-toolbar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            background: #fff;
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .standard-select {
+            width: 120px;
+            margin-right: 8px;
+            height: 32px;
+            padding: 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .standard-input {
+            width: 200px;
+            margin-right: 8px;
+            height: 32px;
+            padding: 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .toolbar-divider {
+            width: 1px;
+            height: 24px;
+            background-color: #dcdfe6;
+            margin: 0 8px;
+        }
+
+        /* 标准类型标签样式 */
+        .standard-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: white;
+        }
+
+        .standard-type.national {
+            background-color: #1890ff;
+        }
+
+        .standard-type.industry {
+            background-color: #52c41a;
+        }
+
+        .standard-type.local {
+            background-color: #722ed1;
+        }
+
+        .standard-type.internal {
+            background-color: #fa8c16;
+        }
+
+        /* 标准状态标签样式 */
+        .standard-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .standard-status.active {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+
+        .standard-status.inactive {
+            background-color: #f5f5f5;
+            color: #999;
+            border: 1px solid #d9d9d9;
+        }
+
+        .standard-status.draft {
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+
+        /* 按钮样式 - 参考demand.html */
+        .standard-button {
+            height: 32px;
+            padding: 0 16px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+
+        .standard-button:hover {
+            border-color: #8fd4d2;
+            color: #8fd4d2;
+        }
+
+        .standard-button.primary {
+            background-color: #8fd4d2;
+            border-color: #8fd4d2;
+            color: #fff;
+        }
+
+        .standard-button.primary:hover {
+            background-color: #7bc9c7;
+            border-color: #7bc9c7;
+            color: #fff;
+        }
+
+        .standard-button i {
+            margin-right: 4px;
+        }
+
+        /* 分页样式 - 参考demand.html */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 16px;
+            padding: 8px 0;
+        }
+
+        .page-btn {
+            min-width: 32px;
+            height: 32px;
+            margin: 0 4px;
+            padding: 0 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: #8fd4d2;
+            color: #8fd4d2;
+        }
+
+        .page-btn.active {
+            background-color: #8fd4d2;
+            border-color: #8fd4d2;
+            color: #fff;
+        }
+
+        .page-btn:disabled {
+            color: #d9d9d9;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            margin-left: 16px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin: 0 auto; /* 添加这一行确保水平居中 */
+            position: relative; /* 添加相对定位 */
+            top: 50%; /* 从顶部开始的位置 */
+            transform: translateY(-50%); /* 向上移动自身高度的一半 */
+        }
+        
+        /* 添加查看模态框的特定样式 */
+        #viewStandardModal .modal-content {
+            max-width: 700px; /* 稍微窄一点 */
+        }
+        
+        #viewStandardModal .modal-body {
+            padding: 20px;
+        }
+        
+        /* 查看模态框内容样式 */
+        .view-section {
+            margin-bottom: 20px;
+        }
+        
+        .view-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .view-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        
+        .view-group {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 8px;
+        }
+        
+        .view-group label {
+            display: inline-block;
+            width: 100px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .view-field {
+            display: inline-block;
+            padding: 4px 0;
+            min-height: 24px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .modal-header {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-body {
+            padding: 16px;
+        }
+
+        .modal-footer {
+            padding: 16px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+
+        /* 表格样式 - 参考demand.html */
+        .table-container {
+            margin-bottom: 8px;
+            overflow-x: auto;
+        }
+
+        .standard-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ebeef5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .standard-table th,
+        .standard-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .standard-table th {
+            background-color: #f5f7fa;
+            color: #606266;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .standard-table tr:hover td {
+            background-color: #f5f7fa;
+        }
+
+        .button-link {
+            background: none;
+            border: none;
+            color: #8fd4d2;
+            cursor: pointer;
+            padding: 0;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .button-link:hover {
+            color: #7bc9c7;
+            text-decoration: underline;
+        }
+
+        .button-link.danger {
+            color: #f56c6c;
+        }
+
+        .button-link.danger:hover {
+            color: #e64242;
+        }
+
+        /* 表单样式 */
+        .form-section {
+            margin-bottom: 24px;
+        }
+
+        .form-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 32px;
+            padding: 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-control:focus {
+            border-color: #8fd4d2;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(143, 212, 210, 0.2);
+        }
+
+        textarea.form-control {
+            height: auto;
+            min-height: 80px;
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-list {
+            margin-top: 8px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+
+        .file-item i {
+            margin-right: 8px;
+            color: #666;
+        }
+
+        .file-item .file-name {
+            flex: 1;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .file-item .file-remove {
+            background: none;
+            border: none;
+            color: #ff4d4f;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .view-field {
+            padding: 8px 0;
+            min-height: 32px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .file-link {
+            display: inline-flex;
+            align-items: center;
+            color: #1890ff;
+            text-decoration: none;
+            margin-right: 16px;
+        }
+
+        .file-link i {
+            margin-right: 4px;
+        }
+
+        .file-link:hover {
+            color: #40a9ff;
+            text-decoration: underline;
+        }
+
+        .required {
+            color: #f56c6c;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-industry"></i>
+                    <span>生产管理</span>
+                    <i class="fas fa-angle-right"></i>
+                    <i class="fas fa-file-alt"></i>
+                    <span>标准管理</span>
+                </div>
+                
+                <!-- 统计卡片 
+                <div class="statistics-cards">
+                    <div class="statistics-card">
+                        <i class="fas fa-file-alt"></i>
+                        <div class="card-content">
+                            <div class="card-title">标准总数</div>
+                            <div class="card-value">60<span class="card-unit">个</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="card-content">
+                            <div class="card-title">生效标准</div>
+                            <div class="card-value">42<span class="card-unit">个</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-edit"></i>
+                        <div class="card-content">
+                            <div class="card-title">草稿标准</div>
+                            <div class="card-value">12<span class="card-unit">个</span></div>
+                        </div>
+                    </div>
+                    <div class="statistics-card">
+                        <i class="fas fa-times-circle"></i>
+                        <div class="card-content">
+                            <div class="card-title">失效标准</div>
+                            <div class="card-value">6<span class="card-unit">个</span></div>
+                        </div>
+                    </div>
+                </div>  -->
+                
+                <!-- 工具栏 -->
+                <div class="standard-toolbar">
+                    <div class="toolbar-left">
+                        <select class="standard-select">
+                            <option value="">全部类型</option>
+                            <option value="national">国家标准</option>
+                            <option value="industry">行业标准</option>
+                            <option value="local">地方标准</option>
+                            <option value="internal">内部工艺标准</option>
+                        </select>
+                        <select class="standard-select">
+                            <option value="">全部状态</option>
+                            <option value="active">生效中</option>
+                            <option value="inactive">已失效</option>
+                            <option value="draft">草稿</option>
+                        </select>
+                        <div class="toolbar-divider"></div>
+                        <input type="text" class="standard-input" placeholder="搜索标准编号/名称">
+                        <button class="standard-button" onclick="searchStandards()">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                    </div>
+                    <div class="toolbar-right">
+                        <button class="standard-button primary" onclick="showAddStandardModal()">
+                            <i class="fas fa-plus"></i> 新增标准
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 标准列表 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="standard-table" id="standardTable">
+                                <thead>
+                                    <tr>
+                                        <th width="60">序号</th>
+                                        <th width="220">标准编号</th>
+                                        <th>标准名称</th>
+                                        <th width="120">标准类型</th>
+                                        <th width="120">发布日期</th>
+                                        <th width="120">实施日期</th>
+                                        <th width="100">状态</th>
+                                        <th width="180">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 表格数据将通过 JavaScript 动态生成 -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 分页 -->
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i class="fas fa-angle-double-left"></i></button>
+                            <button class="page-btn" disabled><i class="fas fa-angle-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn"><i class="fas fa-angle-right"></i></button>
+                            <button class="page-btn"><i class="fas fa-angle-double-right"></i></button>
+                            <span class="page-info">共 10 页，60 条记录</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 标准管理模态框 -->
+    <div class="modal" id="standardModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">新增标准</div>
+                <button class="modal-close" onclick="closeStandardModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="standardForm">
+                    <!-- 表单内容从这里开始 -->
+                    <div class="form-section">
+                        <div class="form-section-title">基本信息</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="standardCode">标准编号 <span class="required">*</span></label>
+                                <input type="text" class="form-control" id="standardCode" name="standardCode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="standardName">标准名称 <span class="required">*</span></label>
+                                <input type="text" class="form-control" id="standardName" name="standardName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="standardTypeSelect">标准类型 <span class="required">*</span></label>
+                                <select class="form-control" id="standardTypeSelect" name="standardType" required>
+                                    <option value="">请选择</option>
+                                    <option value="national">国家标准</option>
+                                    <option value="industry">行业标准</option>
+                                    <option value="local">地方标准</option>
+                                    <option value="internal">内部工艺标准</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="standardStatusSelect">标准状态 <span class="required">*</span></label>
+                                <select class="form-control" id="standardStatusSelect" name="standardStatus" required>
+                                    <option value="">请选择</option>
+                                    <option value="active">生效中</option>
+                                    <option value="inactive">已失效</option>
+                                    <option value="draft">草稿</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="publishDate">发布日期 <span class="required">*</span></label>
+                                <input type="date" class="form-control" id="publishDate" name="publishDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="implementDate">实施日期 <span class="required">*</span></label>
+                                <input type="date" class="form-control" id="implementDate" name="implementDate" required>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-section">
+                        <div class="form-section-title">标准内容</div>
+                        <div class="form-group">
+                            <label for="standardSummary">标准概述</label>
+                            <textarea class="form-control" id="standardSummary" name="standardSummary" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="standardScope">适用范围</label>
+                            <textarea class="form-control" id="standardScope" name="standardScope" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="standardKeyPoints">关键要点</label>
+                            <textarea class="form-control" id="standardKeyPoints" name="standardKeyPoints" rows="3"></textarea>
+                        </div>
+                    </div>
+    
+                    <div class="form-section">
+                        <div class="form-section-title">附件</div>
+                        <div class="form-group">
+                            <div class="file-upload">
+                                <button type="button" class="standard-button" onclick="document.getElementById('standardFile').click()">
+                                    <i class="fas fa-upload"></i> 选择文件
+                                </button>
+                                <span id="fileNameDisplay">未选择文件</span>
+                                <input type="file" id="standardFile" style="display: none;">
+                            </div>
+                            <div id="fileList" class="file-list"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="standard-button" onclick="closeStandardModal()">取消</button>
+                <button class="standard-button primary" onclick="saveStandard()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 查看标准模态框 -->
+    <div class="modal" id="viewStandardModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">查看标准</div>
+                <button class="modal-close" onclick="closeViewStandardModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                // 查看标准
+                function viewStandard(code) {
+                    currentStandardCode = code;
+                    
+                    // 获取标准数据
+                    const standard = standardsData[code];
+                    if (!standard) {
+                        alert('未找到标准数据');
+                        return;
+                    }
+                    
+                    // 检查查看模态框是否存在
+                    const viewModal = document.getElementById('viewStandardModal');
+                    if (!viewModal) {
+                        console.error('找不到查看标准模态框');
+                        return;
+                    }
+                    
+                    // 检查模态框内容元素是否存在
+                    const modalBody = viewModal.querySelector('.modal-body');
+                    if (!modalBody) {
+                        console.error('找不到模态框内容元素');
+                        return;
+                    }
+                    
+                    // 填充查看模态框内容
+                    modalBody.innerHTML = `
+                        <div class="view-section">
+                            <div class="view-section-title">基本信息</div>
+                            <div class="view-row">
+                                <div class="view-group">
+                                    <label>标准编号:</label>
+                                    <div class="view-field">${standard.code}</div>
+                                </div>
+                                <div class="view-group">
+                                    <label>标准名称:</label>
+                                    <div class="view-field">${standard.name}</div>
+                                </div>
+                            </div>
+                            <div class="view-row">
+                                <div class="view-group">
+                                    <label>标准类型:</label>
+                                    <div class="view-field">${standard.typeName}</div>
+                                </div>
+                                <div class="view-group">
+                                    <label>标准状态:</label>
+                                    <div class="view-field">${standard.statusName}</div>
+                                </div>
+                            </div>
+                            <div class="view-row">
+                                <div class="view-group">
+                                    <label>发布日期:</label>
+                                    <div class="view-field">${standard.publishDate}</div>
+                                </div>
+                                <div class="view-group">
+                                    <label>实施日期:</label>
+                                    <div class="view-field">${standard.implementDate}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="view-section">
+                            <div class="view-section-title">标准内容</div>
+                            <div class="view-row">
+                                <div class="view-group" style="width: 100%;">
+                                    <label>标准概述:</label>
+                                    <div class="view-field">${standard.summary || '无'}</div>
+                                </div>
+                            </div>
+                            <div class="view-row">
+                                <div class="view-group" style="width: 100%;">
+                                    <label>适用范围:</label>
+                                    <div class="view-field">${standard.scope || '无'}</div>
+                                </div>
+                            </div>
+                            <div class="view-row">
+                                <div class="view-group" style="width: 100%;">
+                                    <label>关键要点:</label>
+                                    <div class="view-field">${standard.keyPoints || '无'}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="view-section">
+                            <div class="view-section-title">附件</div>
+                            <div class="view-row">
+                                <div class="view-group" style="width: 100%;">
+                                    ${standard.files && standard.files.length > 0 
+                                        ? standard.files.map(file => `
+                                            <a href="#" class="file-link">
+                                                <i class="fas fa-file"></i>
+                                                ${file.name}
+                                            </a>
+                                        `).join('')
+                                        : '<div class="view-field">无附件</div>'
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 显示模态框
+                    viewModal.style.display = 'flex';
+                }
+                
+                // 显示编辑标准模态框
+                function editStandard(code) {
+                    isEditing = true;
+                    currentStandardCode = code;
+                    document.getElementById('modalTitle').textContent = '编辑标准';
+                    
+                    // 获取标准数据
+                    const standard = standardsData[code];
+                    if (!standard) {
+                        alert('未找到标准数据');
+                        return;
+                    }
+                    
+                    // 填充表单数据
+                    document.getElementById('standardCode').value = standard.code;
+                    document.getElementById('standardName').value = standard.name;
+                    document.getElementById('standardTypeSelect').value = standard.type;
+                    document.getElementById('standardStatusSelect').value = standard.status;
+                    document.getElementById('publishDate').value = standard.publishDate;
+                    document.getElementById('implementDate').value = standard.implementDate;
+                    document.getElementById('standardSummary').value = standard.summary || '';
+                    document.getElementById('standardScope').value = standard.scope || '';
+                    document.getElementById('standardKeyPoints').value = standard.keyPoints || '';
+                    
+                    // 填充文件列表
+                    uploadedFiles = [...(standard.files || [])];
+                    renderFileList();
+                    
+                    // 显示模态框
+                    document.getElementById('standardModal').style.display = 'flex';
+                }
+            </div>
+            <div class="modal-footer">
+                <button class="standard-button" onclick="closeViewStandardModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加必要的脚本引用 -->
+    <script src="../../../js/common.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="../../../js/standard.js"></script>
+    
+    <script>
+    // 刷新标准表格
+    function refreshStandardTable() {
+        const tableBody = document.querySelector('#standardTable tbody');
+        if (!tableBody) {
+            console.error('找不到表格主体元素');
+            return;
+        }
+        
+        // 清空表格
+        tableBody.innerHTML = '';
+        
+        // 获取所有标准数据
+        const standards = Object.values(standardsData);
+        
+        // 填充表格
+        standards.forEach((standard, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${standard.code}</td>
+                <td>${standard.name}</td>
+                <td><span class="standard-type ${standard.type}">${standard.typeName}</span></td>
+                <td>${standard.publishDate}</td>
+                <td>${standard.implementDate}</td>
+                <td><span class="standard-status ${standard.status}">${standard.statusName}</span></td>
+                <td>
+                    <button class="button-link" onclick="viewStandard('${standard.code}')">查看</button>
+                    <button class="button-link" onclick="editStandard('${standard.code}')">编辑</button>
+                    <button class="button-link danger" onclick="deleteStandard('${standard.code}')">删除</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // 文件上传处理
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('fileNameDisplay').textContent = file.name;
+            
+            // 添加到文件列表
+            uploadedFiles.push({
+                name: file.name,
+                size: file.size,
+                type: file.type
+            });
+            
+            renderFileList();
+        }
+    }
+    
+    // 渲染文件列表
+    function renderFileList() {
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = '';
+        
+        uploadedFiles.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <i class="fas fa-file"></i>
+                <span class="file-name">${file.name}</span>
+                <button type="button" class="file-remove" onclick="removeFile(${index})">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+    }
+    
+    // 删除文件
+    function removeFile(index) {
+        uploadedFiles.splice(index, 1);
+        renderFileList();
+    }
+    
+    // 删除标准
+    function deleteStandard(code) {
+        if (confirm(`确定要删除标准 "${code}" 吗？`)) {
+            delete standardsData[code];
+            refreshStandardTable();
+            alert('删除成功');
+        }
+    }
+    
+    // 关闭查看标准模态框
+    function closeViewStandardModal() {
+        document.getElementById('viewStandardModal').style.display = 'none';
+    }
+    
+    // 搜索标准
+    function searchStandards() {
+        // 实际应用中应该根据搜索条件过滤数据
+        alert('搜索功能将在后续版本实现');
+    }
+    </script>
+<!-- 在 body 结束标签前添加以下内容 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化菜单
+            Menu.renderMenu();
+            // 初始化菜单切换功能
+            initMenuToggle();
+        });
+        
+        // 其他已有的 JavaScript 函数保持不变
+    </script>
+</body>
+</html>

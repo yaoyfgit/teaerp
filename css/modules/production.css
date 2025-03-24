@@ -146,3 +146,240 @@
     background-color: #f5f5f5;
     color: #666;
 }
+
+/* 统计卡片样式 */
+.stats-cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+    border-top: 3px solid transparent;
+}
+
+.stat-card .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-card i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.stat-card .label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-card .value {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.stat-card .value span {
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+/* 统计卡片颜色 - 使用与截图一致的颜色 */
+.stat-card.primary { border-top-color: #1890ff; }
+.stat-card.primary i, .stat-card.primary .value { color: #1890ff; }
+
+.stat-card.success { border-top-color: #52c41a; }
+.stat-card.success i, .stat-card.success .value { color: #52c41a; }
+
+.stat-card.warning { border-top-color: #faad14; }
+.stat-card.warning i, .stat-card.warning .value { color: #faad14; }
+
+.stat-card.info { border-top-color: #13c2c2; }
+.stat-card.info i, .stat-card.info .value { color: #13c2c2; }
+
+.stat-card.danger { border-top-color: #e74c3c; }
+.stat-card.danger i, .stat-card.danger .value { color: #e74c3c; }
+
+/* 工具栏样式 */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+.search-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.search-group .form-control {
+    height: 32px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 0 10px;
+    min-width: 120px;
+    font-size: 13px;
+}
+
+.action-area {
+    display: flex;
+    gap: 8px;
+}
+
+/* 按钮样式 */
+.btn {
+    height: 32px;
+    padding: 0 15px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 400;
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: #1890ff;
+    color: #fff;
+    border-color: #1890ff;
+}
+
+.btn-primary:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+.btn-success {
+    background-color: #52c41a;
+    color: #fff;
+    border-color: #52c41a;
+}
+
+.btn-success:hover {
+    background-color: #73d13d;
+    border-color: #73d13d;
+}
+
+.btn-danger {
+    background-color: #f5222d;
+    color: #fff;
+    border-color: #f5222d;
+}
+
+.btn-danger:hover {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+}
+
+.btn-default {
+    background-color: #fff;
+    color: #666;
+    border-color: #d9d9d9;
+}
+
+.btn-default:hover {
+    color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+/* 报告状态标签样式 */
+.report-status {
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.report-status.draft {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+.report-status.submitted {
+    background-color: #e6f7ff;
+    color: #1890ff;
+}
+
+.report-status.approved {
+    background-color: #f6ffed;
+    color: #52c41a;
+}
+
+.report-status.rejected {
+    background-color: #fff2f0;
+    color: #f5222d;
+}
+
+/* 分页样式 */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-btn {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    background-color: #fff;
+    color: #606266;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+    color: #4a90e2;
+    border-color: #c6e2ff;
+}
+
+.page-btn.active {
+    background-color: #4a90e2;
+    border-color: #4a90e2;
+    color: #fff;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    margin-left: 15px;
+    font-size: 13px;
+    color: #606266;
+}

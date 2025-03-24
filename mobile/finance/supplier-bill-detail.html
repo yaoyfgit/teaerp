@@ -127,10 +127,15 @@
             <div class="expense-list">
                 <div class="expense-item">
                     <div class="expense-header">
-                        <div class="expense-type">运费</div>
-                        <div class="expense-amount">2,000.00</div>
+                        <div class="expense-type">供应商A</div>
                     </div>
                     <div class="expense-body">
+                        <div class="form-row">
+                            <div class="form-label">费用项目</div>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" value="运费" readonly>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-label">数量</div>
                             <div class="form-control-wrapper">
@@ -234,44 +239,30 @@
         <div class="detail-section" id="payment-info-section">
             <div class="detail-section-title">付款信息</div>
             <div class="payment-list">
-                <div class="payment-item">
-                    <div class="payment-header">
-                        <div class="payment-date">2024-03-05</div>
-                        <div class="payment-amount">20,000.00</div>
-                    </div>
-                    <div class="payment-body">
-                        <div class="form-row">
-                            <div class="form-label">付款单号</div>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" value="FK202403050001" readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-label">付款方式</div>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" value="银行转账" readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-label">开户银行</div>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" value="中国工商银行" readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-label">账号</div>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" value="6222 **** **** 1234" readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-label">备注</div>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" value="首期付款" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="related-bills-table">
+                    <thead>
+                        <tr>
+                            <th>付款单号</th>
+                            <th>付款日期</th>
+                            <th>付款金额</th>
+                            <th>付款方式</th>
+                            <th>开户银行</th>
+                            <th>账号</th>
+                            <th>备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FK202403050001</td>
+                            <td>2024-03-05</td>
+                            <td>20,000.00</td>                            
+                            <td>银行转账</td>
+                            <td>中国工商银行</td>
+                            <td>6222 **** **** 1234</td>
+                            <td>首期付款</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         

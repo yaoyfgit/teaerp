@@ -46,7 +46,7 @@
                     <span>库存预警</span>
                 </div>
 
-                <!-- 预警统计 -->
+                <!-- 预警统计
                 <div class="standard-card">
                     <div class="overview-grid">
                         <div class="overview-item warning">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>   -->
 
                 <!-- 预警列表 -->
                 <div class="standard-card">
@@ -113,9 +113,9 @@
                                 <button class="standard-button" onclick="exportWarning()">
                                     <i class="fas fa-file-export"></i> 导出
                                 </button>
-                                <button class="standard-button" onclick="batchProcess()">
+                            <!--<button class="standard-button" onclick="batchProcess()">
                                     <i class="fas fa-check"></i> 批量处理
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                                     <th>预警值</th>
                                     <th>预警类型</th>
                                     <th>预警时间</th>
-                                    <th>处理状态</th>
+                                <!--<th>处理状态</th>-->
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -153,14 +153,14 @@
                                     <td>20</td>
                                     <td><span class="status-tag warning">库存预警</span></td>
                                     <td>2024-03-20 14:30:00</td>
-                                    <td><span class="status-tag">未处理</span></td>
+                                <!--<td><span class="status-tag">未处理</span></td>-->
                                     <td>
                                         <button class="operation-button" onclick="viewWarning('P001')">
                                             <i class="fas fa-eye"></i> 查看
                                         </button>
-                                        <button class="operation-button" onclick="processWarning('P001')">
+                                    <!--<button class="operation-button" onclick="processWarning('P001')">
                                             <i class="fas fa-check"></i> 处理
-                                        </button>
+                                        </button>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,14 +174,14 @@
                                     <td>15</td>
                                     <td><span class="status-tag danger">缺货预警</span></td>
                                     <td>2024-03-20 15:00:00</td>
-                                    <td><span class="status-tag">未处理</span></td>
+                                <!--<td><span class="status-tag">未处理</span></td>-->
                                     <td>
                                         <button class="operation-button" onclick="viewWarning('P002')">
                                             <i class="fas fa-eye"></i> 查看
                                         </button>
-                                        <button class="operation-button" onclick="processWarning('P002')">
+                                    <!--<button class="operation-button" onclick="processWarning('P002')">
                                             <i class="fas fa-check"></i> 处理
-                                        </button>
+                                        </button>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -195,7 +195,7 @@
                                     <td>150</td>
                                     <td><span class="status-tag warning">积压预警</span></td>
                                     <td>2024-03-20 16:15:00</td>
-                                    <td><span class="status-tag success">已处理</span></td>
+                                <!--<td><span class="status-tag success">已处理</span></td>-->
                                     <td>
                                         <button class="operation-button" onclick="viewWarning('P003')">
                                             <i class="fas fa-eye"></i> 查看

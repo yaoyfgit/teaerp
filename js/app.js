@@ -224,6 +224,12 @@ const menuConfig = [
         icon: 'industry',
         children: [
             {
+                key: 'standard',
+                title: '标准管理',
+                icon: 'ruler',
+                path: 'pages/production/standard/manage.html'
+            },
+            {
                 key: 'bom',
                 title: 'BOM管理',
                 icon: 'sitemap',
@@ -267,6 +273,25 @@ const menuConfig = [
                         title: '分析报表', 
                         icon: 'chart-line', 
                         path: 'pages/production/report/analysis.html'
+                    }
+                ]
+            },
+            {
+                key: 'piecework',
+                title: '计件管理',
+                icon: 'calculator',
+                children: [
+                    {
+                        key: 'report',
+                        title: '计件日报',
+                        icon: 'file-alt',
+                        path: 'pages/production/piecework/report.html'
+                    },
+                    {
+                        key: 'scheme',
+                        title: '计件方案',
+                        icon: 'tasks',
+                        path: 'pages/production/piecework/scheme.html'
                     }
                 ]
             },
