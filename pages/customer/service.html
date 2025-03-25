@@ -46,7 +46,7 @@
                     <span>客户服务</span>
                 </div>
 
-                <!-- 统计卡片 -->
+                <!-- 统计卡片
                 <div class="stats-cards">
                     <div class="stat-card warning">
                         <div class="info">
@@ -76,7 +76,7 @@
                             <div class="value">168<span>件</span></div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- 工具栏 -->
                 <div class="card standard-card">
@@ -153,9 +153,9 @@
                                             <button class="btn btn-secondary btn-xs" onclick="handleService(1)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-secondary btn-xs" onclick="transferService(1)">
+                                            <!--<button class="btn btn-secondary btn-xs" onclick="transferService(1)">
                                                 <i class="fas fa-exchange-alt"></i>
-                                            </button>
+                                            </button>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -176,9 +176,9 @@
                                             <button class="btn btn-secondary btn-xs" onclick="handleService(2)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-secondary btn-xs" onclick="transferService(2)">
+                                            <!--<button class="btn btn-secondary btn-xs" onclick="transferService(2)">
                                                 <i class="fas fa-exchange-alt"></i>
-                                            </button>
+                                            </button>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -199,9 +199,9 @@
                                             <button class="btn btn-secondary btn-xs" onclick="handleService(3)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-secondary btn-xs" onclick="transferService(3)">
+                                            <!--<button class="btn btn-secondary btn-xs" onclick="transferService(3)">
                                                 <i class="fas fa-exchange-alt"></i>
-                                            </button>
+                                            </button>-->
                                         </div>
                                     </td>
                                 </tr>
@@ -222,8 +222,8 @@
                                             <button class="btn btn-secondary btn-xs" onclick="handleService(4)">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-secondary btn-xs" onclick="transferService(4)">
-                                                <i class="fas fa-exchange-alt"></i>
+                                            <!--<button class="btn btn-secondary btn-xs" onclick="transferService(4)">
+                                                <i class="fas fa-exchange-alt"></i>-->
                                             </button>
                                         </div>
                                     </td>
@@ -267,6 +267,7 @@
                 </div>
                 <div class="dialog-content">
                     <form id="serviceForm">
+                        <div class="form-section-title">基本信息</div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>工单编号</label>
@@ -314,7 +315,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>处理人<span class="required">*</span></label>
+                                <label>创建人<span class="required">*</span></label>
                                 <select class="form-control" name="handler" required>
                                     <option value="">请选择</option>
                                     <option value="1">张三</option>
@@ -326,7 +327,7 @@
                                 <input type="datetime-local" class="form-control" name="expectedCompletionTime" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                    <!--<div class="form-group">
                             <label>处理记录</label>
                             <div class="timeline">
                                 <div class="timeline-item">
@@ -353,8 +354,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div> 
+                        </div>-->
                         <div class="form-group">
                             <label>附件</label>
                             <input type="file" class="form-control" name="attachments" multiple>
@@ -368,7 +369,164 @@
             </div>
         </div>
     </div>
+    <!-- 查看工单弹窗 -->
+    <div class="modal" id="viewServiceModal">
+        <div class="dialog-overlay">
+            <div class="dialog">
+                <div class="dialog-header">
+                    <h3><i class="fas fa-eye"></i> 查看工单详情</h3>
+                    <button class="close-button" onclick="closeModal('viewServiceModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="dialog-content">
+                    <div class="view-info">
+                        <div class="form-section-title">基本信息</div>                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>工单编号</label>
+                                <div class="info-text" id="view-serviceCode"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>客户名称</label>
+                                <div class="info-text" id="view-customerName"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>服务类型</label>
+                                <div class="info-text" id="view-serviceType"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>紧急程度</label>
+                                <div class="info-text" id="view-priority"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>处理状态</label>
+                                <div class="info-text" id="view-status"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>问题描述</label>
+                            <div class="info-text info-text-area" id="view-description"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>创建人</label>
+                                <div class="info-text" id="view-handler"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>预计完成时间</label>
+                                <div class="info-text" id="view-expectedCompletionTime"></div>
+                            </div>
+                        </div>
+                        <div class="form-section-title">处理信息</div>                                                
+                        <div class="form-group">
+                            <label>处理记录</label>
+                            <div class="timeline" id="view-timeline">
+                                <!-- 处理记录将通过JS动态加载 -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>附件</label>
+                            <div class="attachment-list" id="view-attachments">
+                                <!-- 附件列表将通过JS动态加载 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dialog-footer">
+                    <button class="btn btn-secondary" onclick="closeModal('viewServiceModal')">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 处理工单弹窗 -->
+    <div class="modal" id="handleServiceModal">
+        <div class="dialog-overlay">
+            <div class="dialog">
+                <div class="dialog-header">
+                    <h3><i class="fas fa-edit"></i> 处理工单</h3>
+                    <button class="close-button" onclick="closeModal('handleServiceModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="dialog-content">
+                    <form id="handleServiceForm">
+                        <input type="hidden" id="handle-serviceId" name="serviceId">
+                        <div class="form-section-title">基本信息</div>                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>工单编号</label>
+                                <input type="text" class="form-control" id="handle-serviceCode" name="serviceCode" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>客户名称</label>
+                                <input type="text" class="form-control" id="handle-customerName" name="customerName" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>服务类型</label>
+                                <input type="text" class="form-control" id="handle-serviceType" name="serviceType" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>紧急程度</label>
+                                <input type="text" class="form-control" id="handle-priority" name="priority" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>处理状态<span class="required">*</span></label>
+                                <select class="form-control" id="handle-status" name="status" required>
+                                    <option value="pending">待处理</option>
+                                    <option value="processing">处理中</option>
+                                    <option value="completed">已完成</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>问题描述</label>
+                            <textarea class="form-control" id="handle-description" name="description" rows="3" readonly></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>创建人<span class="required">*</span></label>
+                                <select class="form-control" id="handle-handler" name="handler" required>
+                                    <option value="1">张三</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>预计完成时间<span class="required">*</span></label>
+                                <input type="datetime-local" class="form-control" id="handle-expectedCompletionTime" name="expectedCompletionTime" required>
+                            </div>
+                        </div>
+                        <div class="form-section-title">处理信息</div>                           
+                        <!-- 新增跟进记录部分 -->
+                        <div class="form-group">
+                            <label>添加跟进记录<span class="required">*</span></label>
+                            <textarea class="form-control" id="handle-followUp" name="followUp" rows="3" placeholder="请输入本次跟进的处理内容..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>上传附件</label>
+                            <input type="file" class="form-control" id="handle-attachment" name="attachment" multiple>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>历史处理记录</label>
+                            <div class="timeline" id="handle-timeline">
+                                <!-- 处理记录将通过JS动态加载 -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="dialog-footer">
+                    <button class="btn btn-secondary" onclick="closeModal('handleServiceModal')">取消</button>
+                    <button class="btn btn-primary" onclick="submitHandleService()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <style>
         /* 统计卡片样式 */
         .stats-cards {
@@ -834,68 +992,404 @@
             font-size: 14px;
             line-height: 1.5;
         }
+        /* 新增样式 */
+        .info-text {
+            padding: 8px 12px;
+            background-color: #f5f7fa;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            min-height: 36px;
+            line-height: 1.5;
+        }
+        
+        .info-text-area {
+            min-height: 80px;
+            white-space: pre-wrap;
+        }
+        
+        .attachment-list {
+            padding: 8px 12px;
+            background-color: #f5f7fa;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            min-height: 36px;
+        }
+        
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 0;
+        }
+        
+        .attachment-item i {
+            margin-right: 8px;
+            color: #909399;
+        }
+        
+        .attachment-item a {
+            color: #409eff;
+            text-decoration: none;
+        }
+        
+        .attachment-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .transfer-dialog {
+            width: 500px;
+        }
     </style>
 
-    <script src="../../js/app.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            Menu.renderMenu();
-            initMenuToggle();
-        });
+<script src="../../js/app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        Menu.renderMenu();
+        initMenuToggle();
+    });
 
-        function createService() {
-            document.getElementById('serviceModal').classList.add('show');
+    function createService() {
+        document.getElementById('serviceModal').classList.add('show');
+    }
+
+    function closeServiceModal() {
+        document.getElementById('serviceModal').classList.remove('show');
+        document.getElementById('serviceForm').reset();
+    }
+    
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('show');
+    }
+
+    function submitService() {
+        const form = document.getElementById('serviceForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
         }
+        
+        // TODO: 处理表单提交
+        alert('工单创建成功！');
+        closeServiceModal();
+    }
 
-        function closeServiceModal() {
-            document.getElementById('serviceModal').classList.remove('show');
-            document.getElementById('serviceForm').reset();
+    function viewService(id) {
+        // 加载工单详情数据
+        const serviceData = getServiceData(id);
+        if (!serviceData) return;
+        
+        // 填充查看弹窗数据
+        document.getElementById('view-serviceCode').textContent = serviceData.code;
+        document.getElementById('view-customerName').textContent = serviceData.customerName;
+        document.getElementById('view-serviceType').textContent = getServiceTypeName(serviceData.type);
+        document.getElementById('view-priority').textContent = getPriorityName(serviceData.priority);
+        document.getElementById('view-status').textContent = getStatusName(serviceData.status);
+        document.getElementById('view-description').textContent = serviceData.description;
+        document.getElementById('view-handler').textContent = serviceData.handler;
+        document.getElementById('view-expectedCompletionTime').textContent = serviceData.expectedCompletionTime;
+        
+        // 加载处理记录
+        loadTimeline('view-timeline', serviceData.timeline);
+        
+        // 加载附件列表
+        loadAttachments('view-attachments', serviceData.attachments);
+        
+        // 显示查看弹窗
+        document.getElementById('viewServiceModal').classList.add('show');
+    }
+
+    function handleService(id) {
+        // 加载工单详情数据
+        const serviceData = getServiceData(id);
+        if (!serviceData) return;
+        
+        // 填充处理弹窗数据
+        document.getElementById('handle-serviceId').value = id;
+        document.getElementById('handle-serviceCode').value = serviceData.code;
+        document.getElementById('handle-customerName').value = serviceData.customerName;
+        document.getElementById('handle-serviceType').value = getServiceTypeName(serviceData.type);
+        document.getElementById('handle-priority').value = getPriorityName(serviceData.priority);
+        document.getElementById('handle-status').value = serviceData.status;
+        document.getElementById('handle-description').value = serviceData.description;
+        document.getElementById('handle-handler').value = serviceData.handlerId;
+        document.getElementById('handle-expectedCompletionTime').value = serviceData.expectedCompletionTimeISO;
+        
+        // 加载处理记录
+        loadTimeline('handle-timeline', serviceData.timeline);
+        
+        // 显示处理弹窗
+        document.getElementById('handleServiceModal').classList.add('show');
+    }
+    
+    function submitHandleService() {
+        const form = document.getElementById('handleServiceForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
         }
-
-        function submitService() {
-            const form = document.getElementById('serviceForm');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
+        
+            // 获取表单数据
+            const serviceId = document.getElementById('transfer-serviceId').value;
+            const toHandler = document.getElementById('transfer-toHandler').value;
+            const reason = document.getElementById('transfer-reason').value;
             
             // TODO: 处理表单提交
-            alert('工单创建成功！');
-            closeServiceModal();
-        }
-
-        function viewService(id) {
-            document.getElementById('serviceModal').classList.add('show');
-            // TODO: 加载工单详情
-            setFormReadOnly(true);
-        }
-
-        function handleService(id) {
-            document.getElementById('serviceModal').classList.add('show');
-            // TODO: 加载工单详情
-            setFormReadOnly(false);
-        }
-
-        function setFormReadOnly(readonly) {
-            const form = document.getElementById('serviceForm');
-            const inputs = form.querySelectorAll('input, select, textarea');
-            inputs.forEach(input => {
-                if (input.name !== 'serviceCode') {
-                    input.readOnly = readonly;
-                    if (input.tagName === 'SELECT') {
-                        input.disabled = readonly;
-                    }
-                }
-            });
-        }
-
-        function transferService(id) {
-            alert('转交工单功能开发中...');
+            //console.log('转交工单:', {
+            //    serviceId,
+            //    toHandler,
+            //    reason
+            //});
+            
+            //alert('工单转交成功！');
+            //closeModal('transferServiceModal'); 
+            
+            // 刷新列表（实际项目中应该调用API刷新数据）
+            // refreshServiceList();
         }
 
         function exportService() {
             alert('导出功能开发中...');
         }
+        
+        // 辅助函数：获取工单数据
+        function getServiceData(id) {
+            // 模拟从后端获取数据
+            // 实际项目中应该通过API获取
+            const mockData = {
+                1: {
+                    id: 1,
+                    code: 'SV202403010001',
+                    customerName: '茶叶专卖店A',
+                    type: 'complaint',
+                    priority: 'high',
+                    status: 'pending',
+                    description: '商品质量问题，客户反映收到的铁观音茶叶有异味，要求退换货。',
+                    handlerId: '1',
+                    handler: '张三',
+                    expectedCompletionTime: '2024-03-05 18:00:00',
+                    expectedCompletionTimeISO: '2024-03-05T18:00',
+                    timeline: [
+                        {
+                            title: '创建工单',
+                            time: '2024-03-01 10:00:00',
+                            content: '工单已创建，等待处理。',
+                            type: 'normal'
+                        }
+                    ],
+                    attachments: [
+                        {
+                            name: '客户投诉截图.png',
+                            url: '#',
+                            type: 'image'
+                        }
+                    ]
+                },
+                2: {
+                    id: 2,
+                    code: 'SV202403010002',
+                    customerName: '茶叶批发商B',
+                    type: 'consult',
+                    priority: 'medium',
+                    status: 'processing',
+                    description: '产品使用方法咨询，客户询问如何正确冲泡不同种类的茶叶。',
+                    handlerId: '2',
+                    handler: '李四',
+                    expectedCompletionTime: '2024-03-03 12:00:00',
+                    expectedCompletionTimeISO: '2024-03-03T12:00',
+                    timeline: [
+                        {
+                            title: '创建工单',
+                            time: '2024-03-01 11:30:00',
+                            content: '工单已创建，等待处理。',
+                            type: 'normal'
+                        },
+                        {
+                            title: '开始处理',
+                            time: '2024-03-01 14:00:00',
+                            content: '已联系客户，正在准备详细的冲泡指南。',
+                            type: 'warning'
+                        }
+                    ],
+                    attachments: []
+                },
+                3: {
+                    id: 3,
+                    code: 'SV202403010003',
+                    customerName: '茶叶经销商C',
+                    type: 'suggest',
+                    priority: 'low',
+                    status: 'completed',
+                    description: '包装改进建议，客户建议改进茶叶包装，增加防潮功能。',
+                    handlerId: '3',
+                    handler: '王五',
+                    expectedCompletionTime: '2024-03-10 18:00:00',
+                    expectedCompletionTimeISO: '2024-03-10T18:00',
+                    timeline: [
+                        {
+                            title: '创建工单',
+                            time: '2024-03-01 09:15:00',
+                            content: '工单已创建，等待处理。',
+                            type: 'normal'
+                        },
+                        {
+                            title: '开始处理',
+                            time: '2024-03-01 10:30:00',
+                            content: '已记录客户建议，转交产品部门评估。',
+                            type: 'warning'
+                        },
+                        {
+                            title: '处理完成',
+                            time: '2024-03-02 16:45:00',
+                            content: '产品部门已评估建议，计划在下一批次产品中采纳。已回复客户处理结果。',
+                            type: 'success'
+                        }
+                    ],
+                    attachments: [
+                        {
+                            name: '客户建议详情.docx',
+                            url: '#',
+                            type: 'document'
+                        },
+                        {
+                            name: '产品部门评估报告.pdf',
+                            url: '#',
+                            type: 'document'
+                        }
+                    ]
+                },
+                4: {
+                    id: 4,
+                    code: 'SV202403010004',
+                    customerName: '茶叶专卖店D',
+                    type: 'repair',
+                    priority: 'high',
+                    status: 'processing',
+                    description: '设备故障维修，客户的茶叶烘干机出现故障，需要上门维修。',
+                    handlerId: '4',
+                    handler: '赵六',
+                    expectedCompletionTime: '2024-03-04 18:00:00',
+                    expectedCompletionTimeISO: '2024-03-04T18:00',
+                    timeline: [
+                        {
+                            title: '创建工单',
+                            time: '2024-03-01 13:20:00',
+                            content: '工单已创建，等待处理。',
+                            type: 'normal'
+                        },
+                        {
+                            title: '开始处理',
+                            time: '2024-03-01 14:30:00',
+                            content: '已联系客户，安排技术人员明天上门检修。',
+                            type: 'warning'
+                        }
+                    ],
+                    attachments: [
+                        {
+                            name: '设备故障照片.jpg',
+                            url: '#',
+                            type: 'image'
+                        }
+                    ]
+                }
+            };
+            
+            return mockData[id] || null;
+        }
+        
+        // 辅助函数：获取服务类型名称
+        function getServiceTypeName(type) {
+            const typeMap = {
+                'complaint': '投诉',
+                'consult': '咨询',
+                'suggest': '建议',
+                'repair': '维修'
+            };
+            return typeMap[type] || type;
+        }
+        
+        // 辅助函数：获取优先级名称
+        function getPriorityName(priority) {
+            const priorityMap = {
+                'high': '高',
+                'medium': '中',
+                'low': '低'
+            };
+            return priorityMap[priority] || priority;
+        }
+        
+        // 辅助函数：获取状态名称
+        function getStatusName(status) {
+            const statusMap = {
+                'pending': '待处理',
+                'processing': '处理中',
+                'completed': '已完成'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // 辅助函数：加载时间线
+        function loadTimeline(containerId, timelineData) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!timelineData || timelineData.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无处理记录</div>';
+                return;
+            }
+            
+            timelineData.forEach(item => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                const dotClass = item.type === 'warning' ? 'timeline-dot warning' : 
+                                item.type === 'success' ? 'timeline-dot success' : 'timeline-dot';
+                
+                timelineItem.innerHTML = `
+                    <div class="${dotClass}"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">${item.title}</span>
+                            <span class="timeline-time">${item.time}</span>
+                        </div>
+                        <div class="timeline-body">
+                            ${item.content}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(timelineItem);
+            });
+        }
+        
+        // 辅助函数：加载附件列表
+        function loadAttachments(containerId, attachmentsData) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (!attachmentsData || attachmentsData.length === 0) {
+                container.innerHTML = '<div class="empty-tip">暂无附件</div>';
+                return;
+            }
+            
+            attachmentsData.forEach(item => {
+                const attachmentItem = document.createElement('div');
+                attachmentItem.className = 'attachment-item';
+                
+                const iconClass = item.type === 'image' ? 'fas fa-image' : 
+                                item.type === 'document' ? 'fas fa-file-alt' : 'fas fa-paperclip';
+                
+                attachmentItem.innerHTML = `
+                    <i class="${iconClass}"></i>
+                    <a href="${item.url}" target="_blank">${item.name}</a>
+                `;
+                
+                container.appendChild(attachmentItem);
+            });
+        }
     </script>
+        
 </body>
 </html> 
