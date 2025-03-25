@@ -55,7 +55,13 @@ const menuConfig = [
                 title: '采购分析',
                 icon: 'chart-line',
                 path: 'pages/purchase/analysis.html'
-            }
+            },
+            {
+                key: 'report',
+                title: '采购明细表',
+                icon: 'file-alt',
+                path: 'pages/purchase/report.html'
+            },
         ]
     },
     {
