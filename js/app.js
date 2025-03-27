@@ -62,6 +62,12 @@ const menuConfig = [
                 icon: 'file-alt',
                 path: 'pages/purchase/report.html'
             },
+            {
+                key: 'report',
+                title: '采购汇总表',
+                icon: 'file-alt',
+                path: 'pages/purchase/summary.html'
+            },
         ]
     },
     {

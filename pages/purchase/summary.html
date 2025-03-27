@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>采购汇总表 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/menu.css">
+    <link rel="stylesheet" href="../../css/modules/stock.css">
+    <style>
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-item label {
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .filter-item select,
+        .filter-item input {
+            min-width: 180px;
+        }
+        
+        .summary-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f9ff;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .summary-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .summary-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .summary-label {
+            color: #666;
+        }
+        
+        .summary-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .summary-value.highlight {
+            color: #f56c6c;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>采购管理</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-chart-pie"></i>
+                    <span>采购汇总表</span>
+                </div>
+
+                <!-- 工具栏 -->
+                <div class="standard-card">
+                    <div class="standard-toolbar">
+                        <div class="search-group">
+                            <input type="text" class="standard-input" placeholder="输入供应商名称搜索">
+                            <select class="standard-select">
+                                <option value="">供应商</option>
+                                <option value="1">供应商A</option>
+                                <option value="2">供应商B</option>
+                                <option value="3">供应商C</option>
+                            </select>
+                            <select class="standard-select">
+                                <option value="">供应商分类</option>
+                                <option value="tea">茶叶供应商</option>
+                                <option value="package">包装供应商</option>
+                                <option value="equipment">设备供应商</option>
+                            </select>
+                            <div class="date-range-group">
+                                <input type="date" class="standard-input" value="2024-01-01">
+                                <span class="date-separator">至</span>
+                                <input type="date" class="standard-input" value="2024-03-31">
+                            </div>
+                            <button class="standard-button primary">
+                                <i class="fas fa-search"></i> 查询
+                            </button>
+                        </div>
+                        <div class="button-group">
+                            <button class="standard-button">
+                                <i class="fas fa-file-excel"></i> 导出Excel
+                            </button>
+                            <button class="standard-button">
+                                <i class="fas fa-print"></i> 打印
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 汇总信息 -->
+                    <div class="summary-section">
+                        <div class="summary-title">汇总信息</div>
+                        <div class="summary-items">
+                            <div class="summary-item">
+                                <span class="summary-label">供应商总数：</span>
+                                <span class="summary-value">15</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">总金额(不含税)：</span>
+                                <span class="summary-value">1,385,234.56</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">总税额：</span>
+                                <span class="summary-value">183,000.00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">价税合计：</span>
+                                <span class="summary-value highlight">1,568,234.56</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 数据表格 -->
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th>供应商名称</th>
+                                <th>供应商分类</th>
+                                <th>价税合计</th>
+                                <th>不含税金额</th>
+                                <th>税额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>供应商A</td>
+                                <td>茶叶供应商</td>
+                                <td>568,234.56</td>
+                                <td>502,862.44</td>
+                                <td>65,372.12</td>
+                            </tr>
+                            <tr>
+                                <td>供应商B</td>
+                                <td>茶叶供应商</td>
+                                <td>425,680.00</td>
+                                <td>376,707.96</td>
+                                <td>48,972.04</td>
+                            </tr>
+                            <tr>
+                                <td>供应商C</td>
+                                <td>茶叶供应商</td>
+                                <td>356,420.00</td>
+                                <td>315,371.68</td>
+                                <td>41,048.32</td>
+                            </tr>
+                            <tr>
+                                <td>供应商D</td>
+                                <td>包装供应商</td>
+                                <td>125,600.00</td>
+                                <td>111,150.44</td>
+                                <td>14,449.56</td>
+                            </tr>
+                            <tr>
+                                <td>供应商E</td>
+                                <td>设备供应商</td>
+                                <td>92,300.00</td>
+                                <td>79,142.04</td>
+                                <td>13,157.96</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="standard-pagination">
+                        <button disabled><i class="fas fa-chevron-left"></i></button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载应用脚本 -->
+    <script src="../../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Menu.renderMenu();
+            initMenuToggle();
+        });
+
+        function initMenuToggle() {
+            const toggleBtn = document.querySelector('.toggle-menu');
+            const appContainer = document.querySelector('.app-container');
+            
+            if (toggleBtn && appContainer) {
+                toggleBtn.addEventListener('click', () => {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
