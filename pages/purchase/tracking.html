@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>采购跟踪表 - TeaERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/menu.css">
+    <link rel="stylesheet" href="../../css/modules/stock.css">
+    <style>
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-item label {
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .filter-item select,
+        .filter-item input {
+            min-width: 180px;
+        }
+        
+        .summary-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f9ff;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .summary-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .summary-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .summary-label {
+            color: #666;
+        }
+        
+        .summary-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .summary-value.highlight {
+            color: #f56c6c;
+        }
+        
+        .status-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #909399;
+            color: #fff;
+        }
+
+        .status-tag.warning {
+            background: #e6a23c;
+        }
+
+        .status-tag.danger {
+            background: #f56c6c;
+        }
+
+        .status-tag.success {
+            background: #67c23a;
+        }
+        
+        .status-tag.primary {
+            background: #409eff;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="main-menu"></div>
+        </div>
+        <div class="main-content">
+            <div class="top-navbar">
+                <div class="toggle-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="logo">TeaERP</div>
+                <nav class="top-nav">
+                    <ul>
+                        <li><a href="../../index.html">首页</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">帮助</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span class="username">管理员</span>
+                    <a href="#" class="logout">退出</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>采购管理</span>
+                    <i class="fas fa-angle-right separator"></i>
+                    <i class="fas fa-tasks"></i>
+                    <span>采购跟踪表</span>
+                </div>
+
+                <!-- 工具栏 -->
+                <div class="standard-card">
+                    <div class="standard-toolbar">
+                        <div class="search-group">
+                            <input type="text" class="standard-input" placeholder="输入单据编号或商品名称搜索">
+                            <select class="standard-select">
+                                <option value="">供应商</option>
+                                <option value="1">供应商A</option>
+                                <option value="2">供应商B</option>
+                                <option value="3">供应商C</option>
+                            </select>
+                            <select class="standard-select">
+                                <option value="">部门</option>
+                                <option value="purchase">采购部</option>
+                                <option value="production">生产部</option>
+                                <option value="sales">销售部</option>
+                            </select>
+                            <select class="standard-select">
+                                <option value="">采购员</option>
+                                <option value="zhang">张三</option>
+                                <option value="li">李四</option>
+                                <option value="wang">王五</option>
+                            </select>
+                            <div class="date-range-group">
+                                <input type="date" class="standard-input" value="2024-01-01">
+                                <span class="date-separator">至</span>
+                                <input type="date" class="standard-input" value="2024-03-31">
+                            </div>
+                            <button class="standard-button primary">
+                                <i class="fas fa-search"></i> 查询
+                            </button>
+                        </div>
+                        <div class="button-group">
+                            <button class="standard-button">
+                                <i class="fas fa-file-excel"></i> 导出Excel
+                            </button>
+                            <button class="standard-button">
+                                <i class="fas fa-print"></i> 打印
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 汇总信息 -->
+                    <div class="summary-section">
+                        <div class="summary-title">汇总信息</div>
+                        <div class="summary-items">
+                            <div class="summary-item">
+                                <span class="summary-label">采购单总数：</span>
+                                <span class="summary-value">56</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">已完成入库：</span>
+                                <span class="summary-value">32</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">部分入库：</span>
+                                <span class="summary-value">15</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">未入库：</span>
+                                <span class="summary-value highlight">9</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">总采购数量：</span>
+                                <span class="summary-value">8,560</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">已入库数量：</span>
+                                <span class="summary-value">7,230</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 数据表格 -->
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th>单据编号</th>
+                                <th>日期</th>
+                                <th>供应商</th>
+                                <th>部门</th>
+                                <th>采购员</th>
+                                <th>单据状态</th>
+                                <th>关闭状态</th>
+                                <th>商品名称</th>
+                                <th>商品编码</th>
+                                <th>期望收货日期</th>
+                                <th>入库状态</th>
+                                <th>基本数量</th>
+                                <th>基本单位</th>
+                                <th>入库数量</th>
+                                <th>入库单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PO202403150001</td>
+                                <td>2024-03-15</td>
+                                <td>供应商A</td>
+                                <td>采购部</td>
+                                <td>张三</td>
+                                <td><span class="status-tag success">已审核</span></td>
+                                <td><span class="status-tag">未关闭</span></td>
+                                <td>特级铁观音</td>
+                                <td>T001</td>
+                                <td>2024-03-20</td>
+                                <td><span class="status-tag success">已完成</span></td>
+                                <td>100</td>
+                                <td>盒</td>
+                                <td>100</td>
+                                <td>盒</td>
+                            </tr>
+                            <tr>
+                                <td>PO202403150001</td>
+                                <td>2024-03-15</td>
+                                <td>供应商A</td>
+                                <td>采购部</td>
+                                <td>张三</td>
+                                <td><span class="status-tag success">已审核</span></td>
+                                <td><span class="status-tag">未关闭</span></td>
+                                <td>特级大红袍</td>
+                                <td>T002</td>
+                                <td>2024-03-20</td>
+                                <td><span class="status-tag success">已完成</span></td>
+                                <td>80</td>
+                                <td>盒</td>
+                                <td>80</td>
+                                <td>盒</td>
+                            </tr>
+                            <tr>
+                                <td>PO202403160001</td>
+                                <td>2024-03-16</td>
+                                <td>供应商B</td>
+                                <td>采购部</td>
+                                <td>李四</td>
+                                <td><span class="status-tag success">已审核</span></td>
+                                <td><span class="status-tag">未关闭</span></td>
+                                <td>特级龙井</td>
+                                <td>T003</td>
+                                <td>2024-03-25</td>
+                                <td><span class="status-tag warning">部分入库</span></td>
+                                <td>120</td>
+                                <td>罐</td>
+                                <td>80</td>
+                                <td>罐</td>
+                            </tr>
+                            <tr>
+                                <td>PO202403170001</td>
+                                <td>2024-03-17</td>
+                                <td>供应商C</td>
+                                <td>生产部</td>
+                                <td>王五</td>
+                                <td><span class="status-tag success">已审核</span></td>
+                                <td><span class="status-tag">未关闭</span></td>
+                                <td>特级普洱</td>
+                                <td>T004</td>
+                                <td>2024-03-30</td>
+                                <td><span class="status-tag danger">未入库</span></td>
+                                <td>150</td>
+                                <td>饼</td>
+                                <td>0</td>
+                                <td>饼</td>
+                            </tr>
+                            <tr>
+                                <td>PO202403180001</td>
+                                <td>2024-03-18</td>
+                                <td>供应商A</td>
+                                <td>采购部</td>
+                                <td>张三</td>
+                                <td><span class="status-tag primary">草稿</span></td>
+                                <td><span class="status-tag">未关闭</span></td>
+                                <td>特级金骏眉</td>
+                                <td>T005</td>
+                                <td>2024-04-05</td>
+                                <td><span class="status-tag danger">未入库</span></td>
+                                <td>100</td>
+                                <td>罐</td>
+                                <td>0</td>
+                                <td>罐</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="standard-pagination">
+                        <button disabled><i class="fas fa-chevron-left"></i></button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                        <button>5</button>
+                        <span>...</span>
+                        <button>10</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载应用脚本 -->
+    <script src="../../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Menu.renderMenu();
+            initMenuToggle();
+        });
+
+        function initMenuToggle() {
+            const toggleBtn = document.querySelector('.toggle-menu');
+            const appContainer = document.querySelector('.app-container');
+            
+            if (toggleBtn && appContainer) {
+                toggleBtn.addEventListener('click', () => {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

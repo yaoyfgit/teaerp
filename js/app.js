@@ -65,8 +65,14 @@ const menuConfig = [
             {
                 key: 'report',
                 title: '采购汇总表',
-                icon: 'file-alt',
+                icon: 'chart-line',
                 path: 'pages/purchase/summary.html'
+            },
+            {
+                key: 'tracking',
+                title: '采购跟踪表',
+                icon: 'tasks',
+                path: 'pages/purchase/tracking.html'
             },
         ]
     },
